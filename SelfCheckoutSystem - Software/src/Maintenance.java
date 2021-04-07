@@ -187,7 +187,10 @@ public class Maintenance {
 		// disable all abstract devices in station
 		disableAll();
 	}
-
+	
+	/**
+	 * enable all abstract devices in self checkout station
+	 */
 	public void enableAll() {
 		this.station.scale.enable();
 		this.station.baggingArea.enable();
@@ -205,7 +208,10 @@ public class Maintenance {
 		this.station.coinStorage.enable();
 		this.station.coinTray.enable();
 	}
-
+	
+	/**
+	 * disable all abstract devices in self checkout station
+	 */
 	public void disableAll() {
 		this.station.scale.disable();
 		this.station.baggingArea.disable();
