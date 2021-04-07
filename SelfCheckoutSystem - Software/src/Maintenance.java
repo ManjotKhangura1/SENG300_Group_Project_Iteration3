@@ -3,63 +3,67 @@ import java.util.Currency;
 import java.util.List;
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.BanknoteStorageUnit;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.CoinStorageUnit;
 import org.lsmr.selfcheckout.devices.OverloadException;
+import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
+import org.lsmr.selfcheckout.devices.listeners.AbstractDeviceListener;
+import org.lsmr.selfcheckout.devices.listeners.ReceiptPrinterListener;
+
 public class Maintenance {
 	public SelfCheckoutStation station;
 	public Currency currency;
-	
-	//VARIABLES FOR PRINTER MAINTENANCE 
-	//global flags to keep track of maintenance functions state
-		private boolean paperChangeSuccessful;
-		private boolean inkChangeSuccessful;
-		
-		//overridden listener for printer, updating flags when necessary
-		private ReceiptPrinterListener printerListener = new ReceiptPrinterListener(){
-			@Override
-			public void outOfPaper(ReceiptPrinter printer){
-				// TODO Auto-generated method stub
-				
-			}
 
-			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				// TODO Auto-generated method stub
-				
-			}
+	// VARIABLES FOR PRINTER MAINTENANCE
+	// global flags to keep track of maintenance functions state
+	private boolean paperChangeSuccessful;
+	private boolean inkChangeSuccessful;
 
-			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-				// TODO Auto-generated method stub
-				
-			}
+	// overridden listener for printer, updating flags when necessary
+	private ReceiptPrinterListener printerListener = new ReceiptPrinterListener() {
 
-			@Override
-			public void outOfInk(ReceiptPrinter printer) {
-				// TODO Auto-generated method stub
-				
-			}
+		@Override
+		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+			// TODO Auto-generated method stub
 
-			@Override
-			public void paperAdded(ReceiptPrinter printer) {
-				paperChangeSuccessful=true;
-				
-			}
+		}
 
-			@Override
-			public void inkAdded(ReceiptPrinter printer) {
-				inkChangeSuccessful=true;
-				
-			}
-		
-		};
-	
-	
+		@Override
+		public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void paperAdded(ReceiptPrinter printer) {
+			paperChangeSuccessful = true;
+
+		}
+
+		@Override
+		public void outOfPaper(ReceiptPrinter printer) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void outOfInk(ReceiptPrinter printer) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void inkAdded(ReceiptPrinter printer) {
+			inkChangeSuccessful = true;
+
+		}
+	};
+
 	/**
 	 * Refill Dispensers constructor
 	 * 
@@ -78,7 +82,7 @@ public class Maintenance {
 			throw new SimulationException(new NullPointerException("currency is null"));
 		}
 		this.currency = currency;
-		
+
 		station.printer.register(printerListener);
 		this.paperChangeSuccessful = false;
 		this.inkChangeSuccessful = false;
@@ -86,20 +90,22 @@ public class Maintenance {
 
 	/**
 	 * Reloads a specified coin dispenser
+	 * 
 	 * @param coinDenomination the denomination of the dispenser to be reloaded
 	 */
 	public void refillCoin(BigDecimal coinDenomination) {
 		int amountToRefill;
 		CoinDispenser coinDispenser;
 
-		//finds the coin dispenser correlated to the given coin denomination
+		// finds the coin dispenser correlated to the given coin denomination
 		coinDispenser = station.coinDispensers.get(coinDenomination);
 
 		try {
-			//finds how many more coins are needed before the coin dispenser reaches capacity
+			// finds how many more coins are needed before the coin dispenser reaches
+			// capacity
 			amountToRefill = coinDispenser.getCapacity() - coinDispenser.size();
 
-			//refills the dispenser until it reaches capacity
+			// refills the dispenser until it reaches capacity
 			for (int i = 0; i < amountToRefill; i++) {
 				Coin coinToLoad = new Coin(coinDenomination, currency);
 				coinDispenser.load(coinToLoad);
@@ -109,26 +115,28 @@ public class Maintenance {
 			throw new SimulationException(e);
 		}
 	}
-	
+
 	/**
 	 * Reloads a specified banknote dispenser
+	 * 
 	 * @param banknoteDenomination the denomination of the dispenser to be reloaded
 	 */
 	public void refillBanknote(int banknoteDenomination) {
 		int amountToRefill;
 		BanknoteDispenser banknoteDispenser;
 
-		//finds the banknote dispenser correlated to the given banknote denomination
+		// finds the banknote dispenser correlated to the given banknote denomination
 		banknoteDispenser = station.banknoteDispensers.get(banknoteDenomination);
 
 		try {
-			//finds how many more banknotes are needed before the banknote dispenser reaches capacity
+			// finds how many more banknotes are needed before the banknote dispenser
+			// reaches capacity
 			amountToRefill = banknoteDispenser.getCapacity() - banknoteDispenser.size();
 
-			//refills the dispenser until it reaches capacity
+			// refills the dispenser until it reaches capacity
 			for (int i = 0; i < amountToRefill; i++) {
-				Banknote banknoteToLoad = new Banknote(banknoteDenomination,currency);
-				 banknoteDispenser.load(banknoteToLoad);
+				Banknote banknoteToLoad = new Banknote(banknoteDenomination, currency);
+				banknoteDispenser.load(banknoteToLoad);
 			}
 
 		} catch (SimulationException | OverloadException e) {
@@ -136,27 +144,22 @@ public class Maintenance {
 		}
 	}
 
-	public void AttendantEmptyCoinStorageUnit(CoinStorageUnit csu)
-	{
+	public void AttendantEmptyCoinStorageUnit(CoinStorageUnit csu) {
 
 		CoinStorageUnit CSU = csu;
-		if(CSU.getCoinCount() <= 0)
-		{
+		if (CSU.getCoinCount() <= 0) {
 			System.out.println("No coins in Storage Unit. None unloaded");
 		}
 		List<Coin> coins = CSU.unload();
 
 		System.out.println("Removed" + coins.size() + " many coins");
 
-
 	}
 
-	public void AttendantEmptyBanknoteStorageUnit(BanknoteStorageUnit bsu)
-	{
+	public void AttendantEmptyBanknoteStorageUnit(BanknoteStorageUnit bsu) {
 		BanknoteStorageUnit BSU = bsu;
 
-		if(BSU.getBanknoteCount() <= 0)
-		{
+		if (BSU.getBanknoteCount() <= 0) {
 			System.out.println("No banknote in Storage Unit. None unloaded");
 		}
 		List<Banknote> notes = BSU.unload();
@@ -164,17 +167,17 @@ public class Maintenance {
 		System.out.println("Removed" + notes.size() + " many coins");
 
 	}
-	
+
 	public void startUp() {
 		System.out.print("Starting up selfcheckout station...");
 		enableAll();
 	}
-	
+
 	public void shutDown() {
 		System.out.print("Shutting down selfcheckout station...");
 		disableAll();
 	}
-	
+
 	public void enableAll() {
 		this.station.scale.enable();
 		this.station.baggingArea.enable();
@@ -192,7 +195,7 @@ public class Maintenance {
 		this.station.coinStorage.enable();
 		this.station.coinTray.enable();
 	}
-	
+
 	public void disableAll() {
 		this.station.scale.disable();
 		this.station.baggingArea.disable();
@@ -210,44 +213,41 @@ public class Maintenance {
 		this.station.coinStorage.disable();
 		this.station.coinTray.disable();
 	}
-	
-	
-		//adds the amount of paper to the printer
-	//prints error message for any encountered exceptions
+
+	// adds the amount of paper to the printer
+	// prints error message for any encountered exceptions
 	public ReceiptPrinter changePaper(int units) {
 		try {
 			station.printer.addPaper(units);
-			if(paperChangeSuccessful) {
+			if (paperChangeSuccessful) {
 				paperChangeSuccessful = false;
 				return station.printer;
-			}else {
+			} else {
 				throw new SimulationException("Unknown Error While Adding Paper");
 			}
-			
-		}catch(SimulationException e) {
+
+		} catch (SimulationException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	
-	//adds the amount of ink to the printer
-	//prints error message for any encountered exceptions
+
+	// adds the amount of ink to the printer
+	// prints error message for any encountered exceptions
 	public ReceiptPrinter changeInk(int quantity) {
 		try {
 			station.printer.addInk(quantity);
-			if(inkChangeSuccessful) {
+			if (inkChangeSuccessful) {
 				inkChangeSuccessful = false;
 				return station.printer;
-			}else {
+			} else {
 				throw new SimulationException("Unknown Error While Adding Ink");
 			}
-			
-		}catch(SimulationException e) {
+
+		} catch (SimulationException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	
+
 }
