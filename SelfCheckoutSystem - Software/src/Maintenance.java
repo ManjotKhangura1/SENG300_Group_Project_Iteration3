@@ -88,13 +88,14 @@ public class Maintenance {
 	{
 
 		CoinStorageUnit CSU = csu;
-		if(csu.getCoinCount() <= 0)
+		if(CSU.getCoinCount() <= 0)
 		{
 			System.out.println("No coins in Storage Unit. None unloaded");
 		}
-		List<Coin> coins = csu.unload();
+		List<Coin> coins = CSU.unload();
 
 		System.out.println("Removed" + coins.size() + " many coins");
+
 
 	}
 
@@ -102,7 +103,7 @@ public class Maintenance {
 	{
 		BanknoteStorageUnit BSU = bsu;
 
-		if(bsu.getBanknoteCount() <= 0)
+		if(BSU.getBanknoteCount() <= 0)
 		{
 			System.out.println("No banknote in Storage Unit. None unloaded");
 		}
