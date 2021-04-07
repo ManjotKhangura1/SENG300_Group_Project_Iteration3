@@ -114,4 +114,50 @@ public class Maintenance {
 		System.out.println("Removed" + notes.size() + " many coins");
 
 	}
+	
+	public void startUp() {
+		System.out.print("Starting up selfcheckout station...");
+		enableAll();
+	}
+	
+	public void shutDown() {
+		System.out.print("Shutting down selfcheckout station...");
+		disableAll();
+	}
+	
+	public void enableAll() {
+		this.station.scale.enable();
+		this.station.baggingArea.enable();
+		this.station.screen.enable();
+		this.station.printer.enable();
+		this.station.cardReader.enable();
+		this.station.mainScanner.enable();
+		this.station.handheldScanner.enable();
+		this.station.banknoteInput.enable();
+		this.station.banknoteOutput.enable();
+		this.station.banknoteValidator.enable();
+		this.station.banknoteStorage.enable();
+		this.station.coinSlot.enable();
+		this.station.coinValidator.enable();
+		this.station.coinStorage.enable();
+		this.station.coinTray.enable();
+	}
+	
+	public void disableAll() {
+		this.station.scale.disable();
+		this.station.baggingArea.disable();
+		this.station.screen.disable();
+		this.station.printer.disable();
+		this.station.cardReader.disable();
+		this.station.mainScanner.disable();
+		this.station.handheldScanner.disable();
+		this.station.banknoteInput.disable();
+		this.station.banknoteOutput.disable();
+		this.station.banknoteValidator.disable();
+		this.station.banknoteStorage.disable();
+		this.station.coinSlot.disable();
+		this.station.coinValidator.disable();
+		this.station.coinStorage.disable();
+		this.station.coinTray.disable();
+	}
 }
