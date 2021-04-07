@@ -1,11 +1,29 @@
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
+import java.util.Map;
 
+import org.lsmr.selfcheckout.devices.AbstractDevice;
+import org.lsmr.selfcheckout.devices.BanknoteDispenser;
+import org.lsmr.selfcheckout.devices.BanknoteStorageUnit;
+import org.lsmr.selfcheckout.devices.BanknoteValidator;
+import org.lsmr.selfcheckout.devices.BarcodeScanner;
+import org.lsmr.selfcheckout.devices.CardReader;
+import org.lsmr.selfcheckout.devices.CoinDispenser;
+import org.lsmr.selfcheckout.devices.CoinSlot;
+import org.lsmr.selfcheckout.devices.CoinStorageUnit;
+import org.lsmr.selfcheckout.devices.CoinTray;
+import org.lsmr.selfcheckout.devices.CoinValidator;
+import org.lsmr.selfcheckout.devices.ElectronicScale;
+import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
+import org.lsmr.selfcheckout.devices.TouchScreen;
+
+import java.lang.reflect.Field;
 
 public class Maintenance {
 	
-	private SelfCheckoutStation station;
+	
 	private BigDecimal nickel = new BigDecimal(0.05);
     private BigDecimal dime = new BigDecimal(0.1);
     private BigDecimal quarter = new BigDecimal(0.25);
@@ -15,15 +33,67 @@ public class Maintenance {
 	private int[] banknoteDenominations = {5, 10 , 20 , 50, 100};
     private int scaleMaximumWeight = 50000;
     private int scaleSensitivity = 1;
-	
-	
-	public SelfCheckoutStation startUp(String curr) {
+    private SelfCheckoutStation station;
+    private Boolean stationOn = true;
+
+    
+    public Maintenance(String curr) {
 		Currency currency = Currency.getInstance(curr);
 		this.station = new SelfCheckoutStation(currency, banknoteDenominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
+    }
+    
+	public SelfCheckoutStation startUp() {
+		System.out.print("Strting up selfcheckout station...");
+		enableAll();
 		return this.station;
 	}
 	
-	public void shutDown() {
-		
+	public SelfCheckoutStation shutDown(SelfCheckoutStation scs) {
+		System.out.print("Shutting down selfcheckout station...");
+		disableAll();
+		return this.station;
+		// System.exit(1);
+	}
+	
+	public void enableAll() {
+		this.station.scale.enable();
+		this.station.baggingArea.enable();
+		this.station.screen.enable();
+		this.station.printer.enable();
+		this.station.cardReader.enable();
+		this.station.mainScanner.enable();
+		this.station.handheldScanner.enable();
+		this.station.banknoteInput.enable();
+		this.station.banknoteOutput.enable();
+		this.station.banknoteValidator.enable();
+		this.station.banknoteStorage.enable();
+		this.station.coinSlot.enable();
+		this.station.coinValidator.enable();
+		this.station.coinStorage.enable();
+		this.station.coinTray.enable();
+		this.stationOn = true;
+	}
+	
+	public void disableAll() {
+		this.station.scale.disable();
+		this.station.baggingArea.disable();
+		this.station.screen.disable();
+		this.station.printer.disable();
+		this.station.cardReader.disable();
+		this.station.mainScanner.disable();
+		this.station.handheldScanner.disable();
+		this.station.banknoteInput.disable();
+		this.station.banknoteOutput.disable();
+		this.station.banknoteValidator.disable();
+		this.station.banknoteStorage.disable();
+		this.station.coinSlot.disable();
+		this.station.coinValidator.disable();
+		this.station.coinStorage.disable();
+		this.station.coinTray.disable();
+		this.stationOn = false;
+	}
+	
+	public Boolean stationState() {
+		return this.stationOn;
 	}
 }
