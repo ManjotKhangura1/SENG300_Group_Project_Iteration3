@@ -1,25 +1,7 @@
 import java.math.BigDecimal;
 import java.util.Currency;
-import java.util.List;
-import java.util.Map;
 
-import org.lsmr.selfcheckout.devices.AbstractDevice;
-import org.lsmr.selfcheckout.devices.BanknoteDispenser;
-import org.lsmr.selfcheckout.devices.BanknoteStorageUnit;
-import org.lsmr.selfcheckout.devices.BanknoteValidator;
-import org.lsmr.selfcheckout.devices.BarcodeScanner;
-import org.lsmr.selfcheckout.devices.CardReader;
-import org.lsmr.selfcheckout.devices.CoinDispenser;
-import org.lsmr.selfcheckout.devices.CoinSlot;
-import org.lsmr.selfcheckout.devices.CoinStorageUnit;
-import org.lsmr.selfcheckout.devices.CoinTray;
-import org.lsmr.selfcheckout.devices.CoinValidator;
-import org.lsmr.selfcheckout.devices.ElectronicScale;
-import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
-import org.lsmr.selfcheckout.devices.TouchScreen;
-
-import java.lang.reflect.Field;
 
 public class Maintenance {
 	
