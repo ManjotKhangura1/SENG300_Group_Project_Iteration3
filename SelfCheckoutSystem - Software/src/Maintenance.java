@@ -83,4 +83,32 @@ public class Maintenance {
 			throw new SimulationException(e);
 		}
 	}
+
+	public void AttendantEmptyCoinStorageUnit(CoinStorageUnit csu)
+	{
+
+		CoinStorageUnit CSU = csu;
+		if(csu.getCoinCount() <= 0)
+		{
+			System.out.println("No coins in Storage Unit. None unloaded");
+		}
+		List<Coin> coins = csu.unload();
+
+		System.out.println("Removed" + coins.size() + " many coins");
+
+	}
+
+	public void AttendantEmptyBanknoteStorageUnit(BanknoteStorageUnit bsu)
+	{
+		BanknoteStorageUnit BSU = bsu;
+
+		if(bsu.getBanknoteCount() <= 0)
+		{
+			System.out.println("No banknote in Storage Unit. None unloaded");
+		}
+		List<Banknote> notes = BSU.unload();
+
+		System.out.println("Removed" + notes.size() + " many coins");
+
+	}
 }
