@@ -4,8 +4,7 @@ import java.util.Currency;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 public class Maintenance {
-	
-	
+
 	private BigDecimal nickel = new BigDecimal(0.05);
     private BigDecimal dime = new BigDecimal(0.1);
     private BigDecimal quarter = new BigDecimal(0.25);
