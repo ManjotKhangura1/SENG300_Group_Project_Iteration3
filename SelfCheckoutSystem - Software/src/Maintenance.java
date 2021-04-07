@@ -167,14 +167,24 @@ public class Maintenance {
 		System.out.println("Removed" + notes.size() + " many coins");
 
 	}
-
+	
+	/**
+	 * Start up a self checkout station
+	 */
 	public void startUp() {
+		// print out start up statement
 		System.out.print("Starting up selfcheckout station...");
+		// enable all abstract devices in station
 		enableAll();
 	}
-
+	
+	/**
+	 * shut down a self checkout station
+	 */
 	public void shutDown() {
+		// print out shut down statement
 		System.out.print("Shutting down selfcheckout station...");
+		// disable all abstract devices in station
 		disableAll();
 	}
 
