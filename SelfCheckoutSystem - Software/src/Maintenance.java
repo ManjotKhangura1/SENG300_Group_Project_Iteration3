@@ -13,7 +13,53 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 public class Maintenance {
 	public SelfCheckoutStation station;
 	public Currency currency;
+	
+	//VARIABLES FOR PRINTER MAINTENANCE 
+	//global flags to keep track of maintenance functions state
+		private boolean paperChangeSuccessful;
+		private boolean inkChangeSuccessful;
+		
+		//overridden listener for printer, updating flags when necessary
+		private ReceiptPrinterListener printerListener = new ReceiptPrinterListener(){
+			@Override
+			public void outOfPaper(ReceiptPrinter printer){
+				// TODO Auto-generated method stub
+				
+			}
 
+			@Override
+			public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void outOfInk(ReceiptPrinter printer) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void paperAdded(ReceiptPrinter printer) {
+				paperChangeSuccessful=true;
+				
+			}
+
+			@Override
+			public void inkAdded(ReceiptPrinter printer) {
+				inkChangeSuccessful=true;
+				
+			}
+		
+		};
+	
+	
 	/**
 	 * Refill Dispensers constructor
 	 * 
@@ -32,6 +78,10 @@ public class Maintenance {
 			throw new SimulationException(new NullPointerException("currency is null"));
 		}
 		this.currency = currency;
+		
+		station.printer.register(printerListener);
+		this.paperChangeSuccessful = false;
+		this.inkChangeSuccessful = false;
 	}
 
 	/**
@@ -160,4 +210,44 @@ public class Maintenance {
 		this.station.coinStorage.disable();
 		this.station.coinTray.disable();
 	}
+	
+	
+		//adds the amount of paper to the printer
+	//prints error message for any encountered exceptions
+	public ReceiptPrinter changePaper(int units) {
+		try {
+			station.printer.addPaper(units);
+			if(paperChangeSuccessful) {
+				paperChangeSuccessful = false;
+				return station.printer;
+			}else {
+				throw new SimulationException("Unknown Error While Adding Paper");
+			}
+			
+		}catch(SimulationException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	//adds the amount of ink to the printer
+	//prints error message for any encountered exceptions
+	public ReceiptPrinter changeInk(int quantity) {
+		try {
+			station.printer.addInk(quantity);
+			if(inkChangeSuccessful) {
+				inkChangeSuccessful = false;
+				return station.printer;
+			}else {
+				throw new SimulationException("Unknown Error While Adding Ink");
+			}
+			
+		}catch(SimulationException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 }
