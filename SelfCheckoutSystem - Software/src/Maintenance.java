@@ -65,7 +65,7 @@ public class Maintenance {
 	};
 
 	/**
-	 * Refill Dispensers constructor
+	 * Maintenance constructor
 	 * 
 	 * @param station  The SelfCheckoutStation that is currently being used
 	 * @param currency The kind of currency permitted
