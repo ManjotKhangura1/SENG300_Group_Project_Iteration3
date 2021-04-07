@@ -150,9 +150,11 @@ public class Maintenance {
 		if (CSU.getCoinCount() <= 0) {
 			System.out.println("No coins in Storage Unit. None unloaded");
 		}
-		List<Coin> coins = CSU.unload();
+		else {
+			List<Coin> coins = CSU.unload();
 
-		System.out.println("Removed" + coins.size() + " many coins");
+			System.out.println("Removed" + coins.size() + " many coins");
+		}
 
 	}
 
@@ -162,9 +164,11 @@ public class Maintenance {
 		if (BSU.getBanknoteCount() <= 0) {
 			System.out.println("No banknote in Storage Unit. None unloaded");
 		}
-		List<Banknote> notes = BSU.unload();
+		else {
+			List<Banknote> notes = BSU.unload();
 
-		System.out.println("Removed" + notes.size() + " many coins");
+			System.out.println("Removed" + notes.size() + " many notes");
+		}
 
 	}
 	
