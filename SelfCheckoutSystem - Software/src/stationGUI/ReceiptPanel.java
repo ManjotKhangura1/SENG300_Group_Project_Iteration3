@@ -1,10 +1,16 @@
 package stationGUI;
 
-public class ReceiptPanel {
+import javax.swing.JPanel;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import net.miginfocom.swing.MigLayout;
 
+public class ReceiptPanel extends JPanel {
+
+	private void initComponents()
+	{
+		setBounds(0,0,1280,720);
+		setLayout(new MigLayout("","[]","[]"));
+		setVisible(true);
 	}
 
 }
