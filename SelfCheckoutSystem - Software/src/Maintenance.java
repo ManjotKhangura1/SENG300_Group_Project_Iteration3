@@ -98,9 +98,11 @@ public class Maintenance {
 	 * Reloads a specified coin dispenser
 	 * 
 	 * @param coinDenomination the denomination of the dispenser to be reloaded
+	 * @param refillAmount the amount of coins the attendant wants to reload with
 	 */
-	public void refillCoin(BigDecimal coinDenomination) {
-		int amountToRefill;
+	public void refillCoin(BigDecimal coinDenomination, int refillAmount) {
+		int maxAmount;
+		int actualRefillAmount;
 		CoinDispenser coinDispenser;
 
 		// finds the coin dispenser correlated to the given coin denomination
@@ -109,10 +111,19 @@ public class Maintenance {
 		try {
 			// finds how many more coins are needed before the coin dispenser reaches
 			// capacity
-			amountToRefill = coinDispenser.getCapacity() - coinDispenser.size();
+			maxAmount = coinDispenser.getCapacity() - coinDispenser.size();
+			
+			//checking if the amount the attendant wants to refill with will overload the dispenser
+			//if it is, only refill up to the max amount the dispenser can handle
+			if(refillAmount > maxAmount) {
+				actualRefillAmount = maxAmount;
+				System.out.println("You've attempted to load more coins than the system can hold. The max amount was before overloading will loaded");
+			}else {
+				actualRefillAmount = refillAmount;
+			}
 
 			// refills the dispenser until it reaches capacity
-			for (int i = 0; i < amountToRefill; i++) {
+			for (int i = 0; i < actualRefillAmount; i++) {
 				Coin coinToLoad = new Coin(coinDenomination, currency);
 				coinDispenser.load(coinToLoad);
 			}
@@ -126,9 +137,11 @@ public class Maintenance {
 	 * Reloads a specified banknote dispenser
 	 * 
 	 * @param banknoteDenomination the denomination of the dispenser to be reloaded
+	 * @param refillAmount the amount of banknotes the attendant wants to reload with
 	 */
-	public void refillBanknote(int banknoteDenomination) {
-		int amountToRefill;
+	public void refillBanknote(int banknoteDenomination, int refillAmount) {
+		int maxAmount;
+		int actualRefillAmount;
 		BanknoteDispenser banknoteDispenser;
 
 		// finds the banknote dispenser correlated to the given banknote denomination
@@ -137,10 +150,19 @@ public class Maintenance {
 		try {
 			// finds how many more banknotes are needed before the banknote dispenser
 			// reaches capacity
-			amountToRefill = banknoteDispenser.getCapacity() - banknoteDispenser.size();
+			maxAmount = banknoteDispenser.getCapacity() - banknoteDispenser.size();
+			
+			//checking if the amount the attendant wants to refill with will overload the dispenser
+			//if it is, only refill up to the max amount the dispenser can handle
+			if(refillAmount > maxAmount) {
+				actualRefillAmount = maxAmount;
+				System.out.println("You've attempted to load more banknote than the system can hold. The max amount was before overloading will loaded");
+			}else {
+				actualRefillAmount = refillAmount;
+			}
 
 			// refills the dispenser until it reaches capacity
-			for (int i = 0; i < amountToRefill; i++) {
+			for (int i = 0; i < actualRefillAmount; i++) {
 				Banknote banknoteToLoad = new Banknote(banknoteDenomination, currency);
 				banknoteDispenser.load(banknoteToLoad);
 			}
@@ -150,7 +172,11 @@ public class Maintenance {
 		}
 	}
 
-	public void AttendantEmptyCoinStorageUnit(CoinStorageUnit csu) {
+	/**
+	 * Empties the coin storage unit
+	 * @param csu	the coin storage unit to be emptied
+	 */
+	public void emptyCoinStorageUnit(CoinStorageUnit csu) {
 
 		CoinStorageUnit CSU = csu;
 		if (CSU.getCoinCount() <= 0) {
@@ -164,7 +190,11 @@ public class Maintenance {
 
 	}
 
-	public void AttendantEmptyBanknoteStorageUnit(BanknoteStorageUnit bsu) {
+	/**
+	 * Empties the banknote storage unit
+	 * @param bsu	the banknote storage unit to be emptied
+	 */
+	public void emptyBanknoteStorageUnit(BanknoteStorageUnit bsu) {
 		BanknoteStorageUnit BSU = bsu;
 
 		if (BSU.getBanknoteCount() <= 0) {
