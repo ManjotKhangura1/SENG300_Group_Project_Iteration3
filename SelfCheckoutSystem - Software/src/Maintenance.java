@@ -247,6 +247,7 @@ public class Maintenance {
 			station.printer.addPaper(units);
 			if (paperChangeSuccessful) {
 				paperChangeSuccessful = false;
+				outOfPaper = false;
 				return station.printer;
 			} else {
 				throw new SimulationException("Unknown Error While Adding Paper");
@@ -265,6 +266,7 @@ public class Maintenance {
 			station.printer.addInk(quantity);
 			if (inkChangeSuccessful) {
 				inkChangeSuccessful = false;
+				outOfInk = false;
 				return station.printer;
 			} else {
 				throw new SimulationException("Unknown Error While Adding Ink");
