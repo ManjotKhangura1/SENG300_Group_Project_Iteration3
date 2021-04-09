@@ -40,12 +40,12 @@ public class MainFrame {
             }
         });
 		
+		frame.add(scanningPanel);
 		frame.add(addItemPanel);
 		frame.add(attendantLoginPanel);
 		frame.add(attendantPanel);
 		frame.add(helpPanel);
 		frame.add(receiptPanel);
-		frame.add(scanningPanel);
 	}
 
 }
