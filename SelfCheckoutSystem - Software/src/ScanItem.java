@@ -7,6 +7,7 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.*;
 
 public class ScanItem {
+	
 	private double totPrice = 0;
 	private double totWeight = 0;
 	private ArrayList<String> totList;
@@ -14,15 +15,36 @@ public class ScanItem {
 	public BarcodeScanner handheld;
 	private boolean isEnabled = false;
 	public static Map<Barcode, BarcodedProduct> database;
+	private static DeclineBagPrompt bagPrompt;
 	
 	private double curWeight; //only used locally
 
+//	/**
+//	 * scans items
+//	 * @param BarcodedItem item
+//	 * @throws SimulationException if SelfCheckoutStation is null
+//	 */
+//	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database) {
+//		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
+//		
+//		main = station.mainScanner;
+//		main.enable();
+//		handheld = station.handheldScanner;
+//		handheld.enable();
+//		totList = new ArrayList<String>();
+//		ScanItem.database = database;
+//		
+//		scannerListener();
+//	}
+//	
+	
 	/**
 	 * scans items
 	 * @param BarcodedItem item
+	 * @param decline bag prompt
 	 * @throws SimulationException if SelfCheckoutStation is null
 	 */
-	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database) {
+	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database, DeclineBagPrompt bagPrompt) {
 		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
 		
 		main = station.mainScanner;
@@ -31,6 +53,7 @@ public class ScanItem {
 		handheld.enable();
 		totList = new ArrayList<String>();
 		ScanItem.database = database;
+		ScanItem.bagPrompt = bagPrompt;
 		
 		scannerListener();
 	}
@@ -40,11 +63,17 @@ public class ScanItem {
 	 * @param a Barcoded item
 	 * @throws SimulationException if barcodedItem is null
 	 */
-	public void scanFromMain(BarcodedItem item) {
-		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
+	public void scanFromMain(BarcodedItem item, boolean declineBagPrompt) {
 		
+		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
 
 		main.scan(item);
+		
+		bagPrompt.showPrompt();
+		if (declineBagPrompt) {
+			bagPrompt.attendentClosePrompt();
+		}
+		
 		curWeight = item.getWeight();
 	}
 	
@@ -53,10 +82,16 @@ public class ScanItem {
 	 * @param a Barcoded item
 	 * @throws SimulationException if barcodedItem is null
 	 */
-	public void scanFromHandheld(BarcodedItem item) {
+	public void scanFromHandheld(BarcodedItem item, boolean declineBagPrompt) {
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
 		
 		handheld.scan(item);
+		
+		bagPrompt.showPrompt();
+		if (declineBagPrompt) {
+			bagPrompt.attendentClosePrompt();
+		}
+		
 		curWeight = item.getWeight();
 	}
 	
