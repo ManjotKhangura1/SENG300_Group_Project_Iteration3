@@ -25,19 +25,21 @@ public class Maintenance {
 	private boolean inkChangeSuccessful;
 	private boolean outOfPaper = false;
 	private boolean outOfInk = false;
+	private boolean isEnabled = false;
+	private boolean isDisabled = false;
 
 	// overridden listener for printer, updating flags when necessary
 	private ReceiptPrinterListener printerListener = new ReceiptPrinterListener() {
 
 		@Override
 		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-			// TODO Auto-generated method stub
+			isEnabled = true;
 
 		}
 
 		@Override
 		public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-			// TODO Auto-generated method stub
+			isDisabled = true;
 
 		}
 
