@@ -23,6 +23,8 @@ public class Maintenance {
 	// global flags to keep track of maintenance functions state
 	private boolean paperChangeSuccessful;
 	private boolean inkChangeSuccessful;
+	private boolean outOfPaper = false;
+	private boolean outOfInk = false;
 
 	// overridden listener for printer, updating flags when necessary
 	private ReceiptPrinterListener printerListener = new ReceiptPrinterListener() {
@@ -47,13 +49,15 @@ public class Maintenance {
 
 		@Override
 		public void outOfPaper(ReceiptPrinter printer) {
-			// TODO Auto-generated method stub
+			System.out.println("WARNING! The Receipt Printer is out of paper!");
+			outOfPaper = true;
 
 		}
 
 		@Override
 		public void outOfInk(ReceiptPrinter printer) {
-			// TODO Auto-generated method stub
+			System.out.println("WARNING! The Receipt Printer is out of ink!");
+			outOfInk = true;
 
 		}
 
