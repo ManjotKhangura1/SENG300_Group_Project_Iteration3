@@ -43,9 +43,8 @@ public class ScanItem {
 	public void scanFromMain(BarcodedItem item) {
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
 		
-
-		main.scan(item);
 		curWeight = item.getWeight();
+		main.scan(item);
 	}
 	
 	/**
@@ -56,8 +55,8 @@ public class ScanItem {
 	public void scanFromHandheld(BarcodedItem item) {
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
 		
-		handheld.scan(item);
 		curWeight = item.getWeight();
+		handheld.scan(item);
 	}
 	
 	/**
