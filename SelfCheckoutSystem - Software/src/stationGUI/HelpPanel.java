@@ -10,7 +10,7 @@ public class HelpPanel extends JPanel {
 	{
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("","[]","[]"));
-		setVisible(true);
+		setVisible(false);
 	}
 
 }

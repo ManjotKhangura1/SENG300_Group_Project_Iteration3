@@ -96,7 +96,7 @@ public class AttendantPanel extends JPanel {
 		JButton btnNewButton_2 = new JButton("Logout");
 		btnNewButton_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton_2, "cell 4 5");
-		setVisible(true);
+		setVisible(false);
 	}
 
 }
