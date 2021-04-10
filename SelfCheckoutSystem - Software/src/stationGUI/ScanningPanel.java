@@ -1,6 +1,7 @@
 package stationGUI;
 
 import javax.swing.JScrollPane;
+
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
