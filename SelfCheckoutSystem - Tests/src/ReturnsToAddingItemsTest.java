@@ -56,6 +56,28 @@ public class ReturnsToAddingItemsTest {
 		
 	}
 	
+	@Test
+	public void testScale_WithValidStation() {
+		
+		return1.enableRequiredHardware();
+		
+		boolean expectedScale=false;
+		boolean actualScale= validStation.baggingArea.isDisabled();
+		
+		assertEquals(expectedScale, actualScale);
+		
+	}
+	
+	@Test 
+	public void testMainScanner_WithInValidStation() {
+		
+		return1.enableRequiredHardware();
+		
+		boolean expectedMainScanner=true;
+		boolean actualMainScanner= validStation.mainScanner.isDisabled();
+		
+		assertEquals(expectedMainScanner, actualMainScanner);
+	}
 	
 	
 }
