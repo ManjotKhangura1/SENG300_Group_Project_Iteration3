@@ -55,8 +55,6 @@ public class ScanItem {
 		if (declineBagPrompt) {
 			bagPrompt.attendentClosePrompt();
 		}
-		
-
 	}
 	
 	/**
@@ -73,8 +71,6 @@ public class ScanItem {
 		if (declineBagPrompt) {
 			bagPrompt.attendentClosePrompt();
 		}
-		
-		
 	}
 	
 	/**
