@@ -49,7 +49,7 @@ public class ReturnsToAddingItems {
 	 * in SelfCheckoutStation
 	 */
     
-    public void ReturnsToAddingItems(SelfCheckoutStation aStation) {
+    public ReturnsToAddingItems(SelfCheckoutStation aStation) {
     	
     	//Station passed cannot be null
     	if(aStation==null) {
@@ -74,8 +74,12 @@ public class ReturnsToAddingItems {
     public void enableRequiredHardware() {
     	
     	aSelfCheckoutStation.mainScanner.enable();
+   
     	aSelfCheckoutStation.handheldScanner.enable();
     	aSelfCheckoutStation.baggingArea.enable();
     	aSelfCheckoutStation.scale.enable();
-    }	
+    	
+    }
+	    
+	
 }
