@@ -23,18 +23,19 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 public class RemovePurchasedItemsTest {
-	SelfCheckoutStation station;
-	BarcodedItem barcodedItem;
-	Map<Barcode, BarcodedProduct> database;
-	ScanItem scanner;
-	BaggingArea bags;
-	GiveChange transaction;
-	PayWithBanknote banknotepayment;
-	Banknote banknote;
-	Coin coin;
-	PayWithCoin coinpayment;
-	RemovePurchasedItems removed;
-	Item i;
+	public SelfCheckoutStation station;
+	public BarcodedItem barcodedItem;
+	public Map<Barcode, BarcodedProduct> database;
+	public ScanItem scanner;
+	public BaggingArea bags;
+	public GiveChange transaction;
+	public PayWithBanknote banknotepayment;
+	public Banknote banknote;
+	public Coin coin;
+	public PayWithCoin coinpayment;
+	public RemovePurchasedItems removed;
+	public DeclineBagPrompt bagPrompt;
+	public Item i;
 
 	@Before
 	public void setUp() throws Exception {
@@ -57,12 +58,13 @@ public class RemovePurchasedItemsTest {
 		database.put(barcode, product);
 		
 		//create scanner
-		scanner = new ScanItem(station, database);
+		bagPrompt = new DeclineBagPrompt();
+		scanner = new ScanItem(station, database, bagPrompt);
 		ArrayList<String> expected = new ArrayList<String>();
 		expected.add("1");
 		
 		// Scan the item that costs $5.25
-		scanner.scanFromMain(barcodedItem);
+		scanner.scanFromMain(barcodedItem, false);
 
 		//create bagging area
 		bags = new BaggingArea(station);

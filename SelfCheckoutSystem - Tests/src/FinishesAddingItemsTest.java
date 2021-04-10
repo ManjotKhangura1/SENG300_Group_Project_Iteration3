@@ -16,11 +16,12 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 public class FinishesAddingItemsTest {
-	SelfCheckoutStation station;
-	BarcodedItem barcodedItem;
-	Map<Barcode, BarcodedProduct> database;
-	ScanItem scanner;
-	BaggingArea bags;
+	public SelfCheckoutStation station;
+	public BarcodedItem barcodedItem;
+	public Map<Barcode, BarcodedProduct> database;
+	public ScanItem scanner;
+	public BaggingArea bags;
+	public DeclineBagPrompt bagPrompt;
 
 	@Before
 	public void setUp() throws Exception {
@@ -43,12 +44,13 @@ public class FinishesAddingItemsTest {
 		database.put(barcode, product);
 		
 		//create scanner
-		scanner = new ScanItem(station, database);
+		bagPrompt = new DeclineBagPrompt();
+		scanner = new ScanItem(station, database, bagPrompt);
 		ArrayList<String> expected = new ArrayList<String>();
 		expected.add("1");
 		
 		for(int i = 0; i < 100; i++)
-			scanner.scanFromMain(barcodedItem); //should have an 80% pass rate
+			scanner.scanFromMain(barcodedItem, false); //should have an 80% pass rate
 
 		//create bagging area
 		bags = new BaggingArea(station);
