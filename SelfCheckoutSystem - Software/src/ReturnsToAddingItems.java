@@ -25,5 +25,14 @@ public class ReturnsToAddingItems {
 	        	isScanned = true;  	    
 	        }
 	    };
+	
+	public void ReturnsToAddingItems(SelfCheckoutStation station) {
+    	
+    		aSelfCheckoutStation=station;
+		
+    		aSelfCheckoutStation.mainScanner.register(bsl);
+    		aSelfCheckoutStation.handheldScanner.register(bsl);
+    	
+    }
 	   	    	
 }
