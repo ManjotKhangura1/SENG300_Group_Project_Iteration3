@@ -31,6 +31,31 @@ public class ReturnsToAddingItemsTest {
 	
 	ReturnsToAddingItems return1 = new ReturnsToAddingItems(validStation);
 	
+	@Test 
+	public void testMainScanner() {
+		
+		return1.enableRequiredHardware();
+		
+		boolean expectedMainScanner=false;
+		boolean actualMainScanner= validStation.mainScanner.isDisabled();
+		
+		assertEquals(expectedMainScanner, actualMainScanner);
+	}
+	
+	
+	
+	@Test
+	public void testHandheldScanner() {
+		
+		return1.enableRequiredHardware();
+		
+		boolean expectedMainScanner=false;
+		boolean actualMainScanner= validStation.handheldScanner.isDisabled();
+		
+		assertEquals(expectedMainScanner, actualMainScanner);
+		
+	}
+	
 	
 	
 }
