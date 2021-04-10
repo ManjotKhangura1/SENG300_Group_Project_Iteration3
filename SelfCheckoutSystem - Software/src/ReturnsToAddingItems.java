@@ -32,7 +32,12 @@ public class ReturnsToAddingItems {
 		
     		aSelfCheckoutStation.mainScanner.register(bsl);
     		aSelfCheckoutStation.handheldScanner.register(bsl);
-    	
+		
+		aSelfCheckoutStation.mainScanner.enable();
+    		aSelfCheckoutStation.handheldScanner.enable();
+    		aSelfCheckoutStation.baggingArea.enable();
+    		aSelfCheckoutStation.scale.enable();
+    
     }
 	   	    	
 }
