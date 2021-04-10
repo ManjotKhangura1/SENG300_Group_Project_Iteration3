@@ -23,10 +23,13 @@ public class Maintenance {
 	// global flags to keep track of maintenance functions state
 	private boolean paperChangeSuccessful;
 	private boolean inkChangeSuccessful;
-	private boolean outOfPaper = false;
-	private boolean outOfInk = false;
-	private boolean isEnabled = false;
-	private boolean isDisabled = false;
+	private boolean outOfPaper;
+	private boolean outOfInk;
+	private boolean isEnabled;
+	private boolean isDisabled;
+	private boolean refillSuccess;
+	private int actualRefillAmount;
+	private boolean emptied;
 
 	// overridden listener for printer, updating flags when necessary
 	private ReceiptPrinterListener printerListener = new ReceiptPrinterListener() {
@@ -74,24 +77,25 @@ public class Maintenance {
 	 * Maintenance constructor
 	 * 
 	 * @param station  The SelfCheckoutStation that is currently being used
-	 * @param currency The kind of currency permitted
 	 */
-	public Maintenance(SelfCheckoutStation station, Currency currency) {
+	public Maintenance(SelfCheckoutStation station) {
 		// throws and exception if station given is null
 		if (station == null) {
 			throw new SimulationException(new NullPointerException("station is null"));
 		}
 		this.station = station;
-
-		// throws and exception if station given is null
-		if (currency == null) {
-			throw new SimulationException(new NullPointerException("currency is null"));
-		}
-		this.currency = currency;
+		this.currency = station.coinValidator.currency;
 
 		station.printer.register(printerListener);
-		this.paperChangeSuccessful = false;
-		this.inkChangeSuccessful = false;
+		paperChangeSuccessful = false;
+		inkChangeSuccessful = false;
+		outOfPaper = false;
+		outOfInk = false;
+		isEnabled = false;
+		isDisabled = false;
+		refillSuccess = true;
+		actualRefillAmount = 0;
+		emptied = false;
 	}
 
 	/**
@@ -102,34 +106,45 @@ public class Maintenance {
 	 */
 	public void refillCoin(BigDecimal coinDenomination, int refillAmount) {
 		int maxAmount;
-		int actualRefillAmount;
 		CoinDispenser coinDispenser;
 
 		// finds the coin dispenser correlated to the given coin denomination
 		coinDispenser = station.coinDispensers.get(coinDenomination);
 
-		try {
-			// finds how many more coins are needed before the coin dispenser reaches
-			// capacity
-			maxAmount = coinDispenser.getCapacity() - coinDispenser.size();
-			
-			//checking if the amount the attendant wants to refill with will overload the dispenser
-			//if it is, only refill up to the max amount the dispenser can handle
-			if(refillAmount > maxAmount) {
-				actualRefillAmount = maxAmount;
-				System.out.println("You've attempted to load more coins than the system can hold. The max amount was before overloading will loaded");
-			}else {
-				actualRefillAmount = refillAmount;
+		if(refillAmount > 0 && coinDispenser != null) {
+	
+			try {
+				// finds how many more coins are needed before the coin dispenser reaches
+				// capacity
+				maxAmount = coinDispenser.getCapacity() - coinDispenser.size();
+				
+				//checking if the amount the attendant wants to refill with will overload the dispenser
+				//if it is, only refill up to the max amount the dispenser can handle
+				if(refillAmount > maxAmount) {
+					actualRefillAmount = maxAmount;
+					System.out.println("You've attempted to load more coins than the system can hold. The max amount was before overloading will loaded");
+				}else {
+					actualRefillAmount = refillAmount;
+				}
+	
+				// refills the dispenser until it reaches capacity
+				for (int i = 0; i < actualRefillAmount; i++) {
+					Coin coinToLoad = new Coin(coinDenomination, currency);
+					coinDispenser.load(coinToLoad);
+				}
+				
+				refillSuccess = true;
+	
+			//overload exception should never be thrown because we make sure to not overfill
+			} catch (OverloadException e) {
+				throw new SimulationException(e);
 			}
-
-			// refills the dispenser until it reaches capacity
-			for (int i = 0; i < actualRefillAmount; i++) {
-				Coin coinToLoad = new Coin(coinDenomination, currency);
-				coinDispenser.load(coinToLoad);
-			}
-
-		} catch (SimulationException | OverloadException e) {
-			throw new SimulationException(e);
+		} else if (refillAmount <= 0){
+			System.out.println("The refill amount chosen is invalid (either negative or 0");
+			refillSuccess = false;
+		}else {
+			System.out.println("Invalid coin denomination provided");
+			refillSuccess = false;
 		}
 	}
 
@@ -141,34 +156,42 @@ public class Maintenance {
 	 */
 	public void refillBanknote(int banknoteDenomination, int refillAmount) {
 		int maxAmount;
-		int actualRefillAmount;
 		BanknoteDispenser banknoteDispenser;
 
 		// finds the banknote dispenser correlated to the given banknote denomination
 		banknoteDispenser = station.banknoteDispensers.get(banknoteDenomination);
 
-		try {
-			// finds how many more banknotes are needed before the banknote dispenser
-			// reaches capacity
-			maxAmount = banknoteDispenser.getCapacity() - banknoteDispenser.size();
-			
-			//checking if the amount the attendant wants to refill with will overload the dispenser
-			//if it is, only refill up to the max amount the dispenser can handle
-			if(refillAmount > maxAmount) {
-				actualRefillAmount = maxAmount;
-				System.out.println("You've attempted to load more banknote than the system can hold. The max amount was before overloading will loaded");
-			}else {
-				actualRefillAmount = refillAmount;
+		if(refillAmount > 0 && banknoteDispenser != null) {
+			try {
+				// finds how many more banknotes are needed before the banknote dispenser
+				// reaches capacity
+				maxAmount = banknoteDispenser.getCapacity() - banknoteDispenser.size();
+				
+				//checking if the amount the attendant wants to refill with will overload the dispenser
+				//if it is, only refill up to the max amount the dispenser can handle
+				if(refillAmount > maxAmount) {
+					actualRefillAmount = maxAmount;
+					System.out.println("You've attempted to load more banknote than the system can hold. The max amount was before overloading will loaded");
+				}else {
+					actualRefillAmount = refillAmount;
+				}
+	
+				// refills the dispenser until it reaches capacity
+				for (int i = 0; i < actualRefillAmount; i++) {
+					Banknote banknoteToLoad = new Banknote(banknoteDenomination, currency);
+					banknoteDispenser.load(banknoteToLoad);
+				}
+				refillSuccess = true;
+			//overload exception should never be thrown because we make sure to not overfill
+			} catch (OverloadException e) {
+				throw new SimulationException(e);
 			}
-
-			// refills the dispenser until it reaches capacity
-			for (int i = 0; i < actualRefillAmount; i++) {
-				Banknote banknoteToLoad = new Banknote(banknoteDenomination, currency);
-				banknoteDispenser.load(banknoteToLoad);
-			}
-
-		} catch (SimulationException | OverloadException e) {
-			throw new SimulationException(e);
+		}else if (refillAmount <= 0){
+			System.out.println("The refill amount chosen is invalid (either negative or 0");
+			refillSuccess = false;
+		}else {
+			System.out.println("Invalid banknote denomination provided");
+			refillSuccess = false;
 		}
 	}
 
@@ -177,17 +200,21 @@ public class Maintenance {
 	 * @param csu	the coin storage unit to be emptied
 	 */
 	public void emptyCoinStorageUnit(CoinStorageUnit csu) {
+		if(csu != null) {
+			CoinStorageUnit CSU = csu;
+			if (CSU.getCoinCount() <= 0) {
+				System.out.println("No coins in Storage Unit. None unloaded");
+				emptied = false;
+			}
+			else {
+				List<Coin> coins = CSU.unload();
 
-		CoinStorageUnit CSU = csu;
-		if (CSU.getCoinCount() <= 0) {
-			System.out.println("No coins in Storage Unit. None unloaded");
+				System.out.println("Removed" + coins.size() + " many coins");
+				emptied = true;
+			}
+		} else {
+			emptied = false;
 		}
-		else {
-			List<Coin> coins = CSU.unload();
-
-			System.out.println("Removed" + coins.size() + " many coins");
-		}
-
 	}
 
 	/**
@@ -195,15 +222,21 @@ public class Maintenance {
 	 * @param bsu	the banknote storage unit to be emptied
 	 */
 	public void emptyBanknoteStorageUnit(BanknoteStorageUnit bsu) {
-		BanknoteStorageUnit BSU = bsu;
-
-		if (BSU.getBanknoteCount() <= 0) {
-			System.out.println("No banknote in Storage Unit. None unloaded");
-		}
-		else {
-			List<Banknote> notes = BSU.unload();
-
-			System.out.println("Removed" + notes.size() + " many notes");
+		if(bsu != null) {			
+			BanknoteStorageUnit BSU = bsu;
+			
+			if (BSU.getBanknoteCount() <= 0) {
+				System.out.println("No banknote in Storage Unit. None unloaded");
+				emptied = false;
+			}
+			else {
+				List<Banknote> notes = BSU.unload();
+				
+				System.out.println("Removed" + notes.size() + " many notes");
+				emptied = true;
+			}
+		} else {
+			emptied = false;
 		}
 
 	}
@@ -231,7 +264,7 @@ public class Maintenance {
 	/**
 	 * enable all abstract devices in self checkout station
 	 */
-	public void enableAll() {
+	private void enableAll() {
 		this.station.scale.enable();
 		this.station.baggingArea.enable();
 		this.station.screen.enable();
@@ -252,7 +285,7 @@ public class Maintenance {
 	/**
 	 * disable all abstract devices in self checkout station
 	 */
-	public void disableAll() {
+	private void disableAll() {
 		this.station.scale.disable();
 		this.station.baggingArea.disable();
 		this.station.screen.disable();
@@ -307,5 +340,31 @@ public class Maintenance {
 			return null;
 		}
 	}
+
+	/**
+	 * Gets the refillSuccess boolean
+	 * @return refillSuccess The refillSuccess boolean which represents the success of the last attemped refill
+	 */
+	public boolean isRefillSuccess() {
+		return refillSuccess;
+	}
+	
+	/**
+	 * Gets the actualRefillAmount for the last attempted refill
+	 * @return actualRefillAmount The actual refill amount the last attempted refill
+	 */
+	public int getActualRefillAmount() {
+		return actualRefillAmount;
+	}
+
+	/**
+	 * Gets the emptied boolean
+	 * @return emptied The emptied boolean which represents the success of the last attemped emptying of a storage unit
+	 */
+	public boolean isEmptied() {
+		return emptied;
+	}
+	
+	
 
 }
