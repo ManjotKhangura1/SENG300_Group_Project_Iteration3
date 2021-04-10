@@ -39,6 +39,7 @@ public class ReturnsToAddingItemsTest {
 	ReturnsToAddingItems return2 = new ReturnsToAddingItems(invalidStation);
 	
 	
+	//4 individual tests for enable required Hardware functiona with a valid station being passed
 	@Test 
 	public void testMainScanner_WithValidStation() {
 		
@@ -87,7 +88,7 @@ public class ReturnsToAddingItemsTest {
 	}
 	
 	@Test 
-	public void testMainScanner_WithNullStation() {
+	public void testEnabledRequiredHardware_WithNullStation() {
 		
 		return1.enableRequiredHardware(null);
 		
@@ -96,6 +97,5 @@ public class ReturnsToAddingItemsTest {
 		
 		assertEquals(expectedMainScannerEnabled, actualMainScannerEnabled);
 	}
-	
 	
 }
