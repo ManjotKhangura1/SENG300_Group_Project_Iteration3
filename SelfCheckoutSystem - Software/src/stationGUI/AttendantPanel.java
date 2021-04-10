@@ -130,14 +130,6 @@ public class AttendantPanel extends JPanel {
 		JButton addItem = new JButton("Add Item");
 		addItem.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(addItem, "cell 1 3");
-		
-		JButton assistance = new JButton("Assistance");
-		assistance.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		add(assistance, "cell 1 4");
-		
-		JButton proceedToPay = new JButton("Proceed to Pay");
-		proceedToPay.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		add(proceedToPay, "cell 1 5");
 	}
 
 }
