@@ -9,6 +9,8 @@ import java.util.Currency;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Card;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Item;
@@ -18,7 +20,9 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 
 public class ReturnsToAddingItemsTest {
 	
-	//parameters for instance of valid SelfCheckoutStation
+	/*
+	 * Parameters for instance of valid SelfCheckoutStation
+	 */
 	Currency currency= Currency.getInstance("CAD");
 	Currency invalidCurrency= Currency.getInstance("USD");
 	
@@ -28,6 +32,9 @@ public class ReturnsToAddingItemsTest {
 	int scaleMaximumWeight= 1000;
 	int scaleSensitivity=1;
 	
+	/*
+	 * Instances of valid and invalid stations and of the class we are testing
+	 */
 	SelfCheckoutStation validStation = new SelfCheckoutStation(currency, bankNoteDenominations,
 			coinDenominations, scaleMaximumWeight, scaleSensitivity);
 	
@@ -39,7 +46,10 @@ public class ReturnsToAddingItemsTest {
 	ReturnsToAddingItems return2 = new ReturnsToAddingItems(invalidStation);
 	
 	
-	//4 individual tests for enable required Hardware functiona with a valid station being passed
+	/*
+	 * Testing whether the main scanner gets enabled when it it required or not
+	 */
+	
 	@Test 
 	public void testMainScanner_WithValidStation() {
 		
@@ -51,6 +61,10 @@ public class ReturnsToAddingItemsTest {
 		assertEquals(expectedMainScannerDisabled, actualMainScannerDisabled);
 	}
 		
+	/*
+	 * Testing whether the hand-held scanner gets enabled when it it required or not
+	 */
+	
 	@Test
 	public void testHandheldScanner_WithValidStation() {
 		
@@ -62,6 +76,11 @@ public class ReturnsToAddingItemsTest {
 		assertEquals(expectedHandheldScannerDisabled, actualHandheldScannerDisabled);
 		
 	}
+	
+	
+	/*
+	 * Testing whether the bagging area gets enabled when it it required or not
+	 */
 	
 	@Test
 	public void testBaggingArea_WithValidStation() {
@@ -75,6 +94,11 @@ public class ReturnsToAddingItemsTest {
 		
 	}
 	
+	
+	/*
+	 * Testing whether the scale gets enabled when it it required or not
+	 */
+	
 	@Test
 	public void testScale_WithValidStation() {
 		
@@ -87,6 +111,11 @@ public class ReturnsToAddingItemsTest {
 		
 	}
 	
+	
+	/*
+	 * The hardware should not get enabled if an invalid station or null station is passed
+	 */
+	
 	@Test 
 	public void testEnabledRequiredHardware_WithNullStation() {
 		
@@ -96,6 +125,25 @@ public class ReturnsToAddingItemsTest {
 		boolean actualMainScannerEnabled= return2.isEnabled;
 		
 		assertEquals(expectedMainScannerEnabled, actualMainScannerEnabled);
+	}
+	
+	/*
+	 * Testing whether an item gets scanned properly after customer decides to
+	 * return to adding items
+	 */
+	@Test
+	public void testItemGetsAddedProperly() {
+		
+		Barcode testBarcode = new Barcode("0001");
+		BarcodedItem testItem = new BarcodedItem(testBarcode, 5);
+		
+		validStation.mainScanner.scan(testItem);
+		
+		boolean expectedisScanned=true;
+		boolean actualisScanned= return1.isScanned;
+		
+		assertEquals(expectedisScanned, actualisScanned);
+		
 	}
 	
 }
