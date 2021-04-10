@@ -20,6 +20,8 @@ public class ReturnsToAddingItemsTest {
 	
 	//parameters for instance of valid SelfCheckoutStation
 	Currency currency= Currency.getInstance("CAD");
+	Currency invalidCurrency= Currency.getInstance("USD");
+	
 	int[] bankNoteDenominations= {5,10,20,50,100};
 	BigDecimal[] coinDenominations= {new BigDecimal(0.01), new BigDecimal(0.05),
 			 new BigDecimal(0.1),new BigDecimal(0.25), new BigDecimal(0.50)};
@@ -31,52 +33,68 @@ public class ReturnsToAddingItemsTest {
 	
 	ReturnsToAddingItems return1 = new ReturnsToAddingItems(validStation);
 	
+	SelfCheckoutStation invalidStation = new SelfCheckoutStation(invalidCurrency, bankNoteDenominations,
+			coinDenominations, scaleMaximumWeight, scaleSensitivity);
+	
+	ReturnsToAddingItems return2 = new ReturnsToAddingItems(invalidStation);
+	
+	
 	@Test 
-	public void testMainScanner() {
+	public void testMainScanner_WithValidStation() {
 		
-		return1.enableRequiredHardware();
+		return1.enableRequiredHardware(validStation);
 		
-		boolean expectedMainScanner=false;
-		boolean actualMainScanner= validStation.mainScanner.isDisabled();
+		boolean expectedMainScannerDisabled=false;
+		boolean actualMainScannerDisabled= validStation.mainScanner.isDisabled();
 		
-		assertEquals(expectedMainScanner, actualMainScanner);
+		assertEquals(expectedMainScannerDisabled, actualMainScannerDisabled);
+	}
+		
+	@Test
+	public void testHandheldScanner_WithValidStation() {
+		
+		return1.enableRequiredHardware(validStation);
+		
+		boolean expectedHandheldScannerDisabled=false;
+		boolean actualHandheldScannerDisabled= validStation.handheldScanner.isDisabled();
+		
+		assertEquals(expectedHandheldScannerDisabled, actualHandheldScannerDisabled);
+		
 	}
 	
-	
-	
 	@Test
-	public void testHandheldScanner() {
+	public void testBaggingArea_WithValidStation() {
 		
-		return1.enableRequiredHardware();
+		return1.enableRequiredHardware(validStation);
 		
-		boolean expectedMainScanner=false;
-		boolean actualMainScanner= validStation.handheldScanner.isDisabled();
+		boolean expectedBaggingAreaDisabled=false;
+		boolean actualBaggingAreaDisabled= validStation.baggingArea.isDisabled();
 		
-		assertEquals(expectedMainScanner, actualMainScanner);
+		assertEquals(expectedBaggingAreaDisabled, actualBaggingAreaDisabled);
 		
 	}
 	
 	@Test
 	public void testScale_WithValidStation() {
 		
-		return1.enableRequiredHardware();
+		return1.enableRequiredHardware(validStation);
 		
-		boolean expectedScale=false;
-		boolean actualScale= validStation.baggingArea.isDisabled();
+		boolean expectedScaleDisabled=false;
+		boolean actualScaleDisabled= validStation.baggingArea.isDisabled();
 		
-		assertEquals(expectedScale, actualScale);
+		assertEquals(expectedScaleDisabled, actualScaleDisabled);
 		
 	}
 	
 	@Test 
-	public void testMainScanner_WithInValidStation() {
+	public void testMainScanner_WithNullStation() {
 		
-		return1.enableRequiredHardware();
+		return1.enableRequiredHardware(null);
 		
-		boolean expectedMainScanner=true;
-		boolean actualMainScanner= validStation.mainScanner.isDisabled();
+		boolean expectedMainScannerEnabled=false;
+		boolean actualMainScannerEnabled= return2.isEnabled;
 		
-		assertEquals(expectedMainScanner, actualMainScanner);
+		assertEquals(expectedMainScannerEnabled, actualMainScannerEnabled);
 	}
 	
 	
