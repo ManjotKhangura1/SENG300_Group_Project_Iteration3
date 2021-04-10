@@ -22,6 +22,7 @@ public class BaggingAreaWeightIncorrectTest {
 	private BaggingAreaWeightIncorrect bawi;
 	private BarcodedItem barcodedItem;
 	Map<Barcode, BarcodedProduct> database;
+	public DeclineBagPrompt bagPrompt;
 	
 	private int scaleSensitivity;
 	//setting up the constructor for the SelfCheckoutStation
@@ -44,13 +45,14 @@ public class BaggingAreaWeightIncorrectTest {
 			
 			scs = new SelfCheckoutStation(currency, banknoteDenominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
 			baggingArea = new BaggingArea (scs);
-			scanItem = new ScanItem(scs, database);
+			bagPrompt = new DeclineBagPrompt();
+			scanItem = new ScanItem(scs, database, bagPrompt);
 			bawi = new BaggingAreaWeightIncorrect(scs, scanItem);
 		}
 		
 		@Test
 		public void testing() throws DisabledException, OverloadException {
-			scanItem.scanFromHandheld(barcodedItem);
+			scanItem.scanFromHandheld(barcodedItem, false);
 			baggingArea.setWeightScanned(barcodedItem.getWeight());
 			baggingArea.addItem(barcodedItem);
 			bawi.calculate();
