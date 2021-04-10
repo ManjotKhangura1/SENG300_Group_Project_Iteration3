@@ -5,6 +5,15 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class ReceiptPanel extends JPanel {
+	
+	private MainFrame mainFrame;
+	
+	public ReceiptPanel(MainFrame mainFrame)
+	{
+		this.mainFrame = mainFrame;
+		
+		initComponents();
+	}
 
 	private void initComponents()
 	{

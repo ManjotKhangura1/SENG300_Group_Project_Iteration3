@@ -5,16 +5,20 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
+
 import net.miginfocom.swing.MigLayout;
 
 public class MainFrame {
 	
-	AddItemPanel addItemPanel = new AddItemPanel();
-	AttendantLoginPanel attendantLoginPanel = new AttendantLoginPanel();
-	AttendantPanel attendantPanel = new AttendantPanel();
-	HelpPanel helpPanel = new HelpPanel();
-	ReceiptPanel receiptPanel = new ReceiptPanel();
-	ScanningPanel scanningPanel = new ScanningPanel();
+	AddItemPanel addItemPanel;
+	AttendantLoginPanel attendantLoginPanel;
+	AttendantPanel attendantPanel;
+	HelpPanel helpPanel;
+	ReceiptPanel receiptPanel;
+	ScanningPanel scanningPanel;
+	
+	SelfCheckoutStation station;
 	
 	
 	JFrame frame = new JFrame(); //touchScreen.getFrame();
@@ -29,6 +33,13 @@ public class MainFrame {
 	 */
 	private void initComponents()
 	{
+		addItemPanel = new AddItemPanel(this);
+		attendantLoginPanel = new AttendantLoginPanel(this);
+		attendantPanel = new AttendantPanel(this);
+		helpPanel = new HelpPanel(this);
+		receiptPanel = new ReceiptPanel(this);
+		scanningPanel = new ScanningPanel(this);
+		
 		frame.setBounds(0,0,1280,720);
 		frame.setVisible(true);
 		frame.setResizable(true);
@@ -40,12 +51,14 @@ public class MainFrame {
             }
         });
 		
-		frame.add(scanningPanel);
-		frame.add(addItemPanel);
-		frame.add(attendantLoginPanel);
-		frame.add(attendantPanel);
-		frame.add(helpPanel);
-		frame.add(receiptPanel);
+		scanningPanel.setVisible(true);
+		
+		frame.getContentPane().add(scanningPanel);
+		frame.getContentPane().add(addItemPanel);
+		frame.getContentPane().add(attendantLoginPanel);
+		frame.getContentPane().add(attendantPanel);
+		frame.getContentPane().add(helpPanel);
+		frame.getContentPane().add(receiptPanel);
 	}
 
 }

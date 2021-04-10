@@ -17,9 +17,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AttendantLoginPanel extends JPanel {
-	private JPasswordField passwordField = new JPasswordField();;
-	JTextField textField = new JFormattedTextField();
-	public AttendantLoginPanel() {
+	private JPasswordField passwordField = new JPasswordField();
+	JTextField textField = new JTextField();
+	
+	private MainFrame mainFrame;
+	
+	public AttendantLoginPanel(MainFrame mainFrame) {
+		
+		this.mainFrame = mainFrame;
+		
 		initComponents();
 	}
 
@@ -27,6 +33,8 @@ public class AttendantLoginPanel extends JPanel {
 	{
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("", "[390.00][368.00]", "[215.00][grow][][grow]"));
+		setVisible(false);
+		
 		
 		JLabel username = new JLabel("Username: ");
 		username.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -79,8 +87,14 @@ public class AttendantLoginPanel extends JPanel {
 		            		|| (userText.equalsIgnoreCase("attendant2") && pwdText.equalsIgnoreCase("456"))
 		            		|| (userText.equalsIgnoreCase("attendant3") && pwdText.equalsIgnoreCase("789"))) {
 		                JOptionPane.showMessageDialog(null, "Login Successful");
+		                
+		                mainFrame.attendantLoginPanel.setVisible(false);
+		                mainFrame.attendantPanel.setVisible(true);
+		                
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+		                mainFrame.attendantLoginPanel.setVisible(false);
+		                mainFrame.scanningPanel.setVisible(true);
 		            }
 				}
 			}
@@ -89,6 +103,5 @@ public class AttendantLoginPanel extends JPanel {
 		
 		loginButton.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(loginButton, "cell 1 3");
-		setVisible(false);
 	}
 }
