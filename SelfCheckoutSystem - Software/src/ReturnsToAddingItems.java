@@ -27,6 +27,10 @@ public class ReturnsToAddingItems {
 	    };
 	
 	public void ReturnsToAddingItems(SelfCheckoutStation station) {
+		
+		if(aStation==null) {
+    			throw new SimulationException(new NullPointerException("ERROR! No station to work with"));
+		}
     	
     		aSelfCheckoutStation=station;
 		
