@@ -19,24 +19,6 @@ public class ScanItem {
 	
 	private double curWeight; //only used locally
 
-//	/**
-//	 * scans items
-//	 * @param BarcodedItem item
-//	 * @throws SimulationException if SelfCheckoutStation is null
-//	 */
-//	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database) {
-//		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
-//		
-//		main = station.mainScanner;
-//		main.enable();
-//		handheld = station.handheldScanner;
-//		handheld.enable();
-//		totList = new ArrayList<String>();
-//		ScanItem.database = database;
-//		
-//		scannerListener();
-//	}
-//	
 	
 	/**
 	 * scans items
