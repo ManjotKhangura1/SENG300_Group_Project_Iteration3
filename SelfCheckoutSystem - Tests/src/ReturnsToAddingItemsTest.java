@@ -53,7 +53,7 @@ public class ReturnsToAddingItemsTest {
 	@Test 
 	public void testMainScanner_WithValidStation() {
 		
-		return1.enableRequiredHardware(validStation);
+		return1.enableRequiredHardware();
 		
 		boolean expectedMainScannerDisabled=false;
 		boolean actualMainScannerDisabled= validStation.mainScanner.isDisabled();
@@ -68,7 +68,7 @@ public class ReturnsToAddingItemsTest {
 	@Test
 	public void testHandheldScanner_WithValidStation() {
 		
-		return1.enableRequiredHardware(validStation);
+		return1.enableRequiredHardware();
 		
 		boolean expectedHandheldScannerDisabled=false;
 		boolean actualHandheldScannerDisabled= validStation.handheldScanner.isDisabled();
@@ -85,7 +85,7 @@ public class ReturnsToAddingItemsTest {
 	@Test
 	public void testBaggingArea_WithValidStation() {
 		
-		return1.enableRequiredHardware(validStation);
+		return1.enableRequiredHardware();
 		
 		boolean expectedBaggingAreaDisabled=false;
 		boolean actualBaggingAreaDisabled= validStation.baggingArea.isDisabled();
@@ -102,7 +102,7 @@ public class ReturnsToAddingItemsTest {
 	@Test
 	public void testScale_WithValidStation() {
 		
-		return1.enableRequiredHardware(validStation);
+		return1.enableRequiredHardware();
 		
 		boolean expectedScaleDisabled=false;
 		boolean actualScaleDisabled= validStation.baggingArea.isDisabled();
@@ -119,7 +119,7 @@ public class ReturnsToAddingItemsTest {
 	@Test 
 	public void testEnabledRequiredHardware_WithNullStation() {
 		
-		return1.enableRequiredHardware(null);
+		return1.enableRequiredHardware();
 		
 		boolean expectedMainScannerEnabled=false;
 		boolean actualMainScannerEnabled= return2.isEnabled;
