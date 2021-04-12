@@ -70,6 +70,12 @@ public class ScanningPanel extends JPanel {
 		JButton btnNewButton = new JButton("Add Item");
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton, "cell 1 3");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.addItemPanel.setVisible(true);
+				mainFrame.scanningPanel.setVisible(false);
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Assistance");
 		btnNewButton_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));

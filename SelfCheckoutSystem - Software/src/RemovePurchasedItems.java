@@ -24,12 +24,12 @@ public class RemovePurchasedItems {
 			scan.handheld.enable(); //re-enable the hand held scanner to allow another customer to come through and use the station
 			scan.main.enable(); //re-enable the main scanner to allow another customer to come through and use the station
 			isEnabled = true;
-			System.out.println("Thank you for your purchase. You may now take your items out of the bagging area.");
+			//System.out.println("Thank you for your purchase. You may now take your items out of the bagging area.");
 		}
 		
 		if (baggingArea.getWeightBaggingArea() == 0.0) {
 			itemsTaken = true;
-			System.out.println("Come again!");
+			//System.out.println("Come again!");
 			baggingArea.baggingArea.enable(); //re-enable the bagging area to allow another customer to come through and use the station
 		}
 	
