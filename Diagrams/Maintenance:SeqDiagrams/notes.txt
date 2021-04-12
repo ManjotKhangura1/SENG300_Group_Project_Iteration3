@@ -1,0 +1,5 @@
+NOTES:
+
+I chose to ommit smaller details in the listeners as well as the specefic cases that happen within the hardware when a function is called.
+These diagrams show a much more high-level understanding of what is happening, and assuming that flags and variables are used appropriately in the controller, 
+the hardware implementation should be negligible 
