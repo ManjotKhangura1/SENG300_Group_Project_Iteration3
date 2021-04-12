@@ -6,7 +6,6 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.TextField;
