@@ -1,6 +1,7 @@
 package stationGUI;
 
 import javax.swing.JScrollPane;
+
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -12,8 +13,16 @@ import java.awt.Font;
 
 public class ScanningPanel extends JPanel {
 	
-	public ScanningPanel() {
+	
+	private MainFrame mainFrame;
+	
+	public ScanningPanel(MainFrame mainFrame) {
+		
+		this.mainFrame = mainFrame;
+		
 		initComponents();
+		
+		
 		
 	}
 	
@@ -21,6 +30,8 @@ public class ScanningPanel extends JPanel {
 	{
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("", "[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]", "[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
+		setVisible(false);
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0 1 6,grow");
@@ -59,6 +70,12 @@ public class ScanningPanel extends JPanel {
 		JButton btnNewButton = new JButton("Add Item");
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton, "cell 1 3");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.addItemPanel.setVisible(true);
+				mainFrame.scanningPanel.setVisible(false);
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Assistance");
 		btnNewButton_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -67,7 +84,22 @@ public class ScanningPanel extends JPanel {
 		JButton btnNewButton_1 = new JButton("Proceed to Pay");
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton_1, "cell 1 5");
-		setVisible(true);
+		
+		JButton attendantLoginB = new JButton("Attendant Login");
+		attendantLoginB.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.scanningPanel.setVisible(false);
+				mainFrame.attendantLoginPanel.setVisible(true);
+			}
+		});
+		attendantLoginB.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(attendantLoginB, "cell 5 5");
+		
+		/*if (!attendantLogin.isVisible() && !attendantLogin.isVisible())
+		{
+			setVisible(true);
+		}*/
 	}
 	
 }
