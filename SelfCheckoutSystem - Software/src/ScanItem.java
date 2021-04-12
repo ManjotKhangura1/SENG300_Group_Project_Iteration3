@@ -43,6 +43,7 @@ public class ScanItem {
 	/**
 	 * Scans a barcoded item from the main scanner
 	 * @param a Barcoded item
+	 * @param a boolean, true is declining bag prompt
 	 * @throws SimulationException if barcodedItem is null
 	 */
 	public void scanFromMain(BarcodedItem item, boolean declineBagPrompt) {
@@ -62,6 +63,7 @@ public class ScanItem {
 	/**
 	 * Scans a barcoded item from the handheld scanner
 	 * @param a Barcoded item
+	 * @param a boolean, true if declining a bag prompt
 	 * @throws SimulationException if barcodedItem is null
 	 */
 	public void scanFromHandheld(BarcodedItem item, boolean declineBagPrompt) {
