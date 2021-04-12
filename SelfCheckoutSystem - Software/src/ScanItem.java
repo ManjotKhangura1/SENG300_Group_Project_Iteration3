@@ -48,7 +48,7 @@ public class ScanItem {
 	public void scanFromMain(BarcodedItem item, boolean declineBagPrompt) {
 		
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
-
+		curWeight = item.getWeight();
 		main.scan(item);
 		
 		bagPrompt.showPrompt();
@@ -56,7 +56,7 @@ public class ScanItem {
 			bagPrompt.attendentClosePrompt();
 		}
 		
-		curWeight = item.getWeight();
+		
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class ScanItem {
 	 */
 	public void scanFromHandheld(BarcodedItem item, boolean declineBagPrompt) {
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
-		
+		curWeight = item.getWeight();
 		handheld.scan(item);
 		
 		bagPrompt.showPrompt();
@@ -74,7 +74,7 @@ public class ScanItem {
 			bagPrompt.attendentClosePrompt();
 		}
 		
-		curWeight = item.getWeight();
+		
 	}
 	
 	/**
