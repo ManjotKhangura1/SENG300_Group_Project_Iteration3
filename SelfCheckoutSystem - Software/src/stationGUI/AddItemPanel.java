@@ -28,7 +28,9 @@ import javax.swing.JTextField;
 public class AddItemPanel extends JPanel{
 	
 	private MainFrame mainFrame;
+
 	private JTextField txtScanned;
+
 
 	
 	public AddItemPanel(MainFrame mainFrame)
@@ -51,11 +53,7 @@ public class AddItemPanel extends JPanel{
 		
 		TextField textField_2 = new TextField(22);
 		add(textField_2, "cell 2 14");
-		
 
-
-	
-		
 	}
 
 	private void initButtons() {
@@ -136,8 +134,6 @@ public class AddItemPanel extends JPanel{
 			}
 		});
 	
-		
-
 		
 	}
 
@@ -221,8 +217,8 @@ public class AddItemPanel extends JPanel{
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("", "[][][][][grow][][][grow]", "[][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][]"));
 		setVisible(false);
-		
-
+	
 	}
+
 
 }

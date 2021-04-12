@@ -1,0 +1,4 @@
+NOTES:
+
+For all these diagrams, I chose to ommit the finer details regarding listeners and such so that the diagram could focus more so on the higher-level functionality of the controller. 
+Assuming the controllers use appropriate flags, the specefic actions of the hardware itself could be inferred.
