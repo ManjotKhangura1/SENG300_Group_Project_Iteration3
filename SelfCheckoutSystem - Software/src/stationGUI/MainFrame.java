@@ -16,6 +16,7 @@ public class MainFrame {
 	AttendantPanel attendantPanel;
 	HelpPanel helpPanel;
 	ReceiptPanel receiptPanel;
+	PaymentPanel paymentPanel;
 	ScanningPanel scanningPanel;
 	
 	SelfCheckoutStation station;
@@ -38,6 +39,7 @@ public class MainFrame {
 		attendantPanel = new AttendantPanel(this);
 		helpPanel = new HelpPanel(this);
 		receiptPanel = new ReceiptPanel(this);
+		paymentPanel = new PaymentPanel(this);
 		scanningPanel = new ScanningPanel(this);
 		
 		frame.setBounds(0,0,1280,720);
@@ -59,6 +61,7 @@ public class MainFrame {
 		frame.getContentPane().add(attendantPanel);
 		frame.getContentPane().add(helpPanel);
 		frame.getContentPane().add(receiptPanel);
+		frame.getContentPane().add(paymentPanel);
 	}
 
 }

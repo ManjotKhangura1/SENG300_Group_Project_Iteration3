@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ScanningPanel extends JPanel {
 	
@@ -76,7 +78,15 @@ public class ScanningPanel extends JPanel {
 		add(btnNewButton_2, "cell 1 4");
 		
 		JButton btnNewButton_1 = new JButton("Proceed to Pay");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mainFrame.scanningPanel.setVisible(false);
+				mainFrame.paymentPanel.setVisible(true);
+			}
+		});
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		
 		add(btnNewButton_1, "cell 1 5");
 		
 		JButton attendantLoginB = new JButton("Attendant Login");
