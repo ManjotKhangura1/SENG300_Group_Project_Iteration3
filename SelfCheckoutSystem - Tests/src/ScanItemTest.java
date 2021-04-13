@@ -124,6 +124,33 @@ public class ScanItemTest {
 		
 		
 	}
+	@Test
+	public void testScanFromMainDeclineBagPrompt() {
+		ScanItem scanner = new ScanItem(station, database, prompt);
+		scanner.scanFromMain(barcodedItem, true); 
+		assertFalse(prompt.getPrompt()); 
+	}
+	
+	@Test
+	public void testScanFromMainAcceptBagPrompt() {
+		ScanItem scanner = new ScanItem(station, database, prompt);
+		scanner.scanFromMain(barcodedItem, false); 
+		assertTrue(prompt.getPrompt()); 
+	}
+	
+	@Test
+	public void testScanFromHandHeldDeclineBagPrompt() {
+		ScanItem scanner = new ScanItem(station, database, prompt);
+		scanner.scanFromHandheld(barcodedItem, true); 
+		assertFalse(prompt.getPrompt()); 
+	}
+	
+	@Test
+	public void testScanFromHandHeldAcceptBagPrompt() {
+		ScanItem scanner = new ScanItem(station, database, prompt);
+		scanner.scanFromHandheld(barcodedItem, false); 
+		assertTrue(prompt.getPrompt()); 
+	}
 	
 	@Test
 	public void testListeners() {
