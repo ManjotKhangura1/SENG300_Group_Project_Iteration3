@@ -14,6 +14,7 @@ public class ScanItem {
 	private boolean isEnabled = false;
 	public static Map<Barcode, BarcodedProduct> database;
 	public FinishesAddingItems done;
+	public BaggingArea baged;
 	
 	private BigDecimal curWeight; //only used locally
 
@@ -24,7 +25,7 @@ public class ScanItem {
 	 * @param decline bag prompt
 	 * @throws SimulationException if SelfCheckoutStation is null
 	 */
-	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database, FinishesAddingItems d) {
+	public ScanItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> database, FinishesAddingItems d, BaggingArea b) {
 		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
 		
 		main = station.mainScanner;
@@ -33,6 +34,7 @@ public class ScanItem {
 		handheld.enable();
 		ScanItem.database = database;
 		done = d;
+		baged = b;
 		scannerListener();
 	}
 	
@@ -97,6 +99,7 @@ public class ScanItem {
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 				done.setList(barcode.toString());
 				done.setWeight(curWeight);
+				baged.setWeightScanned(curWeight);
 				lookupProduct(barcode);
 			}
 			
@@ -117,6 +120,7 @@ public class ScanItem {
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 				done.setList(barcode.toString());
 				done.setWeight(curWeight);
+				baged.setWeightScanned(curWeight);
 				lookupProduct(barcode);
 			}
 			

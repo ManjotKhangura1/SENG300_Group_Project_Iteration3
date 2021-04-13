@@ -20,6 +20,7 @@ public class EnterPLU {
 	public static Map<PriceLookupCode, PLUCodedProduct> database;
 	public final ElectronicScale scale;
 	public FinishesAddingItems done;
+	public BaggingArea baged;
 
 
 	/**
@@ -27,10 +28,11 @@ public class EnterPLU {
 	 * @param station
 	 * @param database
 	 */
-	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database, FinishesAddingItems d) {
+	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
 		EnterPLU.database = database;
 		scale = station.scale;
 		done = d;
+		baged = b;
 	}
 
 	/**
@@ -59,6 +61,7 @@ public class EnterPLU {
 		done.setList(description);
 		done.setPrice(price);
 		done.setWeight(weight);
+		baged.setWeightScanned(weight);
 	}
 	
 }

@@ -21,6 +21,7 @@ public class LookupProduct {
 	//Local objects
 	public final ElectronicScale scale;
 	public FinishesAddingItems done;
+	public BaggingArea baged;
 	
 	public static Map<String, PLUCodedProduct> PLUPRODUCTS = new HashMap<>();
 	
@@ -30,10 +31,11 @@ public class LookupProduct {
 	 * @param database
 	 * @param d
 	 */
-	public LookupProduct(SelfCheckoutStation station, Map<String, PLUCodedProduct> database, FinishesAddingItems d) {
+	public LookupProduct(SelfCheckoutStation station, Map<String, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
 		this.scale = station.scale;
 		PLUPRODUCTS = database;
 		done = d;
+		baged = b;
 	}
 
 	/**
@@ -57,5 +59,6 @@ public class LookupProduct {
 		done.setList(description);
 		done.setPrice(price);
 		done.setWeight(weight);
+		baged.setWeightScanned(weight);
 	}
 }
