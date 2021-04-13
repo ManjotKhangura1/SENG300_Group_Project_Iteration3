@@ -18,7 +18,7 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 import stationGUI.MainFrame;
 
-public class Main {
+public class SoftwareController {
 
 	public static SelfCheckoutStation station;
 	public static Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>();
