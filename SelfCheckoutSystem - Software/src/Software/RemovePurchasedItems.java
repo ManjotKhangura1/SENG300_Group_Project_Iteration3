@@ -1,4 +1,6 @@
 package Software;
+import java.math.BigDecimal;
+
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
@@ -28,7 +30,7 @@ public class RemovePurchasedItems {
 			//System.out.println("Thank you for your purchase. You may now take your items out of the bagging area.");
 		}
 		
-		if (baggingArea.getWeightBaggingArea() == 0.0) {
+		if (baggingArea.getWeightBaggingArea().compareTo(BigDecimal.valueOf(0.0)) == 0.0) {
 			itemsTaken = true;
 			//System.out.println("Come again!");
 			baggingArea.baggingArea.enable(); //re-enable the bagging area to allow another customer to come through and use the station

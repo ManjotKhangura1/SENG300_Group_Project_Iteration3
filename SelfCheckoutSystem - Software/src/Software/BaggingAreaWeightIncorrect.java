@@ -9,7 +9,7 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 public class BaggingAreaWeightIncorrect {
 	private SelfCheckoutStation scs;
 	private ElectronicScale baggingArea;
-	private ScanItem scanItem;
+	private FinishesAddingItems scanItem;
 	
 	private boolean weightCheck;
 	private double scanWeight;
@@ -17,7 +17,7 @@ public class BaggingAreaWeightIncorrect {
 	private double bagAreaSens;
 
 	
-	public BaggingAreaWeightIncorrect(SelfCheckoutStation selfCheckoutStation, ScanItem scanItem) {
+	public BaggingAreaWeightIncorrect(SelfCheckoutStation selfCheckoutStation, FinishesAddingItems scanItem) {
 		this.scs = selfCheckoutStation;
 		this.baggingArea = selfCheckoutStation.baggingArea;
 		this.scanItem = scanItem;
@@ -28,7 +28,7 @@ public class BaggingAreaWeightIncorrect {
 	
 	public void calculate() throws OverloadException {
 		bagAreaWeight = baggingArea.getCurrentWeight();
-		scanWeight = scanItem.getTotalWeight();
+		scanWeight = scanItem.getWeight();
 		double difference = bagAreaWeight - scanWeight;
 		//if negative make it positive
 		if(difference <= 0) {
