@@ -25,13 +25,11 @@ public class AddOwnBag {
 
 		@Override
 		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-			// TODO Auto-generated method stub
 			isEnabled = true;
 		}
 
 		@Override
 		public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-			// TODO Auto-generated method stub
 			isEnabled = false;
 		}
 
@@ -42,20 +40,20 @@ public class AddOwnBag {
 		}
 
 		@Override
-		public void overload(ElectronicScale scale) {
-			// TODO Auto-generated method stub
-		}
+		public void overload(ElectronicScale scale) {}
 
 		@Override
-		public void outOfOverload(ElectronicScale scale) {
-			// TODO Auto-generated method stub
-		}
+		public void outOfOverload(ElectronicScale scale) {}
 		
 	};
 	
 	
 	
-	//main method
+	/**
+	 * adds a bag item to the bagging area
+	 * @param bag
+	 * @throws DisabledException
+	 */
 	public void addBag(Bag bag) throws DisabledException {
 		if(!isEnabled) {
 			throw new DisabledException();
@@ -63,10 +61,15 @@ public class AddOwnBag {
 		if(bag == null) {
 			throw new SimulationException(new NullPointerException("Null bag being added."));
 		}
-		baggingArea.add(bag);
-		
+		baggingArea.add(bag);		
 	}
 	
+	/**
+	 * removes a bag from the bagging area
+	 * @param bag
+	 * @throws DisabledException
+	 * @throws OverloadException
+	 */
 	public void removeBag(Bag bag) throws DisabledException, OverloadException {
 		if(!isEnabled) {
 			throw new DisabledException();
@@ -84,9 +87,12 @@ public class AddOwnBag {
 
 class Bag extends Item{
 
+	/**
+	 * Creates an item of type Bag
+	 * @param weightInGrams
+	 */
 	protected Bag(double weightInGrams) {
 		super(weightInGrams);
-		// TODO Auto-generated constructor stub
 	}
 
 }

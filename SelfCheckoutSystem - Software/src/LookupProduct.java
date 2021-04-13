@@ -9,56 +9,65 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
-
-// Attendant looks up product using the PLU code to give a price check for the customer when there is no barcode
-// Price is determined by the weight of the item on the scale and the price as determined in the database  
 public class LookupProduct {
-	//local variables
-	private BigDecimal price;
-	private String name;
-	private String description; 
-	private BigDecimal weight;
-	//Local objects
-	public final ElectronicScale scale;
-	public FinishesAddingItems done;
-	public BaggingArea baged;
 	
-	public static Map<String, PLUCodedProduct> PLUPRODUCTS = new HashMap<>();
-	
-	/**
-	 * Constructor to look up a PLU item through a string input
-	 * @param station
-	 * @param database
-	 * @param d
-	 */
-	public LookupProduct(SelfCheckoutStation station, Map<String, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
-		this.scale = station.scale;
-		PLUPRODUCTS = database;
-		done = d;
-		baged = b;
-	}
+	//Attendant looks up product using the PLU code to give a price check for the customer when there is no barcode
+	public static Map<PriceLookupCode, PLUCodedProduct> database;
 
+	
 	/**
-	 * Lookup the plu in the database and get the price by multiplying with the weight 
-	 * @param pluCode
-	 * @throws OverloadException
+	 * Attendant LookUpProduct constructor
+	 * @param Map<PriceLookupCode, PLUCodedProduct> database
 	 */
-	public void Lookup(String pluCode) throws OverloadException {
-		if (pluCode == null) {
-			throw new SimulationException(new NullPointerException("PLU code is null"));
-		}
-		try {
-			description = PLUPRODUCTS.get(pluCode).getDescription();
-			// The weight on the scale is in grams so I converted to kg because the price of the products in PLUCodedProduct is per kg 
-			price = BigDecimal.valueOf(scale.getCurrentWeight()).divide(new BigDecimal(1000)).multiply(PLUPRODUCTS.get(pluCode).getPrice());
-		}
-		catch(Exception e) {
-			throw new SimulationException(new NullPointerException("Something went wrong. Try again. "));
-		}
-		//update totals in finishesAddingItems
-		done.setList(description);
-		done.setPrice(price);
-		done.setWeight(weight);
-		baged.setWeightScanned(weight);
+	public LookupProduct(Map<PriceLookupCode, PLUCodedProduct> database) {
+		LookupProduct.database = database; 
 	}
+	
+	
+	/**
+	 * returns the product with the matched PLU code
+	 * @param PriceLookupCode pluCode
+	 */
+	public PLUCodedProduct searchProductInPLUDatabase(PriceLookupCode pluCode) {
+			
+			if(LookupProduct.database.containsKey(pluCode)) {
+				return LookupProduct.database.get(pluCode);
+			
+			} else {
+				throw new SimulationException("There is no product with this PLU code");
+			}
+			
+	}
+	
+	
+	/**
+	 * returns the searched product price
+	 * @param PriceLookupCode pluCode
+	 */
+	public BigDecimal getPriceOfProduct(PriceLookupCode pluCode) {
+		
+		if(LookupProduct.database.containsKey(pluCode)) {
+			return LookupProduct.database.get(pluCode).getPrice();	
+		} else {
+			throw new SimulationException("There is no price of product with this PLU code");
+
+		}
+	}
+	
+	
+	/**
+	 * returns the searched product description
+	 * @param PriceLookupCode pluCode
+	 */
+	public String getDescriptionOfProduct(PriceLookupCode pluCode) {
+		
+		if(LookupProduct.database.containsKey(pluCode)) {
+			return LookupProduct.database.get(pluCode).getDescription();
+		} else {
+			throw new SimulationException("There is no description of product with this PLU code");
+
+		}
+	}
+	
+
 }
