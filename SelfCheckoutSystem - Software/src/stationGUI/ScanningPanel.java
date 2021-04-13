@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -84,6 +86,14 @@ public class ScanningPanel extends JPanel {
 		JButton btnNewButton_1 = new JButton("Proceed to Pay");
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton_1, "cell 1 5");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				mainFrame.scanningPanel.setVisible(false);
+				mainFrame.paymentPanel.setVisible(true);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		
 		JButton attendantLoginB = new JButton("Attendant Login");
 		attendantLoginB.addActionListener(new ActionListener() {

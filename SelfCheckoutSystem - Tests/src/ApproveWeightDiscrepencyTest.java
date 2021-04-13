@@ -12,6 +12,9 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.ApproveWeightDiscrepency;
+import Software.BaggingArea;
+
 public class ApproveWeightDiscrepencyTest {
 	SelfCheckoutStation station;
 	BaggingArea bagging;

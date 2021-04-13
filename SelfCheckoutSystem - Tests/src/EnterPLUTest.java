@@ -19,6 +19,8 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
+import Software.EnterPLU;
+
 public class EnterPLUTest {
 	SelfCheckoutStation station;
 	Map<PriceLookupCode, PLUCodedProduct> database;

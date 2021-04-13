@@ -1,7 +1,6 @@
 package stationGUI;
 
 import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +17,7 @@ public class AttendantPanel extends JPanel {
 
 	/**
 	 * Creates the Attendent Panel
+	 * 
 	 * @param mainFrame The main frame used in the checkout system
 	 */
 	public AttendantPanel(MainFrame mainFrame) {
@@ -31,13 +31,13 @@ public class AttendantPanel extends JPanel {
 				"[517.00][252.00][136.00,grow][grow][101.00][131.00,grow][17.00][10.00][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
-		
-		//Creating new frame for option panels
+
+		// Creating new frame for option panels
 		frame = new JFrame("Option Frame");
 		frame.setBounds(0, 0, 250, 220);
 		frame.setResizable(false);
-		
-		//frame.getContentPane().setLayout(null);
+
+		// frame.getContentPane().setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Sub Total:");
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -122,20 +122,34 @@ public class AttendantPanel extends JPanel {
 		});
 		btnUnblock.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnUnblock, "cell 5 4");
-		
+
 		// Refill button
 		JButton btnRefill = new JButton("Refill");
 		btnRefill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Creating new Refill Panel
-				RefillPanel refillPanel = new RefillPanel();
-				frame.getContentPane().add(refillPanel);
+				// Creating new Refill Panel
+				DispenserPanel dispenserPanel = new DispenserPanel(mainFrame);
+				frame.getContentPane().add(dispenserPanel);
 				frame.pack();
 				frame.setVisible(true);
 			}
 		});
 		btnRefill.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnRefill, "cell 0 0");
+
+		// Empty Dispenser
+		JButton btnEmpty = new JButton("Empty Storage");
+		btnEmpty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Creating new Refill Panel
+				DispenserPanel panel = new DispenserPanel(mainFrame);
+				frame.getContentPane().add(panel);
+				frame.pack();
+				frame.setVisible(true);
+			}
+		});
+		btnEmpty.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnEmpty, "cell 0 1");
 
 		// Logout button
 		JButton btnLogout = new JButton("Logout");

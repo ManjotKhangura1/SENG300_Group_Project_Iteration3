@@ -16,6 +16,9 @@ import org.lsmr.selfcheckout.ChipFailureException;
 import org.lsmr.selfcheckout.InvalidPINException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.external.CardIssuer;
+
+import Software.PayWithDebit;
+
 import org.lsmr.selfcheckout.devices.SimulationException;
 
 

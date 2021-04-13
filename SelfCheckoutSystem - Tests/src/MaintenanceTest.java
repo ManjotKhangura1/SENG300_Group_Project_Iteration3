@@ -11,6 +11,8 @@ import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.Maintenance;
+
 public class MaintenanceTest {
 	SelfCheckoutStation station;
 	int[] noteDenominations = { 5, 10, 20, 50, 100 };

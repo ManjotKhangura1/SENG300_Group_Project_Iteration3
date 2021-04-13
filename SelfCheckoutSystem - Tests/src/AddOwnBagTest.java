@@ -11,6 +11,9 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.AddOwnBag;
+import Software.Bag;
+
 public class AddOwnBagTest {
 	private SelfCheckoutStation scs;
 	private AddOwnBag addOwnBag;

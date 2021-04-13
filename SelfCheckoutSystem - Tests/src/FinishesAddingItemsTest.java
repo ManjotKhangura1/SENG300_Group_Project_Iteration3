@@ -15,6 +15,11 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+import Software.BaggingArea;
+import Software.DeclineBagPrompt;
+import Software.FinishesAddingItems;
+import Software.ScanItem;
+
 public class FinishesAddingItemsTest {
 	public SelfCheckoutStation station;
 	public BarcodedItem barcodedItem;

@@ -13,6 +13,8 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.BaggingArea;
+
 public class BaggingAreaTest {
 	
 	SelfCheckoutStation station;

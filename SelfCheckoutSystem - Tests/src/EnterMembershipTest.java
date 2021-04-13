@@ -3,6 +3,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+import Software.EnterMembership;
+
 public class EnterMembershipTest {
 	@Test
 	public void testFirstCard() {

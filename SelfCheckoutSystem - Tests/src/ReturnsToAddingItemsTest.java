@@ -18,6 +18,8 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.ReturnsToAddingItems;
+
 public class ReturnsToAddingItemsTest {
 	
 	/*

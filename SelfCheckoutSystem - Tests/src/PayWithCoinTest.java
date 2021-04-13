@@ -13,6 +13,8 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.PayWithCoin;
+
 public class PayWithCoinTest {
 	
 	SelfCheckoutStation station;

@@ -15,6 +15,11 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+import Software.BaggingArea;
+import Software.BaggingAreaWeightIncorrect;
+import Software.DeclineBagPrompt;
+import Software.ScanItem;
+
 public class BaggingAreaWeightIncorrectTest {
 	private SelfCheckoutStation scs;
 	private BaggingArea baggingArea;

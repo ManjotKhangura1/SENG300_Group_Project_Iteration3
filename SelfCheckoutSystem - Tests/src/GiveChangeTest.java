@@ -11,6 +11,10 @@ import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.GiveChange;
+import Software.PayWithBanknote;
+import Software.PayWithCoin;
+
 public class GiveChangeTest {
 	SelfCheckoutStation station;
 	Currency currency;

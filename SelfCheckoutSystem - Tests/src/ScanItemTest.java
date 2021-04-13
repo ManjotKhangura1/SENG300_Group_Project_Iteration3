@@ -16,6 +16,9 @@ import org.lsmr.selfcheckout.devices.listeners.AbstractDeviceListener;
 import org.lsmr.selfcheckout.devices.listeners.BarcodeScannerListener;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+import Software.DeclineBagPrompt;
+import Software.ScanItem;
+
 public class ScanItemTest {
 	SelfCheckoutStation station;
 	BarcodedItem barcodedItem;

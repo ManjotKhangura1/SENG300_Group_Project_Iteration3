@@ -16,6 +16,8 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.ScansMembershipCard;
+
 public class ScansMembershipCardTest {
 	
 	//parameters for instance of SelfCheckoutStation

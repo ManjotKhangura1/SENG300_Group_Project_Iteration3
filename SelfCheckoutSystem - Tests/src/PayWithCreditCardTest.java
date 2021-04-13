@@ -12,6 +12,8 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.external.CardIssuer;
 
+import Software.PayWithCreditCard;
+
 public class PayWithCreditCardTest {
 	
 	

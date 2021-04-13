@@ -10,6 +10,8 @@ import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.PayWithBanknote;
+
 public class PayWithBanknoteTest {
 	SelfCheckoutStation station;
 	Banknote banknote;

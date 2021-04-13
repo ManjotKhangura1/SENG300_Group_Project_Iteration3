@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.lsmr.selfcheckout.Card;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.external.CardIssuer;
+
+import Software.PayWithGiftCard;
+
 import org.lsmr.selfcheckout.devices.SimulationException;
 
 

@@ -11,6 +11,8 @@ import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
+import Software.CustomerLookUpProduct;
+
 public class CustomerLookUpProductTest {
 
 	public static Map<PriceLookupCode, PLUCodedProduct> database = new HashMap<>();

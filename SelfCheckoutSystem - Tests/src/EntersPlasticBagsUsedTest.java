@@ -2,6 +2,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import Software.EntersPlasticBagsUsed;
+
 public class EntersPlasticBagsUsedTest {
 @Test
 public void setTotalPlasticBagsUsed_WithPostiveNumberTest() {
