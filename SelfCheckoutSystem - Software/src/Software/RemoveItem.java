@@ -62,7 +62,6 @@ public class RemoveItem {
 		this.barcodedItemList = barcodedItemList;
 		this.pluCodedItemList = pluCodedItemList;
 		this.total = total;
-		initializeDatabase();
 		this.station.mainScanner.register(listener);
 		this.station.handheldScanner.register(listener);
 	}
@@ -143,22 +142,5 @@ public class RemoveItem {
 	 */
 	public double getCurrentWeight() {
 		return currentWeight;
-	}
-	
-	/**
-	 * Initialize product database
-	 */
-	private void initializeDatabase() {
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(new Barcode("01"), new BarcodedProduct(new Barcode("01"), "One", new BigDecimal("10.99")));
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(new Barcode("02"), new BarcodedProduct(new Barcode("02"), "Two", new BigDecimal("2.49")));
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(new Barcode("03"), new BarcodedProduct(new Barcode("03"), "Three", new BigDecimal("20.45")));
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(new Barcode("04"), new BarcodedProduct(new Barcode("04"), "Four", new BigDecimal("6.94")));
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(new Barcode("05"), new BarcodedProduct(new Barcode("05"), "Five", new BigDecimal("9.29")));
-		
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(new PriceLookupCode("0001"), new PLUCodedProduct(new PriceLookupCode("0001"), "A", new BigDecimal("7.49")));
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(new PriceLookupCode("0002"), new PLUCodedProduct(new PriceLookupCode("0002"), "B", new BigDecimal("5.99")));
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(new PriceLookupCode("0003"), new PLUCodedProduct(new PriceLookupCode("0003"), "C", new BigDecimal("10.59")));
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(new PriceLookupCode("0004"), new PLUCodedProduct(new PriceLookupCode("0004"), "D", new BigDecimal("9.77")));
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(new PriceLookupCode("0005"), new PLUCodedProduct(new PriceLookupCode("0005"), "E", new BigDecimal("6.49")));
 	}
 }

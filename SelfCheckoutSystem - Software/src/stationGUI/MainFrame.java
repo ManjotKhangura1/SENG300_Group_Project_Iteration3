@@ -18,6 +18,7 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.external.CardIssuer;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 import Software.*;
 import net.miginfocom.swing.MigLayout;
@@ -60,15 +61,16 @@ public class MainFrame {
 	public ReturnsToAddingItems returnsToAddingItems;
 	public Maintenance maintence;
 	public FailBagging failBagging;
-	public DeclineBagPrompt declineBagPrompt;
 	public EntersPlasticBagsUsed bagsUsed;
 	public EnterPLU enterPLU;
 	public CardIssuer cardIssuer;
 
 	
 	public SelfCheckoutStation station;
-	public Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>();
-	public Map<PriceLookupCode, Double> PLUCodedItems = new HashMap<>();
+	public Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>(); //ScanItem
+	public Map<PriceLookupCode, Double> PLUCodedItems = new HashMap<>(); //removeItem
+	public Map<PriceLookupCode, PLUCodedProduct> PLUProduct = new HashMap<>(); //EnterPLU and LookupItem
+	public Map<String, PLUCodedProduct> PLULookup = new HashMap<>(); //cutomerLooksupItem
 	public ArrayList<Barcode> barcodedItemList = new ArrayList<Barcode>();
 	public String membershipNumber;
 	public String PLUCode = "";
@@ -101,17 +103,16 @@ public class MainFrame {
 		// Instantiating these allows the methods of them to be accessible to the panels
 		// within the GUI
 
-		declineBagPrompt = new DeclineBagPrompt();
-		scanItem = new ScanItem(station, BarcodedProducts, declineBagPrompt);
+		scanItem = new ScanItem(station, BarcodedProducts, finishesAddingItems, baggingArea);
 		enterMembership = new EnterMembership(membershipNumber);
 		scanMembership = new ScansMembershipCard(station);
 		
 		try {
 			addOwnBag = new AddOwnBag(station);
 			baggingArea = new BaggingArea(station);
-			incorrectBaggingWeight = new BaggingAreaWeightIncorrect(station, scanItem);
+			incorrectBaggingWeight = new BaggingAreaWeightIncorrect(station, finishesAddingItems);
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
-			lookupProduct = new LookupProduct(station, PLUCode);
+			lookupProduct = new LookupProduct(PLUProduct);
 			finishesAddingItems = new FinishesAddingItems(station, scanItem, baggingArea);
 			removeItem = new RemoveItem(station, barcodedItemList, PLUCodedItems, total);
 			payWithBanknote = new PayWithBanknote(station);

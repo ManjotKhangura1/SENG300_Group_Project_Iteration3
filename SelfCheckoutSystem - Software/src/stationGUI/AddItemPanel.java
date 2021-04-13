@@ -119,7 +119,7 @@ public class AddItemPanel extends JPanel{
 //					int bags = Integer.parseInt(textField.getText());
 //					String PLU = textField_1.getText();
 //					int weightPLUPurchased = Integer.parseInt(textField_2.getText());
-					System.out.println(mainFrame.scanItem.getTotalPrice());
+//					System.out.println(mainFrame.scanItem.getTotalPrice());
 					
 
 				}
