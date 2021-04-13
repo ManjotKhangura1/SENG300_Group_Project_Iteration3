@@ -1,6 +1,7 @@
 package stationGUI;
 
 import java.awt.event.WindowAdapter;
+
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -8,6 +9,8 @@ import javax.swing.JFrame;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 import net.miginfocom.swing.MigLayout;
+
+//import BaggingArea;
 
 public class MainFrame {
 	
@@ -22,6 +25,8 @@ public class MainFrame {
 
 	
 	SelfCheckoutStation station;
+	
+	//BaggingArea baggingArea;
 	
 	
 	JFrame frame = new JFrame(); //touchScreen.getFrame();
