@@ -50,18 +50,25 @@ public class PaymentPanel extends JPanel {
 				creditCard.setBackground(Color.WHITE);
 			}
 			@Override
-			public void mouseClicked(MouseEvent e) {                
-                ActionListener listener = new ActionListener() {
+			public void mouseClicked(MouseEvent e) {
+				ActionListener listener1 = new ActionListener() {
                 	public void actionPerformed (ActionEvent ee) {
-                		mainFrame.acknowledgementPanel.setVisible(false);
-                		mainFrame.welcomePanel.setVisible(true);
+                		mainFrame.creditDebitWaitingPanel.setVisible(false);
+                		mainFrame.acknowledgementPanel.setVisible(true);
+                		ActionListener listener2 = new ActionListener() {
+                        	public void actionPerformed (ActionEvent ee) {
+                        		mainFrame.acknowledgementPanel.setVisible(false);
+                        		mainFrame.welcomePanel.setVisible(true);
+                        	}
+                        };
+                        Timer timer2 = new Timer(10000, listener2);
+                        timer2.start();
                 	}
                 };
-                Timer timer = new Timer(10000, listener);
-                
+                Timer timer1 = new Timer(10000, listener1);
                 mainFrame.paymentPanel.setVisible(false);
-                mainFrame.acknowledgementPanel.setVisible(true);
-                timer.start();
+                mainFrame.creditDebitWaitingPanel.setVisible(true);
+                timer1.start();
 			}
 		});
 		add(creditCard);
@@ -83,8 +90,27 @@ public class PaymentPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				debitCard.setBackground(Color.WHITE);
 			}
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ActionListener listener1 = new ActionListener() {
+                	public void actionPerformed (ActionEvent ee) {
+                		mainFrame.creditDebitWaitingPanel.setVisible(false);
+                		mainFrame.acknowledgementPanel.setVisible(true);
+                		ActionListener listener2 = new ActionListener() {
+                        	public void actionPerformed (ActionEvent ee) {
+                        		mainFrame.acknowledgementPanel.setVisible(false);
+                        		mainFrame.welcomePanel.setVisible(true);
+                        	}
+                        };
+                        Timer timer2 = new Timer(10000, listener2);
+                        timer2.start();
+                	}
+                };
+                Timer timer1 = new Timer(10000, listener1);
+                mainFrame.paymentPanel.setVisible(false);
+                mainFrame.creditDebitWaitingPanel.setVisible(true);
+                timer1.start();
 			}
 		});
 		add(debitCard);
@@ -108,6 +134,24 @@ public class PaymentPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ActionListener listener1 = new ActionListener() {
+                	public void actionPerformed (ActionEvent ee) {
+                		mainFrame.cashWaitingPanel.setVisible(false);
+                		mainFrame.acknowledgementPanel.setVisible(true);
+                		ActionListener listener2 = new ActionListener() {
+                        	public void actionPerformed (ActionEvent ee) {
+                        		mainFrame.acknowledgementPanel.setVisible(false);
+                        		mainFrame.welcomePanel.setVisible(true);
+                        	}
+                        };
+                        Timer timer2 = new Timer(10000, listener2);
+                        timer2.start();
+                	}
+                };
+                Timer timer1 = new Timer(10000, listener1);
+                mainFrame.paymentPanel.setVisible(false);
+                mainFrame.cashWaitingPanel.setVisible(true);
+                timer1.start();
 			}
 		});
 		add(cash);
@@ -131,6 +175,24 @@ public class PaymentPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ActionListener listener1 = new ActionListener() {
+                	public void actionPerformed (ActionEvent ee) {
+                		mainFrame.giftCardWaitingPanel.setVisible(false);
+                		mainFrame.acknowledgementPanel.setVisible(true);
+                		ActionListener listener2 = new ActionListener() {
+                        	public void actionPerformed (ActionEvent ee) {
+                        		mainFrame.acknowledgementPanel.setVisible(false);
+                        		mainFrame.welcomePanel.setVisible(true);
+                        	}
+                        };
+                        Timer timer2 = new Timer(10000, listener2);
+                        timer2.start();
+                	}
+                };
+                Timer timer1 = new Timer(10000, listener1);
+                mainFrame.paymentPanel.setVisible(false);
+                mainFrame.giftCardWaitingPanel.setVisible(true);
+                timer1.start();
 			}
 		});
 		add(giftCard);
@@ -177,6 +239,8 @@ public class PaymentPanel extends JPanel {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				mainFrame.paymentPanel.setVisible(false);
+				mainFrame.welcomePanel.setVisible(true);
 			}
 		});
 		add(cancel);

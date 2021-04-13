@@ -15,6 +15,9 @@ public class MainFrame {
 	AddItemPanel addItemPanel;
 	AttendantLoginPanel attendantLoginPanel;
 	AttendantPanel attendantPanel;
+	CashWaitingPanel cashWaitingPanel;
+	CreditDebitWaitingPanel creditDebitWaitingPanel;
+	GiftCardWaitingPanel giftCardWaitingPanel;
 	HelpPanel helpPanel;
 	ReceiptPanel receiptPanel;
 	PaymentPanel paymentPanel;
@@ -40,6 +43,9 @@ public class MainFrame {
 		addItemPanel = new AddItemPanel(this);
 		attendantLoginPanel = new AttendantLoginPanel(this);
 		attendantPanel = new AttendantPanel(this);
+		cashWaitingPanel = new CashWaitingPanel(this);
+		creditDebitWaitingPanel = new CreditDebitWaitingPanel(this);
+		giftCardWaitingPanel = new GiftCardWaitingPanel(this);
 		helpPanel = new HelpPanel(this);
 		receiptPanel = new ReceiptPanel(this);
 		paymentPanel = new PaymentPanel(this);
@@ -64,6 +70,9 @@ public class MainFrame {
 		frame.getContentPane().add(addItemPanel);
 		frame.getContentPane().add(attendantLoginPanel);
 		frame.getContentPane().add(attendantPanel);
+		frame.getContentPane().add(cashWaitingPanel);
+		frame.getContentPane().add(creditDebitWaitingPanel);
+		frame.getContentPane().add(giftCardWaitingPanel);
 		frame.getContentPane().add(helpPanel);
 		frame.getContentPane().add(receiptPanel);
 		frame.getContentPane().add(paymentPanel);
