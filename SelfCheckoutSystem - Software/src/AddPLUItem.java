@@ -20,6 +20,9 @@ public class AddPLUItem {
 
 
 	public AddPLUItem(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database) {
+		if(station == null && database == null) {
+			throw new SimulationException(new NullPointerException("station or database is null."));
+		}
 		this.database = database;
 		scale = station.scale;
 		totList = new ArrayList<String>();
