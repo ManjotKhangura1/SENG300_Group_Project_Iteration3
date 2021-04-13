@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.lsmr.selfcheckout.Barcode;
@@ -16,7 +17,6 @@ public class EnterPLU {
 	private PriceLookupCode plu;
 	public static Map<PriceLookupCode, PLUCodedProduct> database;
 	public final ElectronicScale scale;
-
 	/**
 	 * PLULookup constructor
 	 * @param station
@@ -64,5 +64,5 @@ public class EnterPLU {
 	 */
 	public String getDescription() {
 		return description;
-	}
+	} 
 }

@@ -24,7 +24,7 @@ public class FinishesAddingItems {
 	 * @param SelfCheckoutStation 
 	 * @param ScanItem
 	 */
-	public FinishesAddingItems(SelfCheckoutStation station, ScanItem scan, BaggingArea bags) {
+	public FinishesAddingItems(SelfCheckoutStation station, ScanItem scan, BaggingArea bags, AddPLUItem plu, ScanningPLUPlasticBagTotal sppbt) {
 		
 		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
 		if(scan == null) throw new SimulationException(new NullPointerException("scanner is null"));
@@ -33,10 +33,11 @@ public class FinishesAddingItems {
 		//if the user is done adding items then the scanners and with weigh area do not need to continue updating
 		scan.handheld.disable(); //disable the hand held scanner
 		scan.main.disable(); //disable the main scanner
-		bags.baggingArea.disable(); //disable the weigh scale
+		bags.baggingArea.disable(); //disable the bag scale
+		plu.scale.disable(); //disable the scale
 		
-		finalPrice = scan.getTotalPrice();
-		finalList = scan.getTotalList();
+		finalPrice = sppbt.getTotalCurrentPrice();
+		finalList = sppbt.getTotalCurrentList();
 		
 		coin = new PayWithCoin(station);
 		banknote = new PayWithBanknote(station);

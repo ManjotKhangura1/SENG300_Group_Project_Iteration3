@@ -5,20 +5,18 @@ import org.junit.Test;
 public class EntersPlasticBagsUsedTest {
 @Test
 public void setTotalPlasticBagsUsed_WithPostiveNumberTest() {
-	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed();
 	int test = 1;
+	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed(test);
 	int expected = 1;
-	epbu.setTotalPlasticBagsUsed(test);
 	int actual = epbu.getTotalPlasticBagsUsed();
 	assertEquals(expected, actual);
 }
 
 @Test
 public void setTotalPlasticBagsUsed_WithNegativeNumberTest() {
-	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed();
 	int test = -1;
+	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed(test);
 	int expected = 0;
-	epbu.setTotalPlasticBagsUsed(test);
 	int actual = epbu.getTotalPlasticBagsUsed();
 	assertEquals(expected, actual);
 }
@@ -26,21 +24,19 @@ public void setTotalPlasticBagsUsed_WithNegativeNumberTest() {
 
 @Test
 public void getTotalPlasticBagsUsed() {
-	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed();
 	int test = 0;
+	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed(test);
 	int expected = 0;
-	epbu.setTotalPlasticBagsUsed(test);
 	int actual = epbu.getTotalPlasticBagsUsed();
 	assertEquals(expected, actual);
 }
 
 @Test
 public void calculateTotalPlasticBagsUsedPrice() {
-	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed();
 	int testBagAmount = 3;
+	EntersPlasticBagsUsed epbu = new EntersPlasticBagsUsed(testBagAmount);
 	double pricePerBag = 0.10;
 	double expected = pricePerBag * testBagAmount;
-	epbu.setTotalPlasticBagsUsed(testBagAmount);
 	double actual = epbu.calculateTotalPlasticBagsUsedPrice();
 	assertEquals(expected, actual, 0);
 }

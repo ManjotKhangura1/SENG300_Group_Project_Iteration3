@@ -3,12 +3,16 @@ import java.util.Scanner;
 public class EntersPlasticBagsUsed {
 		
 
-	private double pricePerPlasticBag = 0.10; //10 cents charge per plastic bag 
+	private double pricePerPlasticBag; 
 	private int totalPlasticBagsUsed;
 	private double totalPlasticBagsUsedPrice;
-
+	
+	public EntersPlasticBagsUsed(int bagsUsed) {
+		this.pricePerPlasticBag = 0.10; //10 cents per bag
+		setTotalPlasticBagsUsed(bagsUsed);
+	}
 	//sets the number of bags used
-	public void setTotalPlasticBagsUsed(int bagsUsed) {
+	private void setTotalPlasticBagsUsed(int bagsUsed) {
 		if(bagsUsed >= 0) {
 			this.totalPlasticBagsUsed = bagsUsed;
 		}

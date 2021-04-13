@@ -10,10 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class testing {
 //testing for scanning and bagging
@@ -26,16 +29,17 @@ public class testing {
 	private ScanItem scanItem;
 	private DeclineBagPrompt dbp;
 	private EntersPlasticBagsUsed epbu;
-	private FailBagging failBagging;
-	private RemoveItem removeItem;
 	private FinishesAddingItems finishAddingItems;
-	private CustomerLookUpProduct clp;
 	private AddOwnBag aob;
 	
 	private BaggingAreaWeightIncorrect bawi;
+	private ScanningPLUPlasticBagTotal sppbt;
+	private AddPLUItem api;
 
 	private BarcodedItem barcodedItem;
-	Map<Barcode, BarcodedProduct> database;
+	private PLUCodedItem PLUItem;
+	Map<Barcode, BarcodedProduct> barcodeDatabase;
+	Map<PriceLookupCode, PLUCodedProduct> PLUDatabase;
 	
 	
 	@Before
@@ -52,18 +56,24 @@ public class testing {
 	barcodedItem = new BarcodedItem(barcode, 50);
 	BarcodedProduct product = new BarcodedProduct(barcode, "the only item we sell", BigDecimal.valueOf(price));
 	
-	database = new HashMap<>();
-	database.put(barcode, product);
+	//Creates PLU item
+	PriceLookupCode plu = new PriceLookupCode("12345");
+	PLUItem = new PLUCodedItem(plu, 30);
+	PLUCodedProduct pluProduct = new PLUCodedProduct(plu, "apples", BigDecimal.valueOf(price));
+	
+	barcodeDatabase = new HashMap<>();
+	barcodeDatabase.put(barcode, product);
+	PLUDatabase = new HashMap<>();
+	PLUDatabase.put(plu, pluProduct);
 
 	dbp = new DeclineBagPrompt();
 	
 	scs = new SelfCheckoutStation(currency, banknoteDenominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
 	baggingArea = new BaggingArea(scs);
-	scanItem = new ScanItem(scs, database, dbp);
+	scanItem = new ScanItem(scs, barcodeDatabase, dbp);
+	api = new AddPLUItem(scs, PLUDatabase);
 	
 	bawi = new BaggingAreaWeightIncorrect(scs, scanItem);
-	
-	epbu = new EntersPlasticBagsUsed();
 	aob = new AddOwnBag(scs);
 	
 	}
@@ -74,13 +84,16 @@ public class testing {
 		baggingArea.setWeightScanned(barcodedItem.getWeight());
 		baggingArea.addItem(barcodedItem);
 		bawi.calculate();
-		epbu.setTotalPlasticBagsUsed(1);
-		this.finishAddingItems = new FinishesAddingItems(scs, scanItem, baggingArea);
-		double actual = finishAddingItems.getPrice() + epbu.calculateTotalPlasticBagsUsedPrice();
+		sppbt = new ScanningPLUPlasticBagTotal(scanItem, api);
+		sppbt.addPlasticBag(1);
+		
+		this.finishAddingItems = new FinishesAddingItems(scs, scanItem, baggingArea, api, sppbt);
+		double actual = finishAddingItems.getPrice();
 		double expected = price + bagPrice;
 		
 		assertEquals(expected, actual, 0);
 	}
+	/*
 
 	@Test
 	public void testing2() throws DisabledException, OverloadException {
@@ -112,6 +125,6 @@ public class testing {
 		
 		assertEquals(expected, actual, 0);
 	}
-	
+	*/
 	
 }
