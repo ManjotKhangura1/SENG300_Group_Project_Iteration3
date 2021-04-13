@@ -1,23 +1,18 @@
 import org.lsmr.selfcheckout.devices.*;
 import org.lsmr.selfcheckout.devices.listeners.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.lsmr.selfcheckout.*;
 
 
 public class FinishesAddingItems {
-	ReceiptPrinter printer;
-	ScanItem scan;
 	boolean isEnabled;
 	
-	PayWithCoin coin;
-	PayWithBanknote banknote;
-	PayWithDebit debit;
-	PayWithCreditCard credit;
-	
-	private double finalPrice;
+	private BigDecimal finalPrice;
 	private ArrayList<String> finalList;
+	private BigDecimal finalWeight;
 
 	/**
 	 * Constructor to finish transaction
@@ -34,25 +29,37 @@ public class FinishesAddingItems {
 		scan.handheld.disable(); //disable the hand held scanner
 		scan.main.disable(); //disable the main scanner
 		bags.baggingArea.disable(); //disable the weigh scale
-		
-		finalPrice = scan.getTotalPrice();
-		finalList = scan.getTotalList();
-		
-		coin = new PayWithCoin(station);
-		banknote = new PayWithBanknote(station);
-		debit = new PayWithDebit(station);
-		credit = new PayWithCreditCard(station, null);
 	}
 	 
-	/*
-	 * here we would implement the initialization of the pay class which we will make next iteration
+	/**
+	 * add the price given to the total price
+	 * @param BigDecimal price
 	 */
+	public void setPrice(BigDecimal price) {
+		finalPrice.add(price);
+	}
+	
+	/**
+	 * add the new item name to the item list
+	 * @param String name
+	 */
+	public void setList(String name) {
+		finalList.add(name);
+	}
+	
+	/**
+	 * add the new item weight to the total weight
+	 * @param weight
+	 */
+	public void setWeight(BigDecimal weight) {
+		finalWeight.add(weight);
+	}
 	
 	/**
 	 * @return the final price
 	 */
 	public double getPrice() {
-		return finalPrice;
+		return finalPrice.doubleValue();
 	}
 	
 	/**
@@ -61,4 +68,8 @@ public class FinishesAddingItems {
 	public ArrayList<String> getList(){
 		return finalList;
 	}
+	
+	public double getWeight() {
+		return finalWeight.doubleValue();	}
+	
 }
