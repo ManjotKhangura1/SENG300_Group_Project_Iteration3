@@ -11,6 +11,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class MainFrame {
 	
+	AcknowledgementPanel acknowledgementPanel;
 	AddItemPanel addItemPanel;
 	AttendantLoginPanel attendantLoginPanel;
 	AttendantPanel attendantPanel;
@@ -18,6 +19,7 @@ public class MainFrame {
 	ReceiptPanel receiptPanel;
 	PaymentPanel paymentPanel;
 	ScanningPanel scanningPanel;
+	WelcomePanel welcomePanel;
 	
 	SelfCheckoutStation station;
 	
@@ -34,6 +36,7 @@ public class MainFrame {
 	 */
 	private void initComponents()
 	{
+		acknowledgementPanel = new AcknowledgementPanel(this);
 		addItemPanel = new AddItemPanel(this);
 		attendantLoginPanel = new AttendantLoginPanel(this);
 		attendantPanel = new AttendantPanel(this);
@@ -41,6 +44,7 @@ public class MainFrame {
 		receiptPanel = new ReceiptPanel(this);
 		paymentPanel = new PaymentPanel(this);
 		scanningPanel = new ScanningPanel(this);
+		welcomePanel = new WelcomePanel(this);
 		
 		frame.setBounds(0,0,1280,720);
 		frame.setVisible(true);
@@ -53,15 +57,17 @@ public class MainFrame {
             }
         });
 		
-		scanningPanel.setVisible(true);
+		welcomePanel.setVisible(true);
 		
 		frame.getContentPane().add(scanningPanel);
+		frame.getContentPane().add(acknowledgementPanel);
 		frame.getContentPane().add(addItemPanel);
 		frame.getContentPane().add(attendantLoginPanel);
 		frame.getContentPane().add(attendantPanel);
 		frame.getContentPane().add(helpPanel);
 		frame.getContentPane().add(receiptPanel);
 		frame.getContentPane().add(paymentPanel);
+		frame.getContentPane().add(welcomePanel);
 	}
 
 }
