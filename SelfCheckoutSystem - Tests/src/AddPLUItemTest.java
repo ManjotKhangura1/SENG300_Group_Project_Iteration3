@@ -82,8 +82,8 @@ public class AddPLUItemTest {
 	public void testAddPLUItem() {
 		api = new AddPLUItem(station, database);
 		
-		plu = new PriceLookupCode("14040");
-		PLUItem = new PLUCodedItem(plu, 5.00);
+		plu = new PriceLookupCode("12345");
+		PLUItem = new PLUCodedItem(plu, 30);
 		pluProduct = new PLUCodedProduct(plu, "apples", BigDecimal.valueOf(price));
 		database = new HashMap<>();
 		database.put(plu, pluProduct);
