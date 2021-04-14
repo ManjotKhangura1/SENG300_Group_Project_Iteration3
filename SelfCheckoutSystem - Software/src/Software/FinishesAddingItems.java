@@ -16,6 +16,7 @@ public class FinishesAddingItems {
 	private ArrayList<String> finalList;
 	private BaggingArea bags;
 	private SelfCheckoutStation station;
+	private AddOwnBag aob;
 	//item tracker
 	private Map<String, ArrayList<BigDecimal>> tracker = new HashMap<>();
 
@@ -32,6 +33,12 @@ public class FinishesAddingItems {
 		
 		this.station = station;
 		this.bags = bags;
+		try {
+			this.aob = new AddOwnBag(station);
+		} catch (OverloadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	 
 	/**
@@ -78,6 +85,33 @@ public class FinishesAddingItems {
 	public double getWeight() {
 		return finalWeight.doubleValue();	
 	}
+	
+	/**
+	 * 
+	 * @param bag
+	 * @param name of the bag(must be unique)
+	 * @throws DisabledException
+	 * @throws OverloadException
+	 */
+	public void addOwnBag(Bag bag, String name) throws DisabledException, OverloadException {
+		aob.addBag(bag);
+		bags.updateWeight();
+		updateTotals(name, BigDecimal.valueOf(0.10), BigDecimal.valueOf(bag.getWeight()));
+	}
+	
+	/**
+	 * 
+	 * @param bag
+	 * @param name (name of the bag you are trying to remove must be associated together)
+	 * @throws DisabledException
+	 * @throws OverloadException
+	 */
+	public void removeOwnBag(Bag bag, String name) throws DisabledException, OverloadException {
+		aob.removeBag(bag);
+		bags.updateWeight();
+		removeItem(name);
+	}
+	
 	
 	public void finish(){
 		//if the user is done adding items then the scanners and with weigh area do not need to continue updating

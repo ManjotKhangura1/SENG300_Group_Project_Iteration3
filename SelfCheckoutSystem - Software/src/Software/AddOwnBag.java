@@ -13,6 +13,11 @@ public class AddOwnBag {
 	private ElectronicScale baggingArea;
 	private boolean isEnabled = true;
 	
+	/**
+	 * 
+	 * @param selfCheckout
+	 * @throws OverloadException
+	 */
 	public AddOwnBag(SelfCheckoutStation selfCheckout) throws OverloadException {
 		if (selfCheckout == null) {
 			throw new SimulationException(new NullPointerException("Self checkout station is null."));
