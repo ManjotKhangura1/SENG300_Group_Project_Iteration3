@@ -18,7 +18,8 @@ public class AttendantPanel extends JPanel {
 	private JFrame frame;
 	private JLabel lblStationStatus;
 	private JLabel lblPrinterPaperStatus;
-	JLabel lblPrinterInkStatus;
+	private JLabel lblPrinterInkStatus;
+	private JButton btnApprove;
 	private int paper = 0;
 	private int ink = 0;
 	int maxPaper = 0;
@@ -161,7 +162,7 @@ public class AttendantPanel extends JPanel {
 		btnChangePaper.setVisible(false);
 		
 		// Approve weight discrepancy button
-		JButton btnApprove = new JButton("Approve Weight Discrepancy");
+		btnApprove = new JButton("Approve Weight Discrepancy");
 		btnApprove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -174,9 +175,11 @@ public class AttendantPanel extends JPanel {
 				}
 				mainFrame.attendantPanel.setVisible(false);
 				mainFrame.scanningPanel.setVisible(true);
+				btnApprove.setVisible(false);
 			}
 		});
 		add(btnApprove, "cell 0 4");
+		btnApprove.setVisible(false);
 
 		// Block Station button
 		JButton btnBlock = new JButton("Block Station");
@@ -286,5 +289,23 @@ public class AttendantPanel extends JPanel {
 		frame.setBounds(0, 0, 250, 370);
 		frame.setResizable(false);
 	}
+
+	/**
+	 * Gets the button to approve weight discrepencies
+	 * @return btnApprove the button
+	 */
+	public JButton getBtnApprove() {
+		return btnApprove;
+	}
+
+	/**
+	 * Sets the visibility of the btnApprove
+	 * @param visibility the boolean representing if the button should be visible or not
+	 */
+	public void setVisibilityBtnApprove(boolean visibility) {
+		btnApprove.setVisible(visibility);
+	}
+	
+	
 
 }
