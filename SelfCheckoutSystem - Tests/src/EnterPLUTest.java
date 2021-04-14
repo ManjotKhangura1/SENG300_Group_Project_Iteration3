@@ -20,10 +20,17 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 import Software.EnterPLU;
+import Software.BaggingArea;
+import Software.ScanItem;
+import Software.FinishesAddingItems;
 
 public class EnterPLUTest {
 	SelfCheckoutStation station;
 	Map<PriceLookupCode, PLUCodedProduct> database;
+	FinishesAddingItems finishAddingItems;
+	BaggingArea baggingArea;
+	ScanItem scanItem;
+	
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,6 +43,9 @@ public class EnterPLUTest {
 			int maxWeight = 23000;
 			int scaleSensitivity = 10;
 			station = new SelfCheckoutStation(currency, noteDenominations, coinDenomonations, maxWeight, scaleSensitivity);
+			//scanItem = new ScanItem(station, Map<Barcode, BarcodedProduct> d, );
+			baggingArea = new BaggingArea(station);
+			
 			
 		//Creates a barcoded item
 			PriceLookupCode plu = new PriceLookupCode("1234");
@@ -47,6 +57,8 @@ public class EnterPLUTest {
 			database = new HashMap<>();
 			database.put(plu, product);
 			database.put(plu1, product1);
+			
+			finishAddingItems = new FinishesAddingItems(station, baggingArea);
 		
 	}
 
@@ -57,9 +69,83 @@ public class EnterPLUTest {
 	}
 
 	@Test
-	public void testEnterPLU() {
+	public void testPLUConstructor() {
+		
+		try {
+			EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
+		} catch(Exception e) {
+			fail();
+		}
+		
+		//the constructor should throw an exception as the selfCheckoutStation is invalid
+		try {
+			EnterPLU test = new EnterPLU(null, null, null, null);
+			fail();
+		} catch(Exception e) {
+			assertTrue(e instanceof SimulationException);
+		}
 		
 	}
+	
+	@Test
+	public void testNullInput() {
+		
+		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
+		
+		try {
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
+			test.itemLookup(null);
+		}catch(Exception e) {
+			assertTrue(e instanceof SimulationException);
+		}
+		
+	}
+	
+	@Test
+	public void testPLUInput() {
+		
+		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
+		
+		try {
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
+			test.itemLookup("1234");
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),5.0)); //item 2222 weighs 5kg
+			test.itemLookup("2222");
+		}catch(Exception e) {
+			fail();
+		}
+		
+	}
+	
+	@Test
+	public void testItemWeightOverload() {
+		
+		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
+		
+		try {
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			test.itemLookup("1234");
+		}catch(Exception e) {
+			assertTrue(e instanceof OverloadException);
+		}
+		
+	}
+	
+	@Test
+	public void testIncorrectPLU() {
+		
+		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
+		
+		try {
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			test.itemLookup("5555");
+		}catch(Exception e) {
+			assertTrue(e instanceof SimulationException);
+		}
+		
+	}
+	
+	/*
 
 	@Test
 	public void testItemLookup() {
@@ -127,5 +213,8 @@ public class EnterPLUTest {
 			fail();
 		}
 	}
+	
+	*/
+	
 
 }
