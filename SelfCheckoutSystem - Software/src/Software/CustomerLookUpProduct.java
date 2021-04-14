@@ -48,14 +48,14 @@ public class CustomerLookUpProduct {
 			description = PLUPRODUCTS.get(pluCode).getDescription();
 			// The weight on the scale is in grams so I converted to kg because the price of the products in PLUCodedProduct is per kg 
 			price = BigDecimal.valueOf(scale.getCurrentWeight()).divide(new BigDecimal(1000)).multiply(PLUPRODUCTS.get(pluCode).getPrice());
+			weight = BigDecimal.valueOf(scale.getCurrentWeight());
+			
+			//update totals in FinishesAddingItems and BaaggingArea
+			done.updateTotals(description, price, weight);
+			baged.setWeightScanned(weight);
 		}
 		catch(Exception e) {
 			throw new SimulationException(new NullPointerException("Something went wrong. Try again. "));
 		}
-		//update totals in finishesAddingItems
-		done.setList(description);
-		done.setPrice(price);
-		done.setWeight(weight);
-		baged.setWeightScanned(weight);
 	}
 }

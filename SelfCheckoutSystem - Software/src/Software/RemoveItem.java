@@ -17,69 +17,30 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class RemoveItem {
+	//local objects
 	private SelfCheckoutStation station;
-	private ArrayList<Barcode> barcodedItemList;
-	private Map<PriceLookupCode, Double> pluCodedItemList;
-	private BigDecimal total;
-	private BigDecimal currentPrice;
-	private double currentWeight;
+	private Map<Barcode, BarcodedProduct> barcodedProduct;
+	private Map<PriceLookupCode, PLUCodedProduct> pluCodedItemList;
+	private Map<String, PLUCodedProduct> PLULookup;
+	Map<Barcode, BarcodedItem> barcodedItem;
+	private FinishesAddingItems done;
 	
 	/**
-	 * Create a BarcodeScannerListener
-	 * If barcodedItemList has the targeted barcode, 
-	 * then remove it from barcodedItemList and subtract price from total
+	 * Constructor for Remove item
+	 * @param SelfCheckoutStation station
+	 * @param ArrayList<Barcode> barcodedItemList
+	 * @param Map<PriceLookupCode, Double> pluCodedItemList
+	 * @param BigDecimal total
 	 */
-	private BarcodeScannerListener listener = new BarcodeScannerListener() {
-		@Override
-		public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {	
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-			if(barcodedItemList.contains(barcode)) {
-				barcodedItemList.remove(barcode);
-				currentPrice = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getPrice();
-				total = total.subtract(currentPrice);
-			}
-		}
-	};
-	
-	/**
-	 * Constructor
-	 * @param station
-	 * @param barcodedItemList
-	 * @param pluCodedItemList
-	 * @param total
-	 */
-	public RemoveItem(SelfCheckoutStation station, ArrayList<Barcode> barcodedItemList, Map<PriceLookupCode, Double> pluCodedItemList, BigDecimal total) {
+	public RemoveItem(SelfCheckoutStation station, Map<Barcode, BarcodedProduct> barcodedProduct, Map<PriceLookupCode, PLUCodedProduct> pluCodedItemList, 
+			Map<String, PLUCodedProduct> PLULookup, Map<Barcode, BarcodedItem> barcodedItem, FinishesAddingItems done) {
 		this.station = station;
-		this.barcodedItemList = barcodedItemList;
+		this.barcodedProduct = barcodedProduct;
 		this.pluCodedItemList = pluCodedItemList;
-		this.total = total;
-		this.station.mainScanner.register(listener);
-		this.station.handheldScanner.register(listener);
-	}
-	
-	/**
-	 * Scan by the main BarcodeScanner
-	 * @param item
-	 */
-	public void scanFromMain(BarcodedItem item) {
-		station.mainScanner.scan(item);
-	}
-	
-	/**
-	 * Scan by the hand-held BarcodeScanner
-	 * @param item
-	 */
-	public void scanFromHandheld(BarcodedItem item) {
-		station.handheldScanner.scan(item);
+		this.PLULookup = PLULookup;
+		this.barcodedItem = barcodedItem;
+		this.done = done;
+
 	}
 	
 	/**
@@ -105,42 +66,20 @@ public class RemoveItem {
 	}
 	
 	/**
-	 * Get barcodedItemList
-	 * @return ArrayList<Barcode> barcodedItemList
+	 * Removes the given item from the total by the given parameter
+	 * @param Barcode barcode
 	 */
-	public ArrayList<Barcode> getBarcodedItemList() {
-		return barcodedItemList;
+	public void removeBarcodedItem(Barcode barcode) {
+		done.removeItem(bar);
 	}
 	
 	/**
-	 * Get pluCodedItemList
-	 * @return Map<PriceLookupCode, Double> pluCodedItemList
+	 * Removes the given item from the total by the given parameter
+	 * @param String plu name
 	 */
-	public Map<PriceLookupCode, Double> getPLUCodedItemList() {
-		return pluCodedItemList;
-	}
-	
-	/**
-	 * Get total
-	 * @return BigDecimal total
-	 */
-	public BigDecimal getTotal() {
-		return total;
-	}
-	
-	/**
-	 * Get currentPrice
-	 * @return BigDecimal currentPrice
-	 */
-	public BigDecimal getCurrentPrice() {
-		return currentPrice;
-	}
-	
-	/**
-	 * Get currentWeight
-	 * @return double currentWeight
-	 */
-	public double getCurrentWeight() {
-		return currentWeight;
+	public void removeItem(String name) {
+		done.removeList(PLULookup.get(name).getDescription());
+		done.removePrice(PLULookup.get(name).getPrice());
+		//done.removeWeight(PLULookup.get(name).get);
 	}
 }
