@@ -255,13 +255,17 @@ public class FinishesAddingItemsTest {
 			Bag bag = new Bag(bagWeight);
 			PLUCodedItem pluItem = new PLUCodedItem(new PriceLookupCode("1234"), 5.0);
 			
-			
 			scanItem.scanFromMain(BARCODEDITEM);
 			bagArea.addItem(BARCODEDITEM);
 			scs.scale.add(pluItem);
 			eplu.itemLookup("1234");
 			bagArea.addItem(pluItem);
 			finish.addOwnBag(bag, bagName);
+			
+			double actual = finish.getPrice();
+			double expected = 5.0*1.5 + 10.5 + 0.10;
+			
+			assertEquals(actual, expected, 0);
 			
 		}
 
