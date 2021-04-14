@@ -47,7 +47,6 @@ public class MainFrame {
 	public ScansMembershipCard scanMembership;
 	public AddOwnBag addOwnBag;
 	public ApproveWeightDiscrepency approveWeightDiscrepancy;
-	public LookupProduct lookupProduct;
 	public FinishesAddingItems finishesAddingItems;
 	public PayWithBanknote payWithBanknote;
 	public PayWithCoin payWithCoin;
@@ -123,7 +122,6 @@ public class MainFrame {
 			addOwnBag = new AddOwnBag(station);
 			baggingArea = new BaggingArea(station);
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
-			lookupProduct = new LookupProduct(ProductDatabases.PLU_PRODUCT_DATABASE);
 			finishesAddingItems = new FinishesAddingItems(station, baggingArea);
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
