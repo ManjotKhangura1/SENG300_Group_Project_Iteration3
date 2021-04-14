@@ -12,20 +12,28 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class EnterPLU {
+	//local variables
 	private BigDecimal price;
+	public BigDecimal weight;
 	private String description;
 	private PriceLookupCode plu;
+	//local objects
 	public static Map<PriceLookupCode, PLUCodedProduct> database;
 	public final ElectronicScale scale;
+	public FinishesAddingItems done;
+	public BaggingArea baged;
+
 
 	/**
 	 * PLULookup constructor
 	 * @param station
 	 * @param database
 	 */
-	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database) {
+	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
 		EnterPLU.database = database;
 		scale = station.scale;
+		done = d;
+		baged = b;
 	}
 
 	/**
@@ -49,21 +57,12 @@ public class EnterPLU {
 		}catch(Exception e) {
 			throw new SimulationException(new NullPointerException("code not recognised")); //from database.get(plu)
 		}
+		
+		//update totals in finishesAddingItems
+		done.setList(description);
+		done.setPrice(price);
+		done.setWeight(weight);
+		baged.setWeightScanned(weight);
 	}
 	
-	/**
-	 * returns the price
-	 * @return BigDecimal price
-	 */
-	public BigDecimal getPrice() {
-		return price;
-	}
-	
-	/**
-	 * returns the item description
-	 * @return String description
-	 */
-	public String getDescription() {
-		return description;
-	}
 }

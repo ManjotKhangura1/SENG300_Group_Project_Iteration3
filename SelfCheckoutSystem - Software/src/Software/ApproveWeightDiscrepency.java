@@ -1,4 +1,6 @@
 package Software;
+import java.math.BigDecimal;
+
 import org.lsmr.selfcheckout.devices.ElectronicScale;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
@@ -21,7 +23,7 @@ public class ApproveWeightDiscrepency {
 	 */
 	public void approve() throws Exception {
 		try {
-			area.setWeightBaggingArea(bagging.getCurrentWeight());
+			area.setWeightScanned(BigDecimal.valueOf(bagging.getCurrentWeight()));
 		}catch(OverloadException e) {
 			throw e; //from getCurrentWeight
 		}

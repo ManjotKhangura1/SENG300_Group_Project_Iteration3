@@ -1,4 +1,6 @@
 package Software;
+import java.math.BigDecimal;
+
 import org.lsmr.selfcheckout.Item;
 
 import org.lsmr.selfcheckout.devices.*;
@@ -7,11 +9,11 @@ import org.lsmr.selfcheckout.devices.listeners.ElectronicScaleListener;
 
 public class BaggingArea {
 
-		
+	
 	public ElectronicScale baggingArea;
 	
-	private double totalWeightInBagging;
-	private double totalWeightScanned;
+	private BigDecimal totalWeightInBagging;
+	private BigDecimal totalWeightScanned;
 	
 	private boolean weightChanged = false;
 	private boolean overload= false;
@@ -119,12 +121,12 @@ public class BaggingArea {
 			throw new SimulationException(new NullPointerException("Null item being added."));
 		}
 
-		if((totalWeightInBagging + item.getWeight()) > totalWeightScanned) {
+		if(totalWeightInBagging.add(new BigDecimal(item.getWeight())).compareTo(totalWeightScanned) > 1) {
 			throw new SimulationException("More items in bagging area than scanned. Unable to add item.");
 		}
 		
 		baggingArea.add(item);
-		totalWeightInBagging = totalWeightInBagging + item.getWeight();
+		totalWeightInBagging = totalWeightInBagging.add(new BigDecimal(item.getWeight()));
 		
 		//Checking if the bagging area has overloaded, in which case the exception is thrown
 		if(overload) {
@@ -163,7 +165,7 @@ public class BaggingArea {
 		if(item == null) {
 			throw new SimulationException(new NullPointerException("Null item being removed."));
 		}
-		if(totalWeightInBagging == 0) {
+		if(totalWeightInBagging.compareTo(new BigDecimal(0.0)) == 0) {
 			throw new SimulationException("No items in the bagging area.");
 		}
 		
@@ -181,7 +183,7 @@ public class BaggingArea {
 	 * 				If there is more weight on the scale than the allowed weight limit.
 	 */
 	public void updateWeight() throws OverloadException {
-		this.totalWeightInBagging = baggingArea.getCurrentWeight();
+		this.totalWeightInBagging = BigDecimal.valueOf(baggingArea.getCurrentWeight());
 	}
 	
 	/**
@@ -192,8 +194,8 @@ public class BaggingArea {
 	 * @throws SimulationException
 	 * 			If the weight being set is negative.
 	 */
-	public void setWeightBaggingArea(double weight) {
-		if(weight < 0) {
+	public void setWeightBaggingArea(BigDecimal weight) {
+		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0) {
 			throw new SimulationException("Invalid weight.");
 		}
 		this.totalWeightInBagging = weight;
@@ -204,7 +206,7 @@ public class BaggingArea {
 	 * 
 	 * @return The total weight currently in the bagging area
 	 */
-	public double getWeightBaggingArea() {
+	public BigDecimal getWeightBaggingArea() {
 		return totalWeightInBagging;
 	}
 	
@@ -218,15 +220,15 @@ public class BaggingArea {
 	 * @throws SimulationException
 	 * 			If the weight being set is greater than the total weight of scanned items.
 	 */
-	public void setWeightScanned(double weight) {
-		if(totalWeightInBagging > weight && weight >= 0) {
+	public void setWeightScanned(BigDecimal weight) {
+		if(totalWeightInBagging.compareTo(weight) > 0 && weight.compareTo(BigDecimal.valueOf(0.0)) >= 0) {
 			throw new SimulationException("More items in bagging area than scanned.");
 		}
 		
-		if(weight < 0) {
+		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0) {
 			throw new SimulationException("Invalid weight.");
 		}
-		this.totalWeightScanned = weight;
+		this.totalWeightScanned.add(weight);
 	}
 	
 	/**
@@ -234,7 +236,7 @@ public class BaggingArea {
 	 * 
 	 * @return The total weight of all items scanned
 	 */
-	public double getWeightScanned() {
+	public BigDecimal getWeightScanned() {
 		return totalWeightScanned;
 	}
 	
