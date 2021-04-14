@@ -86,16 +86,3 @@ public class AddOwnBag {
 	
 
 }
-
-class Bag extends Item{
-
-	/**
-	 * creates an Item of type Bag
-	 * @param weightInGrams
-	 */
-	protected Bag(double weightInGrams) {
-		super(weightInGrams);
-		// TODO Auto-generated constructor stub
-	}
-
-}
