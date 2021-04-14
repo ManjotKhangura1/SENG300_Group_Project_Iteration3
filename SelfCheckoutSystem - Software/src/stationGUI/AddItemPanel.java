@@ -383,7 +383,7 @@ public class AddItemPanel extends JPanel{
 			lblNewJgoodiesLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 			add(lblNewJgoodiesLabel_1);
 			
-			JLabel lblNewJgoodiesLabel_16 = new JLabel("Enter Amount(g):");
+			JLabel lblNewJgoodiesLabel_16 = new JLabel("Enter Amount (g):");
 			lblNewJgoodiesLabel_16.setBounds(320, 553, 109, 15);
 			lblNewJgoodiesLabel_16.setFont(new Font("Tahoma", Font.BOLD, 12));
 			add(lblNewJgoodiesLabel_16);

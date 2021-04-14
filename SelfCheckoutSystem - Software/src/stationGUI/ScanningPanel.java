@@ -85,7 +85,7 @@ public class ScanningPanel extends JPanel {
 
 		// Creating station status label
 		lblStationStatus = new JLabel("Station Status: ON");
-		lblStationStatus.setBounds(581, 305, 160, 24);
+		lblStationStatus.setBounds(569, 302, 227, 24);
 		//lblStationStatus.setText("Station Status: ON");
 		//System.out.print(mainFrame.attendantPanel.getLblStationStatus());
 		//lblStationStatus.setText(mainFrame.attendantPanel.getLblStationStatus());
