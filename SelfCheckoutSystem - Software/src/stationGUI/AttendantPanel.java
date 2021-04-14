@@ -37,7 +37,6 @@ public class AttendantPanel extends JPanel {
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
 
-
 		JLabel lblSubTotal = new JLabel("Sub Total:");
 		lblSubTotal.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblSubTotal.setHorizontalAlignment(SwingConstants.CENTER);
@@ -135,6 +134,24 @@ public class AttendantPanel extends JPanel {
 		btnEmpty.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnEmpty, "cell 0 1");
 
+		//Change ink button
+		JButton btnChangeInk = new JButton("Change Ink");
+		btnChangeInk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnChangeInk.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnChangeInk, "cell 0 3");
+		
+		//Change paper button
+		JButton btnChangePaper = new JButton("Change Paper");
+		btnChangePaper.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnChangePaper.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnChangePaper, "flowx,cell 0 3");
+
 		// Creating the start up button
 		JButton btnStartUp = new JButton("Start Up");
 
@@ -177,6 +194,7 @@ public class AttendantPanel extends JPanel {
 		});
 		btnLogout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnLogout, "cell 5 5");
+		
 
 	}
 	
