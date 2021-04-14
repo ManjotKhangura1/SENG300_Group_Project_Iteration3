@@ -31,6 +31,7 @@ public class Maintenance {
 	private boolean refillSuccess;
 	private int actualRefillAmount;
 	private boolean emptied;
+	private boolean stationOn;
 
 	// overridden listener for printer, updating flags when necessary
 	private ReceiptPrinterListener printerListener = new ReceiptPrinterListener() {
@@ -97,6 +98,7 @@ public class Maintenance {
 		refillSuccess = true;
 		actualRefillAmount = 0;
 		emptied = false;
+		stationOn = true;
 	}
 
 	/**
@@ -248,6 +250,8 @@ public class Maintenance {
 		System.out.print("Starting up selfcheckout station...");
 		// enable all abstract devices in station
 		enableAll();
+		
+		stationOn = true;
 	}
 	
 	/**
@@ -258,6 +262,8 @@ public class Maintenance {
 		System.out.print("Shutting down selfcheckout station...");
 		// disable all abstract devices in station
 		disableAll();
+		
+		stationOn = false;
 	}
 	
 	/**
@@ -362,6 +368,14 @@ public class Maintenance {
 	 */
 	public boolean isEmptied() {
 		return emptied;
+	}
+	
+	/**
+	 * Gets the stationOn boolean
+	 * @return stationOn The boolean which represents the station status
+	 */
+	public boolean isStationOn() {
+		return stationOn;
 	}
 	
 	
