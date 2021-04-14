@@ -299,24 +299,9 @@ public class MaintenanceTest {
 		Maintenance maintenance = new Maintenance(station);
 		maintenance.startUp();
 		
-		boolean expected = false;
+		boolean expected = true;
 		
-		assertEquals(expected, station.scale.isDisabled());
-		assertEquals(expected, station.baggingArea.isDisabled());
-		assertEquals(expected, station.screen.isDisabled());
-		assertEquals(expected, station.printer.isDisabled());
-		assertEquals(expected, station.cardReader.isDisabled());
-		assertEquals(expected, station.mainScanner.isDisabled());
-		assertEquals(expected, station.handheldScanner.isDisabled());
-		assertEquals(expected, station.banknoteInput.isDisabled());
-		assertEquals(expected, station.banknoteOutput.isDisabled());
-		assertEquals(expected, station.banknoteValidator.isDisabled());
-		assertEquals(expected, station.banknoteStorage.isDisabled());
-		assertEquals(expected, station.coinSlot.isDisabled());
-		assertEquals(expected, station.coinValidator.isDisabled());
-		assertEquals(expected, station.coinStorage.isDisabled());
-		assertEquals(expected, station.coinTray.isDisabled());
-		
+		assertEquals(expected, maintenance.isStationOn());
 	}
 
 	@Test //Testing normal usage
@@ -324,23 +309,9 @@ public class MaintenanceTest {
 		Maintenance maintenance = new Maintenance(station);
 		maintenance.shutDown();
 		
-		boolean expected = true;
+		boolean expected = false;
 		
-		assertEquals(expected, station.scale.isDisabled());
-		assertEquals(expected, station.baggingArea.isDisabled());
-		assertEquals(expected, station.screen.isDisabled());
-		assertEquals(expected, station.printer.isDisabled());
-		assertEquals(expected, station.cardReader.isDisabled());
-		assertEquals(expected, station.mainScanner.isDisabled());
-		assertEquals(expected, station.handheldScanner.isDisabled());
-		assertEquals(expected, station.banknoteInput.isDisabled());
-		assertEquals(expected, station.banknoteOutput.isDisabled());
-		assertEquals(expected, station.banknoteValidator.isDisabled());
-		assertEquals(expected, station.banknoteStorage.isDisabled());
-		assertEquals(expected, station.coinSlot.isDisabled());
-		assertEquals(expected, station.coinValidator.isDisabled());
-		assertEquals(expected, station.coinStorage.isDisabled());
-		assertEquals(expected, station.coinTray.isDisabled());
+		assertEquals(expected, maintenance.isStationOn());
 	}
 
 	@Test //Test that null return when given invalid units

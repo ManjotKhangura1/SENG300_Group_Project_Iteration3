@@ -9,11 +9,13 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class AttendantPanel extends JPanel {
 
 	private MainFrame mainFrame;
-	JFrame frame;
+	private JFrame frame;
+	private JLabel lblStationStatus;
 
 	/**
 	 * Creates the Attendent Panel
@@ -25,6 +27,9 @@ public class AttendantPanel extends JPanel {
 		initComponents();
 	}
 
+	/**
+	 * Creates the different components of the Attendant Panel
+	 */
 	private void initComponents() {
 		setBounds(0, 0, 1280, 720);
 		setLayout(new MigLayout("",
@@ -32,69 +37,45 @@ public class AttendantPanel extends JPanel {
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
 
-		// Creating new frame for option panels
-		frame = new JFrame("Option Frame");
-		frame.setBounds(0, 0, 250, 220);
-		frame.setResizable(false);
+		JLabel lblSubTotal = new JLabel("Sub Total:");
+		lblSubTotal.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblSubTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblSubTotal, "cell 1 0");
 
-		// frame.getContentPane().setLayout(null);
+		JLabel lblPrinterStatus = new JLabel("Printer Status:");
+		lblPrinterStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblPrinterStatus, "cell 4 0");
 
-		JLabel lblNewLabel_1 = new JLabel("Sub Total:");
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel_1, "cell 1 0");
+		JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotal.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblTotal, "cell 1 1");
 
-		JPanel panel_2 = new JPanel();
-		add(panel_2, "cell 2 0,grow");
+		//Creates the label to display the station status
+		lblStationStatus = new JLabel("Station Status: ON");
+		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblStationStatus, "cell 1 2");
 
-		JLabel lblNewLabel_7 = new JLabel("Printer Status:");
-		lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblNewLabel_7, "cell 4 0");
-
-		JPanel panel_7 = new JPanel();
-		add(panel_7, "cell 5 0,grow");
-
-		JLabel lblNewLabel_2 = new JLabel("Total:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblNewLabel_2, "cell 1 1");
-
-		JPanel panel_3 = new JPanel();
-		add(panel_3, "cell 2 1,grow");
-
-		JLabel lblNewLabel_3 = new JLabel("Station Status:");
-		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblNewLabel_3, "cell 1 2");
-
-		JPanel panel_4 = new JPanel();
-		add(panel_4, "cell 2 2,grow");
-
-		JLabel lblNewLabel_4 = new JLabel("Payment Method:");
-		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblNewLabel_4, "cell 2 3");
-
-		JPanel panel = new JPanel();
-		add(panel, "cell 4 3,grow");
+		JLabel lblPaymentMethod = new JLabel("Payment Method:");
+		lblPaymentMethod.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblPaymentMethod, "cell 2 3");
 
 		JLabel lblStatus = new JLabel("Status:");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblStatus, "cell 2 4");
 
-		JPanel panel_5 = new JPanel();
-		add(panel_5, "cell 4 4,grow");
-
 		JLabel lblChange = new JLabel("Change:");
 		lblChange.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblChange, "cell 2 5");
-
-		JPanel panel_6 = new JPanel();
-		add(panel_6, "cell 4 5,grow");
 
 		createButtons();
 
 	}
 
+	/**
+	 * Creates all the buttons needed in the attendant station
+	 */
 	private void createButtons() {
 		// Block Station button
 		JButton btnBlock = new JButton("Block Station");
@@ -127,8 +108,9 @@ public class AttendantPanel extends JPanel {
 		JButton btnRefill = new JButton("Refill");
 		btnRefill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				createFrame();
 				// Creating new Refill Panel
-				DispenserPanel dispenserPanel = new DispenserPanel(mainFrame);
+				RefillPanel dispenserPanel = new RefillPanel(mainFrame, frame);
 				frame.getContentPane().add(dispenserPanel);
 				frame.pack();
 				frame.setVisible(true);
@@ -141,8 +123,9 @@ public class AttendantPanel extends JPanel {
 		JButton btnEmpty = new JButton("Empty Storage");
 		btnEmpty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				createFrame();
 				// Creating new Refill Panel
-				DispenserPanel panel = new DispenserPanel(mainFrame);
+				EmptyPanel panel = new EmptyPanel(mainFrame, frame);
 				frame.getContentPane().add(panel);
 				frame.pack();
 				frame.setVisible(true);
@@ -150,6 +133,56 @@ public class AttendantPanel extends JPanel {
 		});
 		btnEmpty.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnEmpty, "cell 0 1");
+
+		//Change ink button
+		JButton btnChangeInk = new JButton("Change Ink");
+		btnChangeInk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnChangeInk.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnChangeInk, "cell 0 3");
+		
+		//Change paper button
+		JButton btnChangePaper = new JButton("Change Paper");
+		btnChangePaper.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnChangePaper.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnChangePaper, "flowx,cell 0 3");
+
+		// Creating the start up button
+		JButton btnStartUp = new JButton("Start Up");
+
+		// Creating the shut down button
+		JButton btnShutDown = new JButton("Shut Down");
+
+		// Creating an action listener for start up button and formatting
+		btnStartUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.maintenance.startUp();
+				btnStartUp.setVisible(false);
+				btnShutDown.setVisible(true);
+				lblStationStatus.setText("Station Status: ON");
+			}
+		});
+		btnStartUp.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnStartUp, "cell 0 2");
+
+		// Creating an action listener for shut down button and formatting
+		btnShutDown.setVisible(true);
+		btnShutDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.maintenance.shutDown();
+				btnShutDown.setVisible(false);
+				btnStartUp.setVisible(true);
+				lblStationStatus.setText("Station Status: OFF");
+			}
+		});
+		btnShutDown.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		add(btnShutDown, "cell 0 2");
+		btnStartUp.setVisible(false);
 
 		// Logout button
 		JButton btnLogout = new JButton("Logout");
@@ -161,6 +194,18 @@ public class AttendantPanel extends JPanel {
 		});
 		btnLogout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnLogout, "cell 5 5");
+		
+
+	}
+	
+	/**
+	 * Creates a new JFrame
+	 */
+	private void createFrame() {
+		// Creating new frame for option panels
+		frame = new JFrame("Option Frame");
+		frame.setBounds(0, 0, 250, 370);
+		frame.setResizable(false);
 	}
 
 }
