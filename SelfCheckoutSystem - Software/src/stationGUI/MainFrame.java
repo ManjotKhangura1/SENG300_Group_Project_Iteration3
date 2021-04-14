@@ -109,7 +109,7 @@ public class MainFrame {
 			baggingArea = new BaggingArea(station);
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
 			lookupProduct = new LookupProduct(PLUCodedItems);
-			finishesAddingItems = new FinishesAddingItems(station, scanItem, baggingArea);
+			finishesAddingItems = new FinishesAddingItems(station);
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
