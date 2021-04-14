@@ -57,7 +57,7 @@ public class FinishesAddingItems {
 		temp.add(price); //element 0
 		temp.add(weight); //element 1
 		finalWeight = finalWeight.add(weight); 
-		finalPrice =  finalPrice.add(price); 
+		finalPrice = finalPrice.add(price); 
 		finalList.add(name); 
 		tracker.put(name, temp);
 	}
@@ -67,8 +67,8 @@ public class FinishesAddingItems {
 	 * @param String name
 	 */
 	public void removeItem(String name) {
-		finalPrice.subtract(tracker.get(name).get(0));
-		finalWeight.subtract(tracker.get(name).get(1));
+		finalPrice = finalPrice.subtract(tracker.get(name).get(0));
+		finalWeight = finalWeight.subtract(tracker.get(name).get(1));
 		finalList.remove(name);
 		tracker.remove(name);
 	}
