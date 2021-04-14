@@ -125,9 +125,15 @@ public class ScanningPanel extends JPanel {
 		});
 		add(btnNewButton_3);
 
-		JButton btnNewButton_2 = new JButton("Assistance");
+		JButton btnNewButton_2 = new JButton("Help");
 		btnNewButton_2.setBounds(581, 544, 199, 33);
 		btnNewButton_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.scanningPanel.setVisible(false);
+				mainFrame.attendantLoginPanel.setVisible(true);
+			}
+		});
 		add(btnNewButton_2);
 
 		JButton btnNewButton_1 = new JButton("Proceed to Pay");
