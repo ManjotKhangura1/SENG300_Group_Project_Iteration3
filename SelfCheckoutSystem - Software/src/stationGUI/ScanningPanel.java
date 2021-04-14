@@ -7,6 +7,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,6 +18,8 @@ import java.awt.Font;
 public class ScanningPanel extends JPanel {
 
 	private MainFrame mainFrame;
+	private JFrame frame;
+	private JLabel lblStationStatus = new JLabel("");
 
 	public ScanningPanel(MainFrame mainFrame) {
 
@@ -60,14 +64,21 @@ public class ScanningPanel extends JPanel {
 		add(panel_3, "cell 2 1,grow");
 
 		// Creating station status label
-		JLabel lblStationStatus = new JLabel("");
-		if (mainFrame.maintenance.isStationOn() == true) {
+		lblStationStatus = new JLabel("Station Status: ON");
+		//lblStationStatus.setText("Station Status: ON");
+		//System.out.print(mainFrame.attendantPanel.getLblStationStatus());
+		//lblStationStatus.setText(mainFrame.attendantPanel.getLblStationStatus());
+		/*if (mainFrame.maintenance.isStationOn() == true) {
+			System.out.print(mainFrame.maintenance.isStationOn());
 			lblStationStatus.setText("Station Status: ON");
 		} else {
+			System.out.print(mainFrame.maintenance.isStationOn());
 			lblStationStatus.setText("Station Status: OFF");
-		}
+		}*/
 		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblStationStatus, "cell 1 2");
+		
+		
 
 		JPanel panel_4 = new JPanel();
 		add(panel_4, "cell 2 2,grow");
@@ -113,6 +124,11 @@ public class ScanningPanel extends JPanel {
 		 * if (!attendantLogin.isVisible() && !attendantLogin.isVisible()) {
 		 * setVisible(true); }
 		 */
+	}
+	
+
+	public JLabel getLblStationStatus() {
+		return lblStationStatus;
 	}
 
 }

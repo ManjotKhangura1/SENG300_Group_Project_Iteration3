@@ -165,6 +165,8 @@ public class AttendantPanel extends JPanel {
 				btnStartUp.setVisible(false);
 				btnShutDown.setVisible(true);
 				lblStationStatus.setText("Station Status: ON");
+				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: ON");
+				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: ON");
 			}
 		});
 		btnStartUp.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -178,6 +180,8 @@ public class AttendantPanel extends JPanel {
 				btnShutDown.setVisible(false);
 				btnStartUp.setVisible(true);
 				lblStationStatus.setText("Station Status: OFF");
+				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: OFF");
+				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: OFF");
 			}
 		});
 		btnShutDown.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -194,10 +198,13 @@ public class AttendantPanel extends JPanel {
 		});
 		btnLogout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnLogout, "cell 5 5");
-		
 
 	}
 	
+	public String getLblStationStatus() {
+		return lblStationStatus.getText();
+	}
+
 	/**
 	 * Creates a new JFrame
 	 */

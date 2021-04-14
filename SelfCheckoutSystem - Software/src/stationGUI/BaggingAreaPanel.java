@@ -14,6 +14,7 @@ import java.awt.Font;
 public class BaggingAreaPanel extends JPanel {
 
 	private MainFrame mainFrame;
+	private JLabel lblStationStatus;
 
 	/**
 	 * Bagging area panel constructor
@@ -98,15 +99,19 @@ public class BaggingAreaPanel extends JPanel {
 		add(lblTotalWeight, "cell 1 1");
 
 		//Creating station status label
-		JLabel lblStationStatus = new JLabel("");
-		if(mainFrame.maintenance.isStationOn() == true) {
+		lblStationStatus = new JLabel("");
+		/*if(mainFrame.maintenance.isStationOn() == true) {
 			lblStationStatus.setText("Station Status: ON");
 		}else {
 			lblStationStatus.setText("Station Status: OFF");
-		}
+		}*/
 		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblStationStatus, "cell 1 2");
 
+	}
+	
+	public JLabel getLblStationStatus() {
+		return lblStationStatus;
 	}
 
 }
