@@ -12,8 +12,8 @@ public class BaggingArea {
 	
 	public ElectronicScale baggingArea;
 	
-	private BigDecimal totalWeightInBagging;
-	private BigDecimal totalWeightScanned;
+	private BigDecimal totalWeightInBagging = new BigDecimal(0.00);
+	private BigDecimal totalWeightScanned = new BigDecimal(0.00);
 	
 	private boolean weightChanged = false;
 	private boolean overload= false;
@@ -34,6 +34,7 @@ public class BaggingArea {
 			throw new SimulationException(new NullPointerException("Self checkout station is null."));
 		}
 		this.baggingArea = selfCheckout.baggingArea;
+		//this.baggingArea.enable();
 		
 		updateWeight();
 		

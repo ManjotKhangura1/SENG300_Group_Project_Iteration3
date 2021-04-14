@@ -11,25 +11,27 @@ import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigDecimal;
 
 import javax.swing.SwingConstants;
 
 import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.external.ProductDatabases;
-import org.lsmr.selfcheckout.products.BarcodedProduct;
-import org.lsmr.selfcheckout.products.PLUCodedProduct;
+
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class AddItemPanel extends JPanel{
 	
 	private MainFrame mainFrame;
-	public int itemScanned = 0;
+	private String itemScanned = "0";
+	private BigDecimal price = new BigDecimal("0.00");
+	private BigDecimal weight = new BigDecimal("0.00");
+	private String name;
+	private Barcode barcode;
 
 	
 	public AddItemPanel(MainFrame mainFrame)
@@ -60,13 +62,12 @@ public class AddItemPanel extends JPanel{
 		TextField textField_2 = new TextField(25); // weight of PLU Item Purchased
 		add(textField_2, "cell 2 14");
 
-
 		JButton btnNewButton_2 = new JButton("      Eggs      ");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_2, "cell 1 8");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = 4;
+				itemScanned = "4";
                 JOptionPane.showMessageDialog(null, "Eggs scanned! Please add to bagging area. ");
 			}
 		});
@@ -76,7 +77,7 @@ public class AddItemPanel extends JPanel{
 		add(btnNewButton_3, "cell 2 8");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = 5;
+				itemScanned = "5";
                 JOptionPane.showMessageDialog(null, "Black beans scanned! Please add to bagging area. ");
 			}
 		});
@@ -84,7 +85,7 @@ public class AddItemPanel extends JPanel{
 		JButton btnNewButton_3_1 = new JButton("   Crackers   ");
 		btnNewButton_3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = 6;
+				itemScanned = "6";
                 JOptionPane.showMessageDialog(null, "Crackers scanned! Please add to bagging area. ");
 			}
 		});
@@ -95,7 +96,7 @@ public class AddItemPanel extends JPanel{
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = 1;
+				itemScanned = "2";
                 JOptionPane.showMessageDialog(null, "Milk scanned! Please add to bagging area. ");
 			}
 		});
@@ -105,7 +106,7 @@ public class AddItemPanel extends JPanel{
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = 2;
+				itemScanned = "2";
                 JOptionPane.showMessageDialog(null, "Soy milk scanned! Please add to bagging area. ");
 			}
 		});
@@ -115,8 +116,7 @@ public class AddItemPanel extends JPanel{
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//mainFrame.scanItem.scanFromMain();
-				itemScanned = 3;
+				itemScanned = "3";
                 JOptionPane.showMessageDialog(null, "Bread scanned! Please add to bagging area. ");
 			}
 		});
@@ -127,44 +127,144 @@ public class AddItemPanel extends JPanel{
 		add(btnNewButton_6, "cell 5 14");
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-				
-					try {
-						//bags addition 
-						int bags = Integer.parseInt(textField.getText());
-						//mainFrame.addOwnBag.addBag(Bag);
-						//PLU Code 
-						String PLU = textField_1.getText();
-						
-						int weightPLUPurchased = Integer.parseInt(textField_2.getText());
-						
-					}
-					catch(Exception exception) {
-		                JOptionPane.showMessageDialog(null, "Invalid input. Try again.");
-					}
 
+				try {
+					// customer buys bags
+					if (textField.getText() != "" && textField.getText().length() > 0) {
+						name = textField.getText() + " Store Bags";
+						price = BigDecimal.valueOf(Integer.parseInt(textField.getText()) * 0.1);
+						int bagsWeight = Integer.parseInt(textField.getText()) * 5; // Each bag is 5g
+						weight = BigDecimal.valueOf(bagsWeight);
+						mainFrame.finishesAddingItems.updateTotals(name, price, weight);
+					}
+					
+					// customer adds own bags
+					else if (textField_3.getText() != "" && textField_3.getText().length() > 0) {
+						// SINCE THERE IS NO ACTUAL SCALE, WE NEED TO ASSUME A WEIGHT FOR THE BAGS THAT ARE ADDED AND I WILL USE 10g PER 
+						int bagsWeight = Integer.parseInt(textField_3.getText()) * 10; 
+						weight = BigDecimal.valueOf(bagsWeight);
+						name = Integer.parseInt(textField_3.getText()) + " Personal Bags";
+						mainFrame.finishesAddingItems.updateTotals(name, new BigDecimal("0.00"), weight);
+		                JOptionPane.showMessageDialog(null, "Place your bags on the scale. ");
+					}
+					
+					//PLU Code 
+					else if (textField_1.getText() != "" && textField_2.getText() != "" && textField_1.getText().length() > 0 && textField_2.getText().length() > 0) {
+
+						String PLU = textField_1.getText();
+						int weightPLUPurchased = Integer.parseInt(textField_2.getText());			
+						PriceLookupCode plu = new PriceLookupCode(PLU);
+						name = textField_2.getText() + " g " + ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getDescription();
+						price = ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getPrice();
+						price = price.multiply(new BigDecimal(weightPLUPurchased)).multiply(new BigDecimal(0.001));
+						mainFrame.finishesAddingItems.updateTotals(null, price, new BigDecimal(weightPLUPurchased));
+					}	
 					
 					//scanning
-					mainFrame.scanItem.scanFromMain(mainFrame.BarcodedItems.get(itemScanned), false);
+					else if(itemScanned != "0") {
+						barcode = new Barcode(itemScanned);
+						double scanWeight = mainFrame.BarcodedItems.get(barcode).getWeight();
+						weight = new BigDecimal(scanWeight);
+						name = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getDescription();
+						price = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getPrice();
+						mainFrame.finishesAddingItems.updateTotals(name, price, weight);
 
-				}
-				catch(Exception error) {
+					}
+					
+					else {
+		                JOptionPane.showMessageDialog(null, "No item was added to the bagging area.");
+					}
+					
+					textField.setText("");
+					textField_3.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+
+					
+					System.out.println(mainFrame.finishesAddingItems.getPrice());
+					System.out.println(mainFrame.finishesAddingItems.getList());
+					System.out.println(mainFrame.finishesAddingItems.getWeight()  + "g");
 					
 				}
-					
+				catch(Exception exception) {
+					exception.printStackTrace();
+				}	
 				
 				mainFrame.addItemPanel.setVisible(false);
 				mainFrame.baggingAreaPanel.setVisible(true);
+				mainFrame.baggingAreaPanel.refreshWeight();
+				mainFrame.scanningPanel.refreshTotal();
 				
 			}
 		});
 		
+		// Get attendant to approve weight discrepancy
 		JButton btnNewButton_5 = new JButton("Skip Bagging This");
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+
+				try {
+					// customer buys bags
+					if (textField.getText() != "" && textField.getText().length() > 0) {
+						price = BigDecimal.valueOf(Integer.parseInt(textField.getText()) * 0.1);
+						int bagsWeight = Integer.parseInt(textField.getText()) * 5; // Each bag is 5g
+						weight = BigDecimal.valueOf(bagsWeight);
+						mainFrame.finishesAddingItems.updateTotals(null, price, weight);
+					}
+					
+					// customer adds own bags
+					else if (textField_3.getText() != "" && textField_3.getText().length() > 0) {
+		                JOptionPane.showMessageDialog(null, "You must place your own bags on the scale.");
+					}
+					
+					//PLU Code 
+					else if (textField_1.getText() != "" && textField_2.getText() != "" && textField_1.getText().length() > 0 && textField_2.getText().length() > 0) {
+
+						String PLU = textField_1.getText();
+						int weightPLUPurchased = Integer.parseInt(textField_2.getText());			
+						PriceLookupCode plu = new PriceLookupCode(PLU);
+						price = ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getPrice();
+						price = price.multiply(new BigDecimal(weightPLUPurchased)).multiply(new BigDecimal(0.001));
+						mainFrame.finishesAddingItems.updateTotals(null, price, new BigDecimal(weightPLUPurchased));
+					}	
+					
+					//scanning
+					else if(itemScanned != "0") {
+						barcode = new Barcode(itemScanned);
+						double scanWeight = mainFrame.BarcodedItems.get(barcode).getWeight();
+						weight = new BigDecimal(scanWeight);
+						price = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getPrice();
+						mainFrame.finishesAddingItems.updateTotals(null, price, weight);
+
+					}
+					
+					else {
+		                JOptionPane.showMessageDialog(null, "No item was added to the bagging area.");
+					}
+					
+					textField.setText("");
+					textField_3.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+
+					
+					System.out.println(mainFrame.finishesAddingItems.getPrice());
+					System.out.println(mainFrame.finishesAddingItems.getList());
+					System.out.println(mainFrame.finishesAddingItems.getWeight()  + "g");
+					
+				}
+				catch(Exception exception) {
+					exception.printStackTrace();
+				}	
+				
 				mainFrame.addItemPanel.setVisible(false);
-				mainFrame.attendantPanel.setVisible(true);
+				mainFrame.attendantLoginPanel.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Please wait for an attendant. ");
+				mainFrame.baggingAreaPanel.refreshWeight();
+				mainFrame.scanningPanel.refreshTotal();
+				
 			}
 		});
 		add(btnNewButton_5, "cell 5 15");
@@ -176,6 +276,13 @@ public class AddItemPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.addItemPanel.setVisible(false);
 				mainFrame.scanningPanel.setVisible(true);
+				System.out.println(mainFrame.finishesAddingItems.getPrice());
+				System.out.println(mainFrame.finishesAddingItems.getList());
+				System.out.println(mainFrame.finishesAddingItems.getWeight());
+				textField.setText("");
+				textField_3.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
 			}
 		});
 		

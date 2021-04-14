@@ -14,12 +14,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class ScanningPanel extends JPanel {
 
 	private MainFrame mainFrame;
 	private JFrame frame;
 	private JLabel lblStationStatus = new JLabel("");
+	public JLabel lblNewJgoodiesLabel = new JLabel("");
+	private JPanel panel_2;
+	private String total;
+	private JPanel panel_1;
 
 	public ScanningPanel(MainFrame mainFrame) {
 
@@ -39,7 +44,7 @@ public class ScanningPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0 1 6,grow");
 
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		scrollPane.setViewportView(panel_1);
 
 		JLabel lblNewLabel = new JLabel("Item Cart:");
@@ -52,9 +57,9 @@ public class ScanningPanel extends JPanel {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel_1, "cell 1 0");
 
-		JPanel panel_2 = new JPanel();
+		panel_2 = new JPanel();
 		add(panel_2, "cell 2 0,grow");
-
+		
 		JLabel lblNewLabel_2 = new JLabel("Total:");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -92,6 +97,14 @@ public class ScanningPanel extends JPanel {
 				mainFrame.scanningPanel.setVisible(false);
 			}
 		});
+		
+		JButton btnNewButton_3 = new JButton("Remove Item");
+		btnNewButton_3.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnNewButton_3, "cell 2 3");
 
 		JButton btnNewButton_2 = new JButton("Assistance");
 		btnNewButton_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -126,6 +139,15 @@ public class ScanningPanel extends JPanel {
 		 */
 	}
 	
+	public void refreshTotal() {
+		
+		total = String.valueOf(mainFrame.finishesAddingItems.getPrice());
+		lblNewJgoodiesLabel = new JLabel(total);
+		lblNewJgoodiesLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewJgoodiesLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panel_2.add(lblNewJgoodiesLabel);
+		
+	}
 
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;

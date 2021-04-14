@@ -10,11 +10,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class BaggingAreaPanel extends JPanel {
 
 	private MainFrame mainFrame;
 	private JLabel lblStationStatus;
+	private String price;
+	private String weight;
+	public JLabel totalWeight;
 
 	/**
 	 * Bagging area panel constructor
@@ -41,6 +45,7 @@ public class BaggingAreaPanel extends JPanel {
 				mainFrame.addItemPanel.setVisible(true);
 				mainFrame.baggingAreaPanel.setVisible(false);
 				mainFrame.attendantLoginPanel.setVisible(false);
+				totalWeight.setText("");
 			}
 		});
 
@@ -55,7 +60,7 @@ public class BaggingAreaPanel extends JPanel {
 		});
 		btnViewCart.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnViewCart, "cell 1 4");
-
+		
 	}
 
 	/**
@@ -86,17 +91,12 @@ public class BaggingAreaPanel extends JPanel {
 		lblBaggingArea.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblBaggingArea);
 
-		//Creating item weight label
-		JLabel lblItemWeight = new JLabel("Weight of Item Added: ");
-		lblItemWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblItemWeight.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblItemWeight, "cell 1 0");
-		
 		//Creating total weight label
-		JLabel lblTotalWeight = new JLabel("Total Weight:");
+		JLabel lblTotalWeight = new JLabel("Total Weight (g): ");
 		lblTotalWeight.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblTotalWeight, "cell 1 1");
+		add(lblTotalWeight, "flowx,cell 1 1");
+
 
 		//Creating station status label
 		lblStationStatus = new JLabel("");
@@ -109,6 +109,16 @@ public class BaggingAreaPanel extends JPanel {
 		add(lblStationStatus, "cell 1 2");
 
 	}
+	
+	public void refreshWeight() {
+		
+		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());
+		totalWeight = new JLabel(weight);
+		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(totalWeight, "cell 1 1");
+
+	}
+	
 	
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;

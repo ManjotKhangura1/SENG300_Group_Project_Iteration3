@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -69,6 +70,27 @@ public class AttendantPanel extends JPanel {
 		JLabel lblPaymentMethod = new JLabel("Payment Method:");
 		lblPaymentMethod.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblPaymentMethod, "cell 2 3");
+		
+		JButton btnNewButton = new JButton("Approve Weight Discrepancy");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					String name;
+					BigDecimal price = new BigDecimal("0.00");
+					BigDecimal weight = new BigDecimal("0.00");
+					mainFrame.approveWeightDiscrepancy.approve();
+					mainFrame.finishesAddingItems.updateTotals(null, price, weight);
+				} catch (Exception e1) {
+				}
+				mainFrame.attendantPanel.setVisible(false);
+				mainFrame.scanningPanel.setVisible(true);
+
+				
+
+			}
+		});
+		add(btnNewButton, "cell 0 4");
 
 		JLabel lblStatus = new JLabel("Status:");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);

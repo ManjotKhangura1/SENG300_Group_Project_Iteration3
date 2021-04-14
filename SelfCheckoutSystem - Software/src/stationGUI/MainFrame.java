@@ -198,6 +198,9 @@ public class MainFrame {
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu4, new PLUCodedProduct(plu4, "Oranges", BigDecimal.valueOf(1.62)));
 	}
 
+	/*
+	 * Make Barcoded Product Database
+	 */
 	public void initBarcodedProductsDatabase() throws SimulationException {
 
 		Barcode barcode1 = new Barcode("1");
@@ -207,12 +210,12 @@ public class MainFrame {
 		Barcode barcode5 = new Barcode("5");
 		Barcode barcode6 = new Barcode("6");
 
-		BarcodedProduct milk = new BarcodedProduct(barcode1, "Fresh milk!", new BigDecimal("4.57")); // 4800g
-		BarcodedProduct soymilk = new BarcodedProduct(barcode2, "Soy milk fortified with B12!", new BigDecimal("3.49")); // 3890g
-		BarcodedProduct bread = new BarcodedProduct(barcode3, "This bread is baked fresh!", new BigDecimal("2.49")); // 350g 
-		BarcodedProduct eggs = new BarcodedProduct(barcode4, "These eggs are white and brown! ", new BigDecimal("3.29")); // 300g
-		BarcodedProduct blackbeans = new BarcodedProduct(barcode5, "From Cuba!", new BigDecimal("2.99")); // 450g
-		BarcodedProduct crackers = new BarcodedProduct(barcode6, "Crackers!", new BigDecimal("2.99")); // 200g
+		BarcodedProduct milk = new BarcodedProduct(barcode1, "Milk", new BigDecimal("4.57")); // 4800g
+		BarcodedProduct soymilk = new BarcodedProduct(barcode2, "Soy Milk", new BigDecimal("3.49")); // 3890g
+		BarcodedProduct bread = new BarcodedProduct(barcode3, "Bread", new BigDecimal("2.49")); // 350g 
+		BarcodedProduct eggs = new BarcodedProduct(barcode4, "Eggs", new BigDecimal("3.29")); // 300g
+		BarcodedProduct blackbeans = new BarcodedProduct(barcode5, "Black beans", new BigDecimal("2.99")); // 450g
+		BarcodedProduct crackers = new BarcodedProduct(barcode6, "Crackers", new BigDecimal("2.99")); // 200g
 
 		//ScanItem and RemoveItems
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, milk);
@@ -223,7 +226,9 @@ public class MainFrame {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode6, crackers);
 
 	}
-	
+	/*
+	 * To store the weights of BarcodedItems
+	 */
 	public void initBarcodedItemsDatabase() {
 		
 		Barcode barcode1 = new Barcode("1");
@@ -233,12 +238,12 @@ public class MainFrame {
 		Barcode barcode5 = new Barcode("5");
 		Barcode barcode6 = new Barcode("6");
 
-		BarcodedItem milk = new BarcodedItem(barcode1, 4800); // 4800g
-		BarcodedItem soymilk = new BarcodedItem(barcode2, 3890); // 3890g
-		BarcodedItem bread = new BarcodedItem(barcode3, 350); // 350g 
-		BarcodedItem eggs = new BarcodedItem(barcode4, 300); // 300g
-		BarcodedItem blackbeans = new BarcodedItem(barcode5, 450); // 450g
-		BarcodedItem crackers = new BarcodedItem(barcode6, 200); // 200g
+		BarcodedItem milk = new BarcodedItem(barcode1, 4800);
+		BarcodedItem soymilk = new BarcodedItem(barcode2, 3890);
+		BarcodedItem bread = new BarcodedItem(barcode3, 350); 
+		BarcodedItem eggs = new BarcodedItem(barcode4, 300);
+		BarcodedItem blackbeans = new BarcodedItem(barcode5, 450);
+		BarcodedItem crackers = new BarcodedItem(barcode6, 200); 
 
 		BarcodedItems.put(barcode1, milk);
 		BarcodedItems.put(barcode2, soymilk);
