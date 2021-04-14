@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.JFrame;
-
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.OverloadException;
@@ -20,7 +18,6 @@ import org.lsmr.selfcheckout.external.CardIssuer;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.BarcodedItem;
-
 import Software.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -58,7 +55,7 @@ public class MainFrame {
 	public GiveChange giveChange;
 	public RemovePurchasedItems removePurchasedItems;
 	public ReturnsToAddingItems returnsToAddingItems;
-	public Maintenance maintence;
+	public Maintenance maintenance;
 	public FailBagging failBagging;
 	public EntersPlasticBagsUsed bagsUsed;
 	public EnterPLU enterPLU;
@@ -116,11 +113,12 @@ public class MainFrame {
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
+			payWithCreditCard = new PayWithCreditCard(station, cardIssuer);
 			payWithGiftCard = new PayWithGiftCard(station);
 			giveChange = new GiveChange(station, CAD, totalOwed, payWithBanknote, payWithCoin);
 			removePurchasedItems = new RemovePurchasedItems(station, scanItem, baggingArea, giveChange);
 			returnsToAddingItems = new ReturnsToAddingItems(station);
-			payWithCreditCard = new PayWithCreditCard(station, cardIssuer);
+			maintenance = new Maintenance(station);
 
 		} catch (OverloadException e) {
 			e.printStackTrace();
