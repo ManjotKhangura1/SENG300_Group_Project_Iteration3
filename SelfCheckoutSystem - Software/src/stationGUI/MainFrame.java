@@ -23,7 +23,6 @@ public class MainFrame {
 
 	BaggingAreaPanel baggingAreaPanel;
 
-	
 	SelfCheckoutStation station;
 	
 	//BaggingArea baggingArea;
