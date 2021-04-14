@@ -51,6 +51,11 @@ public class EnterPLU {
 			if(plu.equals(database.get(plu).getPLUCode())) {
 				description = database.get(plu).getDescription(); //update the item description
 				price = database.get(plu).getPrice().multiply(BigDecimal.valueOf(scale.getCurrentWeight())); //multiply price by weight
+				weight = BigDecimal.valueOf(scale.getCurrentWeight());
+				
+				//update totals in FinishesAddingItems and BaggingArea
+				done.updateTotals(description, price, weight);
+				baged.setWeightScanned(weight);
 			}
 		}catch(OverloadException e) {
 			throw new OverloadException("Item not on scale"); //from scale.getCurrentWeight
@@ -58,11 +63,6 @@ public class EnterPLU {
 			throw new SimulationException(new NullPointerException("code not recognised")); //from database.get(plu)
 		}
 		
-		//update totals in finishesAddingItems
-		done.setList(description);
-		done.setPrice(price);
-		done.setWeight(weight);
-		baged.setWeightScanned(weight);
 	}
 	
 }

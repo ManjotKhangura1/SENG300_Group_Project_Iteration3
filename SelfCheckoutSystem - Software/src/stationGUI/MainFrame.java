@@ -19,6 +19,7 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.external.CardIssuer;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
+import org.lsmr.selfcheckout.BarcodedItem;
 
 import Software.*;
 import net.miginfocom.swing.MigLayout;
@@ -46,7 +47,6 @@ public class MainFrame {
 	public EnterMembership enterMembership;
 	public ScansMembershipCard scanMembership;
 	public AddOwnBag addOwnBag;
-	public BaggingAreaWeightIncorrect incorrectBaggingWeight;
 	public ApproveWeightDiscrepency approveWeightDiscrepancy;
 	public LookupProduct lookupProduct;
 	public FinishesAddingItems finishesAddingItems;
@@ -67,11 +67,12 @@ public class MainFrame {
 
 	
 	public SelfCheckoutStation station;
-	public Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>(); //ScanItem
-	public Map<PriceLookupCode, Double> PLUCodedItems = new HashMap<>(); //removeItem
-	public Map<PriceLookupCode, PLUCodedProduct> PLUProduct = new HashMap<>(); //EnterPLU and LookupItem
+	public Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>(); //ScanItem and RemoveItems
+	public Map<Barcode, BarcodedItem> barcodedItem = new HashMap<>();
+	//public Map<PriceLookupCode, Double> PLUCodedItems = new HashMap<>(); //removeItem
+	public Map<PriceLookupCode, PLUCodedProduct> PLUCodedItems = new HashMap<>(); //EnterPLU and LookupItem
 	public Map<String, PLUCodedProduct> PLULookup = new HashMap<>(); //cutomerLooksupItem
-	public ArrayList<Barcode> barcodedItemList = new ArrayList<Barcode>();
+	//public ArrayList<Barcode> barcodedItemList = new ArrayList<Barcode>();
 	public String membershipNumber;
 	public String PLUCode = "";
 	public BigDecimal total;
@@ -110,11 +111,10 @@ public class MainFrame {
 		try {
 			addOwnBag = new AddOwnBag(station);
 			baggingArea = new BaggingArea(station);
-			incorrectBaggingWeight = new BaggingAreaWeightIncorrect(station, finishesAddingItems);
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
-			lookupProduct = new LookupProduct(PLUProduct);
+			lookupProduct = new LookupProduct(PLUCodedItems);
 			finishesAddingItems = new FinishesAddingItems(station, scanItem, baggingArea);
-			removeItem = new RemoveItem(station, barcodedItemList, PLUCodedItems, total);
+			removeItem = new RemoveItem(station, BarcodedProducts, PLUCodedItems, PLULookup,barcodedItem, finishesAddingItems);
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
@@ -178,10 +178,10 @@ public class MainFrame {
 		PriceLookupCode plu3 = new PriceLookupCode("55589");
 		PriceLookupCode plu4 = new PriceLookupCode("30897");
 
-		PLUCodedItems.put(plu1, 2.00);
-		PLUCodedItems.put(plu2, 1.97);
-		PLUCodedItems.put(plu3, 4.37);
-		PLUCodedItems.put(plu4, 2.50);
+		PLUCodedItems.put(plu1, new PLUCodedProduct(plu1, "Apple", BigDecimal.valueOf(2.0)));
+		PLUCodedItems.put(plu2, new PLUCodedProduct(plu2, "Banana", BigDecimal.valueOf(1.96)));
+		PLUCodedItems.put(plu3, new PLUCodedProduct(plu3, "Grapes", BigDecimal.valueOf(0.50)));
+		PLUCodedItems.put(plu4, new PLUCodedProduct(plu4, "Orenges", BigDecimal.valueOf(1.62)));
 	}
 
 	public void initBarcodedItemsDatabase() throws SimulationException {

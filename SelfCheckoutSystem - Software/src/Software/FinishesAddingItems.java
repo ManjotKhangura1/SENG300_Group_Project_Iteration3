@@ -3,14 +3,19 @@ package Software;
 import org.lsmr.selfcheckout.devices.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FinishesAddingItems {
+	//local variables
 	boolean isEnabled;
-	
-	private BigDecimal finalPrice;
-	private ArrayList<String> finalList;
 	private BigDecimal finalWeight;
+	private BigDecimal finalPrice;
+	//Local object
+	private ArrayList<String> finalList;
+	//item tracker
+	private Map<String, ArrayList<BigDecimal>> tracker = new HashMap<>();
 
 	/**
 	 * Constructor to finish transaction
@@ -30,27 +35,29 @@ public class FinishesAddingItems {
 	}
 	 
 	/**
-	 * add the price given to the total price
+	 * updates the tracker that keeps track of each items name, price and weight
+	 * @param String name
 	 * @param BigDecimal price
+	 * @param BigDecimal weight
 	 */
-	public void setPrice(BigDecimal price) {
-		finalPrice.add(price);
+	public void updateTotals(String name, BigDecimal price, BigDecimal weight) {
+		ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>();
+		temp.add(price); //element 0
+		temp.add(weight); //element 1
+		finalWeight.add(weight); 
+		finalPrice.add(price); 
+		finalList.add(name); 
+		tracker.put(name, temp);
 	}
 	
 	/**
-	 * add the new item name to the item list
+	 * removes the name price and weight of the given parameter
 	 * @param String name
 	 */
-	public void setList(String name) {
-		finalList.add(name);
-	}
-	
-	/**
-	 * add the new item weight to the total weight
-	 * @param weight
-	 */
-	public void setWeight(BigDecimal weight) {
-		finalWeight.add(weight);
+	public void removeItem(String name) {
+		finalPrice.subtract(tracker.get(name).get(0));
+		finalWeight.subtract(tracker.get(name).get(1));
+		tracker.remove(name);
 	}
 	
 	/**
@@ -68,6 +75,7 @@ public class FinishesAddingItems {
 	}
 	
 	public double getWeight() {
-		return finalWeight.doubleValue();	}
+		return finalWeight.doubleValue();	
+	}
 	
 }
