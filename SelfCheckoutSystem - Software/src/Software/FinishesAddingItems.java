@@ -14,6 +14,8 @@ public class FinishesAddingItems {
 	private BigDecimal finalPrice;
 	//Local object
 	private ArrayList<String> finalList;
+	private ScanItem scan;
+	private BaggingArea bags;
 	//item tracker
 	private Map<String, ArrayList<BigDecimal>> tracker = new HashMap<>();
 
@@ -23,15 +25,11 @@ public class FinishesAddingItems {
 	 * @param ScanItem
 	 */
 	public FinishesAddingItems(SelfCheckoutStation station, ScanItem scan, BaggingArea bags) {
-		
 		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
 		if(scan == null) throw new SimulationException(new NullPointerException("scanner is null"));
 		if(bags == null) throw new SimulationException(new NullPointerException("bagging area is null"));
 		
-		//if the user is done adding items then the scanners and with weigh area do not need to continue updating
-		scan.handheld.disable(); //disable the hand held scanner
-		scan.main.disable(); //disable the main scanner
-		bags.baggingArea.disable(); //disable the weigh scale
+		
 	}
 	 
 	/**
@@ -57,6 +55,7 @@ public class FinishesAddingItems {
 	public void removeItem(String name) {
 		finalPrice.subtract(tracker.get(name).get(0));
 		finalWeight.subtract(tracker.get(name).get(1));
+		finalList.remove(name);
 		tracker.remove(name);
 	}
 	
@@ -78,4 +77,10 @@ public class FinishesAddingItems {
 		return finalWeight.doubleValue();	
 	}
 	
+	public void finish(){
+		//if the user is done adding items then the scanners and with weigh area do not need to continue updating
+				scan.handheld.disable(); //disable the hand held scanner
+				scan.main.disable(); //disable the main scanner
+				bags.baggingArea.disable(); //disable the weigh scale
+	}	
 }
