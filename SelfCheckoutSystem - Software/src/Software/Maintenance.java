@@ -308,8 +308,12 @@ public class Maintenance {
 		this.station.coinTray.disable();
 	}
 
-	// adds the amount of paper to the printer
-	// prints error message for any encountered exceptions
+	/**
+	 * Adds paper to printer. When used in the GUI it will always max out the paper in the printer
+	 * 
+	 * @param units - the units of paper to be added
+	 * @return - null if SimulationException detected
+	 */
 	public ReceiptPrinter changePaper(int units) {
 		try {
 			station.printer.addPaper(units);
@@ -327,8 +331,12 @@ public class Maintenance {
 		}
 	}
 
-	// adds the amount of ink to the printer
-	// prints error message for any encountered exceptions
+	/**
+	 * Adds ink to printer. When used in the GUI it will always max out the ink in the printer
+	 * 
+	 * @param units - the units of ink to be added
+	 * @return - null if SimulationException detected
+	 */
 	public ReceiptPrinter changeInk(int quantity) {
 		try {
 			station.printer.addInk(quantity);
