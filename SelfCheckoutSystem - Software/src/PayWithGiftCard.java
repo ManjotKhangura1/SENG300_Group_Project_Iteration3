@@ -101,7 +101,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 							return data;
 						}
 						
-						if ( !HandleDebitHold(data, issuer, amount)) {
+						if ( !HandleGiftCardHold(data, issuer, amount)) {
 							throw new SimulationException("Error when completing transaction");
 						}
 						
@@ -110,6 +110,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 						
 					}
 						}
+				
 			
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -119,7 +120,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 				return null;		
 		}
 	  /**
-		 * Handles the debit transactions for your Card Issuer
+		 * Handles the gift card transactions for your Card Issuer
 		 * 2 cases : 
 		 * 	a) If HoldNumber returns -1 then the transaction has failed, and you need to release the hold
 		 * 	b) If HoldNumber returns anything else, then take that hold number and call PostTransaction, which will post & release the hold
@@ -127,7 +128,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 		 * @param issuer Issuer for the card
 		 * @param amount Amount that you're looking to spend
 		 */
-		private boolean HandleDebitHold(CardData data, CardIssuer issuer, BigDecimal amount) {
+		private boolean HandleGiftCardHold(CardData data, CardIssuer issuer, BigDecimal amount) {
 			int holdNumber = issuer.authorizeHold(data.getNumber(), amount);
 			if (holdNumber != -1) {
 				return issuer.postTransaction(data.getNumber(), holdNumber, amount);
