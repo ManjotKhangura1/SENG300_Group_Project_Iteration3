@@ -30,6 +30,7 @@ public class EnterPLU {
 	 * @param database
 	 */
 	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
+		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
 		EnterPLU.database = database;
 		scale = station.scale;
 		done = d;
