@@ -28,7 +28,7 @@ public class FinishesAddingItemsTest {
 	
 	private Map<Barcode, BarcodedProduct> database;
 	
-
+	//setting up the classes
 	@Before
 	public void setUp() throws Exception {
 		Currency currency = Currency.getInstance("USD");
@@ -43,24 +43,63 @@ public class FinishesAddingItemsTest {
 		finish = new FinishesAddingItems(scs, bagArea);
 		scanItem = new ScanItem(scs, database, finish, bagArea);
 	}
-	
+	//testing the method without usage of other classes
 	@Test
 	public void updateTotals_Test() {
 		String testString = "test name";
 		BigDecimal testPrice = new BigDecimal(10.00);
 		BigDecimal testWeight = new BigDecimal(50);
+		
 		Map<String, ArrayList<BigDecimal>> expected = new HashMap<>();
 		ArrayList<String> testList = new ArrayList<>();
 		ArrayList<BigDecimal> tempList = new ArrayList<>();
 		tempList.add(testPrice);
 		tempList.add(testWeight);
 		testList.add(testString);
-		
+
 		expected.put(testString, tempList);
 		finish.updateTotals(testString, testPrice, testWeight); //actual
 		
 		assertEquals(expected, finish.getTracker());
+		assertEquals(testList, finish.getList());
 		
+	}
+	
+	//testing the method without usage of other classes
+	@Test
+	public void removeItemTest() {
+		String testString = "test item 1";
+		String testString2 = "test item 2";
+		BigDecimal testPrice = new BigDecimal(10.00);
+		BigDecimal testWeight = new BigDecimal(50);
+		
+		Map<String, ArrayList<BigDecimal>> expected = new HashMap<>();
+		ArrayList<String> testList = new ArrayList<>();
+		ArrayList<BigDecimal> tempList = new ArrayList<>();
+		tempList.add(testPrice);
+		tempList.add(testWeight);
+		testList.add(testString);
+
+		expected.put(testString, tempList);
+		
+		finish.updateTotals(testString, testPrice, testWeight);
+		finish.updateTotals(testString2, testPrice, testWeight);
+		finish.removeItem(testString2);
+		
+		assertEquals(expected, finish.getTracker());
+		assertEquals(testList, finish.getList());
+	}
+	
+	//testing the method without usage of other classes
+	@Test
+	public void getPrice() {
+		String testString = "test item 2";
+		BigDecimal testPrice = new BigDecimal(10.00);
+		BigDecimal testWeight = new BigDecimal(50);
+		finish.updateTotals(testString, testPrice, testWeight);
+		
+		double actual = finish.getPrice();
+		double expected = 10.00;
 	}
 		
 		
