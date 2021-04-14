@@ -109,7 +109,7 @@ public class EnterPLUTest {
 		try {
 			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
 			test.itemLookup("1234");
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),5.0)); //item 2222 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),3.0)); //item 2222 weighs 3kg
 			test.itemLookup("2222");
 		}catch(Exception e) {
 			fail();
@@ -123,7 +123,7 @@ public class EnterPLUTest {
 		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
 		
 		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 23001kg
 			test.itemLookup("1234");
 		}catch(Exception e) {
 			assertTrue(e instanceof OverloadException);
@@ -137,7 +137,7 @@ public class EnterPLUTest {
 		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
 		
 		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),51.0)); //item 1234 weighs 51kg
 			test.itemLookup("5555");
 		}catch(Exception e) {
 			assertTrue(e instanceof SimulationException);

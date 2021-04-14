@@ -20,7 +20,7 @@ public class CustomerLookUpProduct {
 	public FinishesAddingItems done;
 	public BaggingArea baged;
 	
-	public static Map<String, PLUCodedProduct> PLUPRODUCTS = new HashMap<>();
+	public static Map<String, PLUCodedProduct> PLUPRODUCTS;
 	
 	/**
 	 * Constructor to look up a PLU item through a string input
@@ -29,8 +29,11 @@ public class CustomerLookUpProduct {
 	 * @param d
 	 */
 	public CustomerLookUpProduct(SelfCheckoutStation station, Map<String, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
+		if(station == null) {
+			throw new SimulationException(new NullPointerException("station is null"));
+		}
 		this.scale = station.scale;
-		PLUPRODUCTS = database;
+		CustomerLookUpProduct.PLUPRODUCTS = database;
 		done = d;
 		baged = b;
 	}
@@ -53,9 +56,11 @@ public class CustomerLookUpProduct {
 			//update totals in FinishesAddingItems and BaaggingArea
 			done.updateTotals(description, price, weight);
 			baged.setWeightScanned(weight);
-		}
-		catch(Exception e) {
-			throw new SimulationException(new NullPointerException("Something went wrong. Try again. "));
+			
+		}catch(OverloadException e) {
+			throw new OverloadException("Item overweight! Please remove."); //from scale.getCurrentWeight
+		}catch(Exception e) {
+			throw new SimulationException(new NullPointerException("Not in database. Please try a different description."));
 		}
 	}
 }

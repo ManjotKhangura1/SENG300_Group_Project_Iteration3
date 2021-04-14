@@ -59,7 +59,7 @@ public class EnterPLU {
 				baged.setWeightScanned(weight);
 			}
 		}catch(OverloadException e) {
-			throw new OverloadException("Item not on scale"); //from scale.getCurrentWeight
+			throw new OverloadException("Item overweight! Please remove."); //from scale.getCurrentWeight
 		}catch(Exception e) {
 			throw new SimulationException(new NullPointerException("code not recognised")); //from database.get(plu)
 		}
