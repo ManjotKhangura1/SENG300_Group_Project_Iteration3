@@ -12,20 +12,22 @@ import org.junit.Test;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.devices.*;
-import org.lsmr.selfcheckout.devices.listeners.AbstractDeviceListener;
-import org.lsmr.selfcheckout.devices.listeners.BarcodeScannerListener;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
-import Software.DeclineBagPrompt;
+import Software.BaggingArea;
+import Software.FinishesAddingItems;
 import Software.ScanItem;
 
 public class ScanItemTest {
 	SelfCheckoutStation station;
 	BarcodedItem barcodedItem;
 	Map<Barcode, BarcodedProduct> database;
-	DeclineBagPrompt prompt;
+	FinishesAddingItems done;
+	BaggingArea bags;
+	
 	@Before
 	public void setUp() throws Exception {
+		
 		//Creates a self checkout station and the components necessary to create it
 		Currency currency = Currency.getInstance("CAD");
 		int[] noteDenominations = {5,10,20,50,100};
@@ -35,15 +37,20 @@ public class ScanItemTest {
 		int scaleSensitivity = 10;
 		station = new SelfCheckoutStation(currency, noteDenominations, coinDenomonations, maxWeight,scaleSensitivity);
 		
+		//create BaggingArea
+		bags = new BaggingArea(station);
+		
+		//create controler FinishesAddingItems
+		done = new FinishesAddingItems(station, bags);
+		
 		//Creates a barcoded item
 		Barcode barcode = new Barcode("1");
 		barcodedItem = new BarcodedItem(barcode, 50);
-		BarcodedProduct product = new BarcodedProduct(barcode, "the only item we sell", BigDecimal.valueOf(10.50));
+		BarcodedProduct product = new BarcodedProduct(barcode, "1", BigDecimal.valueOf(10.50));
 		
 		database = new HashMap<>();
 		database.put(barcode, product);
 		
-		prompt = new DeclineBagPrompt();
 	}
 
 	@After
@@ -51,6 +58,8 @@ public class ScanItemTest {
 		station = null;
 		barcodedItem = null;
 		database = null;
+		done = null;
+		bags = null;
 	}
 
 	@Test //test to make sure the constructor works as intended
@@ -58,14 +67,14 @@ public class ScanItemTest {
 		
 		//this test should pass as station is valid argument
 		try {
-			ScanItem scanner = new ScanItem(station, database, prompt);
+			ScanItem scanner = new ScanItem(station, database, done, bags);
 		} catch(Exception e) {
 			fail();
 		}
 		
 		//the constructor should throw an exception as the selfCheckoutStation is invalid
 		try {
-			ScanItem scanner = new ScanItem(null, null, null);
+			ScanItem scanner = new ScanItem(null, null, null, null);
 			fail();
 		} catch(Exception e) {
 			assertTrue(e instanceof SimulationException);
@@ -74,24 +83,22 @@ public class ScanItemTest {
 
 	@Test //test to make sure scanning from main is working as intended
 	public void testScanFromMain() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
-		
-		ArrayList<String> expected = new ArrayList<String>();
-		expected.add("1");
+		ScanItem scanner = new ScanItem(station, database, done, bags);
 		
 		for(int i = 0; i < 100; i++)
-			scanner.scanFromMain(barcodedItem, true);
+			scanner.scanFromMain(barcodedItem);
 		
-		assertTrue(scanner.getTotalWeight() > (barcodedItem.getWeight()*80));
+		System.out.println(done.getWeight());
+		assertTrue(done.getWeight() > (barcodedItem.getWeight()*70)); //test weight
 
-		assertTrue(scanner.getTotalList().size() > 80);
+		assertTrue(done.getList().size() > 70); //test length
 		
-		assertTrue(scanner.getTotalList().contains("1"));
+		assertTrue(done.getList().contains("1")); //test item names
 		
-		assertTrue(scanner.getTotalPrice() > (10.50 * 80));
+		assertTrue(done.getPrice() > (10.50 * 80)); //test price
 		
 		try {
-			scanner.scanFromMain(null, false);
+			scanner.scanFromMain(null); 
 			fail();
 		}catch (Exception e) {
 			assertTrue(e instanceof SimulationException);
@@ -102,24 +109,24 @@ public class ScanItemTest {
 	
 	@Test //test to make sure scanning from handheld is working as intended
 	public void testScanFromHandheld() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
+		ScanItem scanner = new ScanItem(station, database, done, bags);
 		
 		ArrayList<String> expected = new ArrayList<String>();
 		expected.add("1");
 		
 		for(int i = 0; i < 100; i++)
-			scanner.scanFromHandheld(barcodedItem, true);
+			scanner.scanFromHandheld(barcodedItem);
 		
-		assertTrue(scanner.getTotalWeight() > (barcodedItem.getWeight()*80));
+		assertTrue(done.getWeight() > (barcodedItem.getWeight()*80)); //test weight
 
-		assertTrue(scanner.getTotalList().size() > 80);
+		assertTrue(done.getList().size() > 80); //test length
 		
-		assertTrue(scanner.getTotalList().contains("1"));
+		assertTrue(done.getList().contains("1")); //test item names
 		
-		assertTrue(scanner.getTotalPrice() > (10.50 * 80));
+		assertTrue(done.getPrice() > (10.50 * 80)); //test price
 		
 		try {
-			scanner.scanFromHandheld(null, false);
+			scanner.scanFromHandheld(null);
 			fail();
 		}catch (Exception e) {
 			assertTrue(e instanceof SimulationException);
@@ -127,37 +134,10 @@ public class ScanItemTest {
 		
 		
 	}
-	@Test
-	public void testScanFromMainDeclineBagPrompt() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
-		scanner.scanFromMain(barcodedItem, true); 
-		assertFalse(prompt.getPrompt()); 
-	}
-	
-	@Test
-	public void testScanFromMainAcceptBagPrompt() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
-		scanner.scanFromMain(barcodedItem, false); 
-		assertTrue(prompt.getPrompt()); 
-	}
-	
-	@Test
-	public void testScanFromHandHeldDeclineBagPrompt() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
-		scanner.scanFromHandheld(barcodedItem, true); 
-		assertFalse(prompt.getPrompt()); 
-	}
-	
-	@Test
-	public void testScanFromHandHeldAcceptBagPrompt() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
-		scanner.scanFromHandheld(barcodedItem, false); 
-		assertTrue(prompt.getPrompt()); 
-	}
 	
 	@Test
 	public void testListeners() {
-		ScanItem scanner = new ScanItem(station, database, prompt);
+		ScanItem scanner = new ScanItem(station, database, done, bags);
 		station.mainScanner.enable();
 		assertTrue(scanner.getIsEnabled());
 		

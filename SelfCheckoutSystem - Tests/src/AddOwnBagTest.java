@@ -13,11 +13,13 @@ import org.lsmr.selfcheckout.devices.SimulationException;
 
 import Software.AddOwnBag;
 import Software.Bag;
+import Software.BaggingArea;
 
 public class AddOwnBagTest {
 	private SelfCheckoutStation scs;
 	private AddOwnBag addOwnBag;
 	private int scaleSensitivity;
+	private BaggingArea bagArea;
 	
 	//setting up the constructor for the SelfCheckoutStation
 	@Before
@@ -30,6 +32,7 @@ public class AddOwnBagTest {
 	
 		scs = new SelfCheckoutStation(currency, banknoteDenominations, coinDenominations, scaleMaximumWeight, scaleSensitivity);
 		addOwnBag = new AddOwnBag(scs);
+		bagArea = new BaggingArea(scs);
 	}
 	
 	//testing when SelfCheckoutStation in the parameter of the constructor is null
@@ -46,13 +49,14 @@ public class AddOwnBagTest {
 	//testing with a bag with a weight that surpasses the limit, testing overload
 	@Test
 	public void testAddBag_WithOverload(){
-		double illegalWeight = 500000.0;
+		double illegalWeight = 50000.0;
 		Bag bag = new Bag(illegalWeight);
 		try {
 			addOwnBag.addBag(bag);
+			bagArea.updateWeight();
 		}
 		catch(Exception e) {
-			assertTrue("Bag weight exceeds the limit of the scale", e instanceof SimulationException);
+			assertTrue("Bag weight exceeds the limit of the scale", e instanceof OverloadException);
 		}
 	}
 	
@@ -62,7 +66,8 @@ public class AddOwnBagTest {
 		double expectedWeight = 5.0;
 		Bag bag = new Bag(expectedWeight);
 		addOwnBag.addBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	
@@ -72,7 +77,8 @@ public class AddOwnBagTest {
 		double expectedWeight = 0.5;
 		Bag bag = new Bag(expectedWeight);
 		addOwnBag.addBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	
@@ -83,7 +89,8 @@ public class AddOwnBagTest {
 		try {
 			Bag bag = new Bag (expectedWeight);
 			addOwnBag.addBag(bag);
-			double actualWeight = scs.baggingArea.getCurrentWeight();
+			bagArea.updateWeight();
+			double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		}
 		catch(Exception e) {
 			assertTrue("Bag weight cannot be zero or less", e instanceof SimulationException);
@@ -122,7 +129,8 @@ public class AddOwnBagTest {
 		double expectedWeight = 5.0;
 		Bag bag = new Bag(expectedWeight);
 		addOwnBag.addBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	
@@ -163,8 +171,10 @@ public class AddOwnBagTest {
 		scs.baggingArea.enable();
 		Bag bag = new Bag(testWeight);
 		addOwnBag.addBag(bag);
+		bagArea.updateWeight();
 		addOwnBag.removeBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	
@@ -201,9 +211,12 @@ public class AddOwnBagTest {
 		Bag bag0 = new Bag(bag0Weight);
 		Bag bag1 = new Bag(bag1Weight);
 		addOwnBag.addBag(bag0);
+		bagArea.updateWeight();
 		addOwnBag.addBag(bag1);
+		bagArea.updateWeight();
 		addOwnBag.removeBag(bag1);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	
@@ -216,11 +229,19 @@ public class AddOwnBagTest {
 		Bag bag0 = new Bag(bag0Weight);
 		Bag bag1 = new Bag(bag1Weight);
 		addOwnBag.addBag(bag0);
-		addOwnBag.addBag(bag1);
-		addOwnBag.removeBag(bag1);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
-		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
+		bagArea.updateWeight();
+		try {
+			addOwnBag.addBag(bag1);
+			bagArea.updateWeight();
+		}
+		catch(Exception e) {
+			addOwnBag.removeBag(bag1);
+			bagArea.updateWeight();
+			double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
+			assertEquals(expectedWeight,actualWeight, scaleSensitivity);
+		}
 	}
+	
 	
 	//test outofOverload with one bag
 	@Test	
@@ -228,10 +249,16 @@ public class AddOwnBagTest {
 		double testWeight = 4000.0;
 		double expectedWeight = testWeight - testWeight;
 		Bag bag = new Bag(testWeight);
-		addOwnBag.addBag(bag);
-		addOwnBag.removeBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
-		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
+		try {
+			addOwnBag.addBag(bag);
+			bagArea.updateWeight();
+		}
+		catch(Exception e) {
+			addOwnBag.removeBag(bag);
+			bagArea.updateWeight();
+			double actualWeight = bagArea.getWeightBaggingArea().doubleValue();
+			assertEquals(expectedWeight,actualWeight, scaleSensitivity);
+		}
 	}
 	
 	//test to remove bag when weight is less than sensitivity
@@ -241,8 +268,10 @@ public class AddOwnBagTest {
 		double expectedWeight = bagWeight - bagWeight;
 		Bag bag = new Bag(bagWeight);
 		addOwnBag.addBag(bag);
+		bagArea.updateWeight();
 		addOwnBag.removeBag(bag);
-		double actualWeight = scs.baggingArea.getCurrentWeight();
+		bagArea.updateWeight();
+		double actualWeight = bagArea.getWeightBaggingArea().doubleValue();;
 		assertEquals(expectedWeight,actualWeight, scaleSensitivity);
 	}
 	

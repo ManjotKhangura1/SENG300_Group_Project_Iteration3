@@ -39,6 +39,9 @@ public class BaggingArea {
 		updateWeight();
 		
 		startListener();
+		
+		this.totalWeightInBagging = new BigDecimal(0.0);
+		this.totalWeightScanned = new BigDecimal(0.0);
 
 	}
 	
