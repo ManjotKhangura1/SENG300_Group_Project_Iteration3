@@ -30,6 +30,9 @@ public class FinishesAddingItems {
 		if(station.baggingArea == null) throw new SimulationException(new NullPointerException("bagging area is null"));
 		
 		this.station = station;
+		finalWeight = new BigDecimal(0.0);
+		finalPrice = new BigDecimal(0.0);
+		finalList = new ArrayList<>();
 	}
 	 
 	/**

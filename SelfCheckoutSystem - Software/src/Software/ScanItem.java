@@ -46,7 +46,7 @@ public class ScanItem {
 	 * @param a boolean, true is declining bag prompt
 	 * @throws SimulationException if barcodedItem is null
 	 */
-	public void scanFromMain(BarcodedItem item, boolean declineBagPrompt) {
+	public void scanFromMain(BarcodedItem item) {
 		
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
 		curWeight = BigDecimal.valueOf(item.getWeight());
