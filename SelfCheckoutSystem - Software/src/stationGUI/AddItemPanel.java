@@ -46,25 +46,30 @@ public class AddItemPanel extends JPanel{
 	private void initComponents(){
 		
 		setBounds(0,0,1280,720);
-		setLayout(new MigLayout("", "[][][][][grow][][][grow]", "[][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][]"));
 		setVisible(false);
+		setLayout(null);
 	
 		
 		TextField textField = new TextField(25); // bags
-		add(textField, "cell 1 3");
+		textField.setBounds(56, 136, 174, 22);
+		add(textField);
 		
 		TextField textField_3 = new TextField(25); // brought own bags
-		add(textField_3, "cell 2 3");
+		textField_3.setBounds(298, 136, 174, 22);
+		add(textField_3);
 		
 		TextField textField_1 = new TextField(25); // plu 
-		add(textField_1, "cell 1 14");
+		textField_1.setBounds(56, 605, 174, 22);
+		add(textField_1);
 		
 		TextField textField_2 = new TextField(25); // weight of PLU Item Purchased
-		add(textField_2, "cell 2 14");
+		textField_2.setBounds(313, 605, 174, 22);
+		add(textField_2);
 
 		JButton btnNewButton_2 = new JButton("      Eggs      ");
+		btnNewButton_2.setBounds(56, 362, 142, 68);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		add(btnNewButton_2, "cell 1 8");
+		add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				itemScanned = "4";
@@ -73,8 +78,9 @@ public class AddItemPanel extends JPanel{
 		});
 		
 		JButton btnNewButton_3 = new JButton("Black Beans");
+		btnNewButton_3.setBounds(269, 362, 142, 68);
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		add(btnNewButton_3, "cell 2 8");
+		add(btnNewButton_3);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				itemScanned = "5";
@@ -83,6 +89,7 @@ public class AddItemPanel extends JPanel{
 		});
 		
 		JButton btnNewButton_3_1 = new JButton("   Crackers   ");
+		btnNewButton_3_1.setBounds(454, 362, 127, 68);
 		btnNewButton_3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				itemScanned = "6";
@@ -90,9 +97,10 @@ public class AddItemPanel extends JPanel{
 			}
 		});
 		btnNewButton_3_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		add(btnNewButton_3_1, "cell 3 8");
+		add(btnNewButton_3_1);
 		
 		JButton btnNewButton = new JButton("      Milk      ");
+		btnNewButton.setBounds(56, 294, 142, 57);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,9 +108,10 @@ public class AddItemPanel extends JPanel{
                 JOptionPane.showMessageDialog(null, "Milk scanned! Please add to bagging area. ");
 			}
 		});
-		add(btnNewButton, "cell 1 6");
+		add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("  Soy Milk  ");
+		btnNewButton_1.setBounds(269, 294, 142, 57);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,9 +119,10 @@ public class AddItemPanel extends JPanel{
                 JOptionPane.showMessageDialog(null, "Soy milk scanned! Please add to bagging area. ");
 			}
 		});
-		add(btnNewButton_1, "cell 2 6");
+		add(btnNewButton_1);
 		
 		JButton btnNewButton_4 = new JButton("    Bread    ");
+		btnNewButton_4.setBounds(454, 294, 127, 57);
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,11 +130,12 @@ public class AddItemPanel extends JPanel{
                 JOptionPane.showMessageDialog(null, "Bread scanned! Please add to bagging area. ");
 			}
 		});
-		add(btnNewButton_4, "cell 3 6");
+		add(btnNewButton_4);
 		
 		JButton btnNewButton_6 = new JButton("Add to Bagging Area");
+		btnNewButton_6.setBounds(757, 440, 194, 102);
 		btnNewButton_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		add(btnNewButton_6, "cell 5 14");
+		add(btnNewButton_6);
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -145,7 +156,6 @@ public class AddItemPanel extends JPanel{
 						weight = BigDecimal.valueOf(bagsWeight);
 						name = Integer.parseInt(textField_3.getText()) + " Personal Bags";
 						mainFrame.finishesAddingItems.updateTotals(name, new BigDecimal("0.00"), weight);
-		                JOptionPane.showMessageDialog(null, "Place your bags on the scale. ");
 					}
 					
 					//PLU Code 
@@ -157,7 +167,7 @@ public class AddItemPanel extends JPanel{
 						name = textField_2.getText() + " g " + ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getDescription();
 						price = ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getPrice();
 						price = price.multiply(new BigDecimal(weightPLUPurchased)).multiply(new BigDecimal(0.001));
-						mainFrame.finishesAddingItems.updateTotals(null, price, new BigDecimal(weightPLUPurchased));
+						mainFrame.finishesAddingItems.updateTotals(name, price, new BigDecimal(weightPLUPurchased));
 					}	
 					
 					//scanning
@@ -200,6 +210,7 @@ public class AddItemPanel extends JPanel{
 		
 		// Get attendant to approve weight discrepancy
 		JButton btnNewButton_5 = new JButton("Skip Bagging This");
+		btnNewButton_5.setBounds(757, 579, 194, 68);
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,11 +278,12 @@ public class AddItemPanel extends JPanel{
 				
 			}
 		});
-		add(btnNewButton_5, "cell 5 15");
+		add(btnNewButton_5);
 		
 		JButton btnNewButton_7 = new JButton("View Cart");
+		btnNewButton_7.setBounds(1021, 579, 117, 68);
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		add(btnNewButton_7, "cell 6 14");
+		add(btnNewButton_7);
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.addItemPanel.setVisible(false);
@@ -290,78 +302,96 @@ public class AddItemPanel extends JPanel{
 	
 		private void initLabels() {
 			JLabel lblNewJgoodiesLabel = new JLabel("Add Bags");
+			lblNewJgoodiesLabel.setBounds(56, 53, 95, 25);
 			lblNewJgoodiesLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-			add(lblNewJgoodiesLabel, "cell 1 1");
+			add(lblNewJgoodiesLabel);
 			
 			JLabel lblNewJgoodiesLabel_15 = new JLabel("PLU Code Guide");
+			lblNewJgoodiesLabel_15.setBounds(857, 97, 160, 25);
 			lblNewJgoodiesLabel_15.setFont(new Font("Tahoma", Font.BOLD, 20));
-			add(lblNewJgoodiesLabel_15, "cell 5 1");
+			add(lblNewJgoodiesLabel_15);
 			
 			JLabel lblNewJgoodiesLabel_14 = new JLabel("Enter number of bags: ");
+			lblNewJgoodiesLabel_14.setBounds(56, 103, 142, 15);
 			lblNewJgoodiesLabel_14.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_14, "cell 1 2");
+			add(lblNewJgoodiesLabel_14);
 
 			
 			JLabel lblNewJgoodiesLabel_2 = new JLabel("Item: ");
+			lblNewJgoodiesLabel_2.setBounds(857, 149, 37, 15);
 			lblNewJgoodiesLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_2, "cell 5 3");
+			add(lblNewJgoodiesLabel_2);
 			
 			JLabel lblNewJgoodiesLabel_13 = new JLabel("Code:");
+			lblNewJgoodiesLabel_13.setBounds(1021, 149, 35, 15);
 			lblNewJgoodiesLabel_13.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_13, "cell 6 3");
+			add(lblNewJgoodiesLabel_13);
 			
 			JLabel lblNewJgoodiesLabel_3 = new JLabel("Scan Item:");
+			lblNewJgoodiesLabel_3.setBounds(56, 241, 111, 25);
 			lblNewJgoodiesLabel_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-			add(lblNewJgoodiesLabel_3, "cell 1 5");
+			add(lblNewJgoodiesLabel_3);
 			
 			JLabel lblNewJgoodiesLabel_4 = new JLabel("Onions");
+			lblNewJgoodiesLabel_4.setBounds(857, 201, 42, 15);
 			lblNewJgoodiesLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_4, "cell 5 5");
+			add(lblNewJgoodiesLabel_4);
 			
 			JLabel lblNewJgoodiesLabel_8 = new JLabel("14040");
+			lblNewJgoodiesLabel_8.setBounds(1021, 201, 40, 15);
 			lblNewJgoodiesLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_8, "cell 6 5");
+			add(lblNewJgoodiesLabel_8);
 			
 			JLabel lblNewJgoodiesLabel_5 = new JLabel("Potatoes");
+			lblNewJgoodiesLabel_5.setBounds(857, 249, 56, 15);
 			lblNewJgoodiesLabel_5.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_5, "cell 5 7");
+			add(lblNewJgoodiesLabel_5);
 			
 			JLabel lblNewJgoodiesLabel_9 = new JLabel("97310");
+			lblNewJgoodiesLabel_9.setBounds(1021, 249, 40, 15);
 			lblNewJgoodiesLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewJgoodiesLabel_9.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_9, "cell 6 7");
+			add(lblNewJgoodiesLabel_9);
 			
 			JLabel lblNewJgoodiesLabel_6 = new JLabel("Apples");
+			lblNewJgoodiesLabel_6.setBounds(857, 295, 41, 15);
 			lblNewJgoodiesLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_6, "cell 5 9");
+			add(lblNewJgoodiesLabel_6);
 			
 			JLabel lblNewJgoodiesLabel_10 = new JLabel("55589");
+			lblNewJgoodiesLabel_10.setBounds(1021, 295, 40, 15);
 			lblNewJgoodiesLabel_10.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_10, "cell 6 9");
+			add(lblNewJgoodiesLabel_10);
 			
 			JLabel lblNewJgoodiesLabel_7 = new JLabel("Oranges");
+			lblNewJgoodiesLabel_7.setBounds(857, 336, 50, 15);
 			lblNewJgoodiesLabel_7.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_7, "cell 5 11");
+			add(lblNewJgoodiesLabel_7);
 			
 			JLabel lblNewJgoodiesLabel_11 = new JLabel("30897");
+			lblNewJgoodiesLabel_11.setBounds(1021, 336, 40, 15);
 			lblNewJgoodiesLabel_11.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_11, "cell 6 11");
+			add(lblNewJgoodiesLabel_11);
 			
 			JLabel lblNewJgoodiesLabel_12 = new JLabel("Add PLU Item:");
+			lblNewJgoodiesLabel_12.setBounds(56, 499, 147, 25);
 			lblNewJgoodiesLabel_12.setFont(new Font("Tahoma", Font.BOLD, 20));
-			add(lblNewJgoodiesLabel_12, "cell 1 12");
+			add(lblNewJgoodiesLabel_12);
 					
 			JLabel lblNewJgoodiesLabel_1 = new JLabel("Enter PLU Code:");
+			lblNewJgoodiesLabel_1.setBounds(56, 553, 99, 15);
 			lblNewJgoodiesLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_1, "cell 1 13");
+			add(lblNewJgoodiesLabel_1);
 			
 			JLabel lblNewJgoodiesLabel_16 = new JLabel("Enter Amount(g):");
+			lblNewJgoodiesLabel_16.setBounds(320, 553, 109, 15);
 			lblNewJgoodiesLabel_16.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_16, "cell 2 13");
+			add(lblNewJgoodiesLabel_16);
 			
 			JLabel lblNewJgoodiesLabel_17 = new JLabel("Brought Your Own Bags? Enter How Many:");
+			lblNewJgoodiesLabel_17.setBounds(291, 103, 265, 15);
 			lblNewJgoodiesLabel_17.setFont(new Font("Tahoma", Font.BOLD, 12));
-			add(lblNewJgoodiesLabel_17, "cell 2 2");
+			add(lblNewJgoodiesLabel_17);
 					
 		}
 
