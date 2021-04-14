@@ -44,7 +44,7 @@ public class CashWaitingPanel extends JPanel {
 		
 		JLabel calculation = new JLabel("<html>SUBTOTAL<br>TAX<br>TOTAL<br>PAID</html>");
 		calculation.setBackground(Color.WHITE);
-		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
+		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 48));
 		calculation.setHorizontalAlignment(SwingConstants.CENTER);
 		calculation.setVerticalAlignment(SwingConstants.CENTER);
 		add(calculation);
@@ -52,7 +52,7 @@ public class CashWaitingPanel extends JPanel {
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
-		help.setIcon(new ImageIcon(helpIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH)));
+		help.setIcon(new ImageIcon(helpIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
 		help.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
 		help.setVerticalTextPosition(SwingConstants.BOTTOM);
 		help.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -75,7 +75,7 @@ public class CashWaitingPanel extends JPanel {
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));
-		cancel.setIcon(new ImageIcon(cancelIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH)));
+		cancel.setIcon(new ImageIcon(cancelIcon.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH)));
 		cancel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
 		cancel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cancel.setHorizontalTextPosition(SwingConstants.CENTER);

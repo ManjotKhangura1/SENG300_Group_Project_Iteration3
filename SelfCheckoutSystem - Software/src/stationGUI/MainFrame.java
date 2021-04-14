@@ -14,7 +14,9 @@ import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
+import org.lsmr.selfcheckout.devices.TouchScreen;
 import org.lsmr.selfcheckout.external.CardIssuer;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.BarcodedItem;
@@ -63,10 +65,10 @@ public class MainFrame {
 
 	
 	public SelfCheckoutStation station;
-	public Map<Barcode, BarcodedProduct> BarcodedProducts = new HashMap<>(); //ScanItem and RemoveItems
-	public Map<Barcode, BarcodedItem> barcodedItem = new HashMap<>();
+
+	public Map<Barcode, BarcodedItem> BarcodedItems = new HashMap<>();
 	//public Map<PriceLookupCode, Double> PLUCodedItems = new HashMap<>(); //removeItem
-	public Map<PriceLookupCode, PLUCodedProduct> PLUCodedItems = new HashMap<>(); //EnterPLU and LookupItem
+	//public Map<PriceLookupCode, PLUCodedProduct> PLUCodedItems = new HashMap<>(); //EnterPLU and LookupItem
 	public Map<String, PLUCodedProduct> PLULookup = new HashMap<>(); //cutomerLooksupItem
 	//public ArrayList<Barcode> barcodedItemList = new ArrayList<Barcode>();
 	public String membershipNumber;
@@ -74,13 +76,26 @@ public class MainFrame {
 	public BigDecimal total;
 	public double totalOwed = 0;
 	
+
+	
+	TouchScreen touchscreen = new TouchScreen();
 	JFrame frame = new JFrame(); //touchScreen.getFrame();
+	//Jframe frame = touchscreen.getFrame();
+	
+	/**
+	 * SWAP LINE 83 and 84 BEFORE SUBMISSION
+	 */
+	
+	
+	
 
 	public MainFrame()
 	{
+		initBarcodedProductsDatabase();
 		initBarcodedItemsDatabase();
 		initPLUCodedItems();
 		initComponents();
+		// initInventory(); Will do this for completeness within the database if I have time to compile all the products together
 	}
 	
 	/**
@@ -100,7 +115,7 @@ public class MainFrame {
 		// Instantiating these allows the methods of them to be accessible to the panels
 		// within the GUI
 
-		scanItem = new ScanItem(station, BarcodedProducts, finishesAddingItems, baggingArea);
+		scanItem = new ScanItem(station, ProductDatabases.BARCODED_PRODUCT_DATABASE, finishesAddingItems, baggingArea);
 		enterMembership = new EnterMembership(membershipNumber);
 		scanMembership = new ScansMembershipCard(station);
 		
@@ -108,8 +123,8 @@ public class MainFrame {
 			addOwnBag = new AddOwnBag(station);
 			baggingArea = new BaggingArea(station);
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
-			lookupProduct = new LookupProduct(PLUCodedItems);
-			finishesAddingItems = new FinishesAddingItems(station);
+			lookupProduct = new LookupProduct(ProductDatabases.PLU_PRODUCT_DATABASE);
+			finishesAddingItems = new FinishesAddingItems(station, baggingArea);
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
@@ -174,13 +189,17 @@ public class MainFrame {
 		PriceLookupCode plu3 = new PriceLookupCode("55589");
 		PriceLookupCode plu4 = new PriceLookupCode("30897");
 
-		PLUCodedItems.put(plu1, new PLUCodedProduct(plu1, "Apple", BigDecimal.valueOf(2.0)));
-		PLUCodedItems.put(plu2, new PLUCodedProduct(plu2, "Banana", BigDecimal.valueOf(1.96)));
-		PLUCodedItems.put(plu3, new PLUCodedProduct(plu3, "Grapes", BigDecimal.valueOf(0.50)));
-		PLUCodedItems.put(plu4, new PLUCodedProduct(plu4, "Orenges", BigDecimal.valueOf(1.62)));
+		//EnterPLU and LookupItem
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu1, new PLUCodedProduct(plu1, "Onions", BigDecimal.valueOf(2.0)));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu2, new PLUCodedProduct(plu2, "Potatoes", BigDecimal.valueOf(1.96)));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu3, new PLUCodedProduct(plu3, "Apples", BigDecimal.valueOf(0.50)));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu4, new PLUCodedProduct(plu4, "Oranges", BigDecimal.valueOf(1.62)));
 	}
 
-	public void initBarcodedItemsDatabase() throws SimulationException {
+	/*
+	 * Make Barcoded Product Database
+	 */
+	public void initBarcodedProductsDatabase() throws SimulationException {
 
 		Barcode barcode1 = new Barcode("1");
 		Barcode barcode2 = new Barcode("2");
@@ -189,20 +208,48 @@ public class MainFrame {
 		Barcode barcode5 = new Barcode("5");
 		Barcode barcode6 = new Barcode("6");
 
-		BarcodedProduct milk = new BarcodedProduct(barcode1, "Fresh milk!", new BigDecimal("4.57"));
-		BarcodedProduct soymilk = new BarcodedProduct(barcode2, "Soy milk fortified with B12!", new BigDecimal("3.49"));
-		BarcodedProduct bread = new BarcodedProduct(barcode3, "This bread is baked fresh!", new BigDecimal("2.49"));
-		BarcodedProduct eggs = new BarcodedProduct(barcode4, "These eggs are white and brown! ", new BigDecimal("3.29"));
-		BarcodedProduct blackbeans = new BarcodedProduct(barcode5, "From Cuba!", new BigDecimal("2.99"));
-		BarcodedProduct crackers = new BarcodedProduct(barcode6, "Crackers!", new BigDecimal("2.99"));
+		BarcodedProduct milk = new BarcodedProduct(barcode1, "Milk", new BigDecimal("4.57")); // 4800g
+		BarcodedProduct soymilk = new BarcodedProduct(barcode2, "Soy Milk", new BigDecimal("3.49")); // 3890g
+		BarcodedProduct bread = new BarcodedProduct(barcode3, "Bread", new BigDecimal("2.49")); // 350g 
+		BarcodedProduct eggs = new BarcodedProduct(barcode4, "Eggs", new BigDecimal("3.29")); // 300g
+		BarcodedProduct blackbeans = new BarcodedProduct(barcode5, "Black beans", new BigDecimal("2.99")); // 450g
+		BarcodedProduct crackers = new BarcodedProduct(barcode6, "Crackers", new BigDecimal("2.99")); // 200g
 
-		BarcodedProducts.put(barcode1, milk);
-		BarcodedProducts.put(barcode2, soymilk);
-		BarcodedProducts.put(barcode3, bread);
-		BarcodedProducts.put(barcode4, eggs);
-		BarcodedProducts.put(barcode5, blackbeans);
-		BarcodedProducts.put(barcode6, crackers);
+		//ScanItem and RemoveItems
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, milk);
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, soymilk);
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode3, bread);
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode4, eggs);
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode5, blackbeans);
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode6, crackers);
 
+	}
+	/*
+	 * To store the weights of BarcodedItems
+	 */
+	public void initBarcodedItemsDatabase() {
+		
+		Barcode barcode1 = new Barcode("1");
+		Barcode barcode2 = new Barcode("2");
+		Barcode barcode3 = new Barcode("3");
+		Barcode barcode4 = new Barcode("4");
+		Barcode barcode5 = new Barcode("5");
+		Barcode barcode6 = new Barcode("6");
+
+		BarcodedItem milk = new BarcodedItem(barcode1, 4800);
+		BarcodedItem soymilk = new BarcodedItem(barcode2, 3890);
+		BarcodedItem bread = new BarcodedItem(barcode3, 350); 
+		BarcodedItem eggs = new BarcodedItem(barcode4, 300);
+		BarcodedItem blackbeans = new BarcodedItem(barcode5, 450);
+		BarcodedItem crackers = new BarcodedItem(barcode6, 200); 
+
+		BarcodedItems.put(barcode1, milk);
+		BarcodedItems.put(barcode2, soymilk);
+		BarcodedItems.put(barcode3, bread);
+		BarcodedItems.put(barcode4, eggs);
+		BarcodedItems.put(barcode5, blackbeans);
+		BarcodedItems.put(barcode6, crackers);
+		
 	}
 
 }

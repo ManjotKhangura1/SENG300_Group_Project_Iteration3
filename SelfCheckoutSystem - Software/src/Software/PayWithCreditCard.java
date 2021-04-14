@@ -25,6 +25,8 @@ public class PayWithCreditCard {
 	//flags
 	private static boolean inProgress = false;
 	private static boolean cardRead = false;
+	public static boolean isCompleted = false;
+	public static boolean isApproved = false;
 	
 	//interfaces and databases
 	public SelfCheckoutStation checkoutStation;
@@ -118,6 +120,7 @@ public class PayWithCreditCard {
 			currentCardNumber = cardInfo.getNumber();
 			currentAmount = amount;
 			currentHoldNumber = issuer.authorizeHold(currentCardNumber, amount);
+			isCompleted = true;
 			if(currentHoldNumber < 0 )
 			{
 				throw new SimulationException("Payment not authorized");
@@ -155,6 +158,7 @@ public class PayWithCreditCard {
 			currentCardNumber = cardInfo.getNumber();
 			currentAmount = amount;
 			currentHoldNumber = issuer.authorizeHold(currentCardNumber, amount);
+			isCompleted = true;
 			if(currentHoldNumber < 0 )
 			{
 				throw new SimulationException("Payment not authorized");
@@ -192,6 +196,7 @@ public class PayWithCreditCard {
 			currentCardNumber = cardInfo.getNumber();
 			currentAmount = amount;
 			currentHoldNumber = issuer.authorizeHold(currentCardNumber, amount);
+			isCompleted = true;
 			if(currentHoldNumber < 0)
 			{
 				throw new SimulationException("Payment not authorized");
@@ -216,6 +221,8 @@ public class PayWithCreditCard {
 		}catch(Exception e) {}
 		cardRead = false;
 		inProgress = false;
+		isCompleted = false;
+		isApproved = false;
 		currentCardNumber = "";
 		currentHoldNumber = -1;
 		currentAmount = BigDecimal.ZERO;
@@ -225,9 +232,12 @@ public class PayWithCreditCard {
 	//release hold and make payment
 	public boolean makePayment() throws SimulationException {
 		try {
+			isApproved = true;
+			
 			issuer.postTransaction(currentCardNumber, currentHoldNumber, currentAmount);
 			
 			amountPaid = amountPaid.add(currentAmount);
+			
 			
 			resetTransaction();
 			return true;
