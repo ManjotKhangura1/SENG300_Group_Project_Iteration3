@@ -50,7 +50,6 @@ public class MainFrame {
 	public ApproveWeightDiscrepency approveWeightDiscrepancy;
 	public LookupProduct lookupProduct;
 	public FinishesAddingItems finishesAddingItems;
-	public RemoveItem removeItem;
 	public PayWithBanknote payWithBanknote;
 	public PayWithCoin payWithCoin;
 	public PayWithDebit payWithDebit;
@@ -114,7 +113,6 @@ public class MainFrame {
 			approveWeightDiscrepancy = new ApproveWeightDiscrepency(station, baggingArea);
 			lookupProduct = new LookupProduct(PLUCodedItems);
 			finishesAddingItems = new FinishesAddingItems(station, scanItem, baggingArea);
-			removeItem = new RemoveItem(station, BarcodedProducts, PLUCodedItems, PLULookup,barcodedItem, finishesAddingItems);
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
