@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -16,6 +17,12 @@ public class AttendantPanel extends JPanel {
 	private MainFrame mainFrame;
 	private JFrame frame;
 	private JLabel lblStationStatus;
+	private JLabel lblPrinterPaperStatus;
+	JLabel lblPrinterInkStatus;
+	private int paper = 0;
+	private int ink = 0;
+	int maxPaper = 0;
+	int maxInk = 0;
 
 	/**
 	 * Creates the Attendent Panel
@@ -42,14 +49,18 @@ public class AttendantPanel extends JPanel {
 		lblSubTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblSubTotal, "cell 1 0");
 
-		JLabel lblPrinterStatus = new JLabel("Printer Status:");
-		lblPrinterStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblPrinterStatus, "cell 4 0");
+		lblPrinterPaperStatus = new JLabel("Printer Paper Status: " + paper + " pages remaining");
+		lblPrinterPaperStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblPrinterPaperStatus, "cell 4 0");
 
 		JLabel lblTotal = new JLabel("Total:");
 		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblTotal, "cell 1 1");
+		
+		lblPrinterInkStatus = new JLabel("Printer Ink Status: " + ink + " units of ink remaining");
+		lblPrinterInkStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		add(lblPrinterInkStatus, "cell 4 1");
 
 		//Creates the label to display the station status
 		lblStationStatus = new JLabel("Station Status: ON");
@@ -59,6 +70,27 @@ public class AttendantPanel extends JPanel {
 		JLabel lblPaymentMethod = new JLabel("Payment Method:");
 		lblPaymentMethod.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblPaymentMethod, "cell 2 3");
+		
+		JButton btnNewButton = new JButton("Approve Weight Discrepancy");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					String name;
+					BigDecimal price = new BigDecimal("0.00");
+					BigDecimal weight = new BigDecimal("0.00");
+					mainFrame.approveWeightDiscrepancy.approve();
+					mainFrame.finishesAddingItems.updateTotals(null, price, weight);
+				} catch (Exception e1) {
+				}
+				mainFrame.attendantPanel.setVisible(false);
+				mainFrame.scanningPanel.setVisible(true);
+
+				
+
+			}
+		});
+		add(btnNewButton, "cell 0 4");
 
 		JLabel lblStatus = new JLabel("Status:");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
@@ -138,6 +170,18 @@ public class AttendantPanel extends JPanel {
 		JButton btnChangeInk = new JButton("Change Ink");
 		btnChangeInk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				maxInk = mainFrame.station.printer.MAXIMUM_INK;
+				if (ink == 0)
+				{
+					mainFrame.maintenance.changeInk(maxInk);
+					lblPrinterInkStatus.setText("Printer Ink Status: " + maxInk + " units of ink remaining");
+				}
+				if (ink > 0 && ink < maxInk)
+				{
+					mainFrame.maintenance.changeInk(maxInk - ink);
+					lblPrinterInkStatus.setText("Printer Ink Status: " + maxInk + " units of ink remaining");
+				}
+				ink = maxInk;
 			}
 		});
 		btnChangeInk.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -147,6 +191,18 @@ public class AttendantPanel extends JPanel {
 		JButton btnChangePaper = new JButton("Change Paper");
 		btnChangePaper.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				maxPaper = mainFrame.station.printer.MAXIMUM_PAPER;
+				if (paper == 0)
+				{
+					mainFrame.maintenance.changePaper(maxPaper);
+					lblPrinterPaperStatus.setText("Printer Paper Status: " + maxPaper + " pages remaining");
+				}
+				if (paper > 0 && paper < maxPaper)
+				{
+					mainFrame.maintenance.changePaper(maxPaper - paper);
+					lblPrinterPaperStatus.setText("Printer Paper Status: " + maxPaper + " pages remaining");
+				}
+				paper = maxPaper;
 			}
 		});
 		btnChangePaper.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -165,6 +221,8 @@ public class AttendantPanel extends JPanel {
 				btnStartUp.setVisible(false);
 				btnShutDown.setVisible(true);
 				lblStationStatus.setText("Station Status: ON");
+				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: ON");
+				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: ON");
 			}
 		});
 		btnStartUp.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -178,6 +236,8 @@ public class AttendantPanel extends JPanel {
 				btnShutDown.setVisible(false);
 				btnStartUp.setVisible(true);
 				lblStationStatus.setText("Station Status: OFF");
+				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: OFF");
+				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: OFF");
 			}
 		});
 		btnShutDown.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -194,10 +254,9 @@ public class AttendantPanel extends JPanel {
 		});
 		btnLogout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnLogout, "cell 5 5");
-		
 
 	}
-	
+
 	/**
 	 * Creates a new JFrame
 	 */
