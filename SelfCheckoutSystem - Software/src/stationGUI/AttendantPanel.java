@@ -25,17 +25,15 @@ public class AttendantPanel extends JPanel {
 		initComponents();
 	}
 
+	/**
+	 * Creates the different components of the Attendant Panel
+	 */
 	private void initComponents() {
 		setBounds(0, 0, 1280, 720);
 		setLayout(new MigLayout("",
 				"[517.00][252.00][136.00,grow][grow][101.00][131.00,grow][17.00][10.00][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
-
-		// Creating new frame for option panels
-		frame = new JFrame("Option Frame");
-		frame.setBounds(0, 0, 250, 220);
-		frame.setResizable(false);
 
 		// frame.getContentPane().setLayout(null);
 
@@ -95,6 +93,9 @@ public class AttendantPanel extends JPanel {
 
 	}
 
+	/**
+	 * Creates all the buttons needed in the attendant station
+	 */
 	private void createButtons() {
 		// Block Station button
 		JButton btnBlock = new JButton("Block Station");
@@ -127,8 +128,9 @@ public class AttendantPanel extends JPanel {
 		JButton btnRefill = new JButton("Refill");
 		btnRefill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				createFrame();
 				// Creating new Refill Panel
-				DispenserPanel dispenserPanel = new DispenserPanel(mainFrame);
+				RefillPanel dispenserPanel = new RefillPanel(mainFrame, frame);
 				frame.getContentPane().add(dispenserPanel);
 				frame.pack();
 				frame.setVisible(true);
@@ -141,8 +143,9 @@ public class AttendantPanel extends JPanel {
 		JButton btnEmpty = new JButton("Empty Storage");
 		btnEmpty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				createFrame();
 				// Creating new Refill Panel
-				DispenserPanel panel = new DispenserPanel(mainFrame);
+				EmptyPanel panel = new EmptyPanel(mainFrame, frame);
 				frame.getContentPane().add(panel);
 				frame.pack();
 				frame.setVisible(true);
@@ -161,6 +164,16 @@ public class AttendantPanel extends JPanel {
 		});
 		btnLogout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnLogout, "cell 5 5");
+	}
+
+	/**
+	 * Creates a new JFrame
+	 */
+	private void createFrame() {
+		// Creating new frame for option panels
+		frame = new JFrame("Option Frame");
+		frame.setBounds(0, 0, 250, 370);
+		frame.setResizable(false);
 	}
 
 }
