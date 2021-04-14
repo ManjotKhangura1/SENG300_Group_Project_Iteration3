@@ -225,7 +225,7 @@ public class BaggingArea {
 	 * 			If the weight being set is greater than the total weight of scanned items.
 	 */
 	public void setWeightScanned(BigDecimal weight) {
-		if(totalWeightInBagging.compareTo(weight) > 0 && weight.compareTo(BigDecimal.valueOf(0.0)) >= 0) {
+		if(totalWeightInBagging.compareTo(totalWeightScanned) > 0 && weight.compareTo(BigDecimal.valueOf(0.0)) >= 0) {
 			throw new SimulationException("More items in bagging area than scanned.");
 		}
 		
