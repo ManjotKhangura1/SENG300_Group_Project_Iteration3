@@ -36,7 +36,7 @@ public class EntersPlasticBagsUsed {
 		return totalPlasticBagsUsedPrice;
 	
 	}
-	//bags.baggingArea.disable(); //disable the weigh scale
-	//if(bags == null) throw new SimulationException(new NullPointerException("bagging area is null"));
+	
+	
 
 }
