@@ -117,6 +117,10 @@ public class FinishesAddingItems {
 		removeItem(name);
 	}
 	
+	public Map<String, ArrayList<BigDecimal>> getTracker(){
+		return tracker;
+	}
+	
 	
 	public void finish(){
 		//if the user is done adding items then the scanners and with weigh area do not need to continue updating
