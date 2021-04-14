@@ -115,7 +115,6 @@ public class BaggingAreaPanel extends JPanel {
 		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());
 		totalWeight = new JLabel(weight);
 		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
-		totalWeight.removeAll();
 		add(totalWeight, "cell 1 1");
 
 	}

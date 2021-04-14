@@ -28,9 +28,13 @@ public class ScanningPanel extends JPanel {
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private String subtotal;
+	private String totaltax;
 	private BigDecimal bdtotal = new BigDecimal("0.00");
+	private BigDecimal tax = new BigDecimal("0.00");
 	private String total;
 	private JPanel panel_1;
+	private JPanel panel_2_2;
+	private JLabel lblNewJgoodiesLabel_2 = new JLabel("");
 
 	public ScanningPanel(MainFrame mainFrame) {
 
@@ -58,30 +62,30 @@ public class ScanningPanel extends JPanel {
 		scrollPane.setColumnHeaderView(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Sub Total ($) :");
-		lblNewLabel_1.setBounds(581, 55, 160, 24);
+		lblNewLabel_1.setBounds(563, 45, 160, 24);
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel_1);
 
 		panel_2 = new JPanel();
-		panel_2.setBounds(846, 55, 173, 33);
+		panel_2.setBounds(857, 45, 173, 33);
 		add(panel_2);
 		
 		JLabel lblNewLabel_2 = new JLabel("Total ($):");
-		lblNewLabel_2.setBounds(605, 171, 109, 24);
+		lblNewLabel_2.setBounds(569, 213, 109, 24);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblNewLabel_2);
 
 		panel_3 = new JPanel();
-		panel_3.setBounds(846, 159, 173, 49);
+		panel_3.setBounds(857, 199, 173, 49);
 		add(panel_3);
 		
 
 
 		// Creating station status label
 		lblStationStatus = new JLabel("Station Status: ON");
-		lblStationStatus.setBounds(581, 303, 160, 24);
+		lblStationStatus.setBounds(581, 305, 160, 24);
 		//lblStationStatus.setText("Station Status: ON");
 		//System.out.print(mainFrame.attendantPanel.getLblStationStatus());
 		//lblStationStatus.setText(mainFrame.attendantPanel.getLblStationStatus());
@@ -98,7 +102,7 @@ public class ScanningPanel extends JPanel {
 		
 
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(846, 252, 173, 119);
+		panel_4.setBounds(857, 286, 173, 119);
 		add(panel_4);
 
 		JButton btnNewButton = new JButton("Add Item");
@@ -150,6 +154,19 @@ public class ScanningPanel extends JPanel {
 		});
 		attendantLoginB.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(attendantLoginB);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Tax ($) :");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblNewLabel_1_1.setBounds(540, 130, 160, 24);
+		add(lblNewLabel_1_1);
+		
+		panel_2_2 = new JPanel();
+		panel_2_2.setBounds(857, 130, 173, 33);
+		add(panel_2_2);
+		
+
+		
 
 		/*
 		 * if (!attendantLogin.isVisible() && !attendantLogin.isVisible()) {
@@ -166,6 +183,15 @@ public class ScanningPanel extends JPanel {
 		panel_2.removeAll();
 		panel_2.add(lblNewJgoodiesLabel);
 		
+		tax = new BigDecimal(mainFrame.finishesAddingItems.getPrice() * 0.05);
+		tax = tax.setScale(2, RoundingMode.HALF_UP);
+		totaltax = tax.toString();
+		lblNewJgoodiesLabel_2 = new JLabel (totaltax);
+		lblNewJgoodiesLabel_2.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewJgoodiesLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panel_2_2.removeAll();
+		panel_2_2.add(lblNewJgoodiesLabel_2);
+
 
 		bdtotal = new BigDecimal(mainFrame.finishesAddingItems.getPrice() * 1.05);
 		bdtotal = bdtotal.setScale(2, RoundingMode.HALF_UP);
