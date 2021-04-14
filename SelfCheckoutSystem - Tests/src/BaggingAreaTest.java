@@ -30,10 +30,11 @@ public class BaggingAreaTest {
 			int maxWeight = 23000;
 			int scaleSensitivity = 10;
 			station = new SelfCheckoutStation(currency, noteDenominations, coinDenomonations, maxWeight,scaleSensitivity);
-	}
+	}  
 
 	@After
 	public void tearDown() throws Exception {
+		station = null;
 	}
 
 	//testing to see if the program accepts a null self checkout station
@@ -69,10 +70,9 @@ public class BaggingAreaTest {
 	@Test (expected = SimulationException.class)
 	public void testaddItem() throws OverloadException, DisabledException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(500);
+		b.setWeightScanned(BigDecimal.valueOf(500));
 		itemStub i = new itemStub(1000);
 		b.addItem(i);
-
 	}	
 	//Testing to see if simulation exception is thrown when a null item is added
 	@Test (expected = SimulationException.class)
@@ -80,14 +80,13 @@ public class BaggingAreaTest {
 		BaggingArea b = new BaggingArea(station);
 		itemStub i = null;
 		b.addItem(i);
-
 	}	
 	
 	//Testing to see if a valid item stub can be added
 	@Test 
 	public void testaddItem3() throws OverloadException, DisabledException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(1000);
+		b.setWeightScanned(BigDecimal.valueOf(1000));
 		itemStub i = new itemStub (500);
 		b.addItem(i);
 
@@ -98,7 +97,7 @@ public class BaggingAreaTest {
 	public void testaddItem4() throws OverloadException, DisabledException {
 		station.baggingArea.disable();
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(500);
+		b.setWeightScanned(BigDecimal.valueOf(500));
 		itemStub i = new itemStub(1000);
 		b.addItem(i);
 
@@ -109,7 +108,7 @@ public class BaggingAreaTest {
 	@Test (expected = SimulationException.class)
 	public void testremoveItem() throws OverloadException, DisabledException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(500);
+		b.setWeightScanned(BigDecimal.valueOf(500));
 		itemStub i = new itemStub(1000);
 		b.removeItem(i);
 
@@ -127,7 +126,7 @@ public class BaggingAreaTest {
 	@Test 
 	public void testremoveItem3() throws OverloadException, DisabledException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(1000);
+		b.setWeightScanned(BigDecimal.valueOf(1000));
 		itemStub i = new itemStub (500);
 		b.addItem(i);
 		b.removeItem(i);
@@ -139,7 +138,7 @@ public class BaggingAreaTest {
 	public void testremoveItem4() throws OverloadException, DisabledException {
 		station.baggingArea.disable();
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(500);
+		b.setWeightScanned(BigDecimal.valueOf(500));
 		itemStub i = new itemStub(1000);
 		b.removeItem(i);
 
@@ -149,7 +148,7 @@ public class BaggingAreaTest {
 	@Test  (expected = SimulationException.class)
 	public void testsetWeightBaggingArea() throws OverloadException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightBaggingArea(-1);
+		b.setWeightBaggingArea(BigDecimal.valueOf(-1));
 
 	}
 	
@@ -157,15 +156,15 @@ public class BaggingAreaTest {
 	@Test 
 	public void testsetWeightBaggingArea2() throws OverloadException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightBaggingArea(500);
+		b.setWeightBaggingArea(BigDecimal.valueOf(500));
 	}
 	
 	//Test to see if the getter is accurate for the bagging area weight
 	@Test 
 	public void testgetWeightBaggingArea() throws OverloadException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightBaggingArea(1234);
-		assertTrue(b.getWeightBaggingArea() == 1234);
+		b.setWeightBaggingArea(BigDecimal.valueOf(1234));
+		assertTrue(b.getWeightBaggingArea().doubleValue() == 1234);
 		
 	}
 	
@@ -174,30 +173,30 @@ public class BaggingAreaTest {
 	@Test  (expected = SimulationException.class)
 	public void testsetWeightScanned() throws OverloadException {
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightBaggingArea(21300);
-		b.setWeightScanned(2000);
+		b.setWeightBaggingArea(BigDecimal.valueOf(21300));
+		b.setWeightScanned(BigDecimal.valueOf(2000));
 
 	}
 	//Test to see if a simulation exception will be thrown with an invalid weight
 	@Test (expected = SimulationException.class)
 	public void testsetWeightScanned2() throws OverloadException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(-50);
+		b.setWeightScanned(BigDecimal.valueOf(-50));
 	}
 	
 	//Test to see if the setter for the set weight scanned works with a valid weight
 	@Test
 	public void testsetWeightScanned3() throws OverloadException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(550);
+		b.setWeightScanned(BigDecimal.valueOf(550));
 	}
 	
 	//Testing to see if the getter for total items scanned is accurate
 	@Test 
 	public void testgetWeightScanned() throws OverloadException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(1234);
-		assertTrue(b.getWeightScanned() == 1234);
+		b.setWeightScanned(BigDecimal.valueOf(1234.0));
+		assertTrue(b.getWeightScanned().compareTo(BigDecimal.valueOf(1234.0)) == 0);
 		
 	}
 	
@@ -240,7 +239,7 @@ public class BaggingAreaTest {
 	@Test (expected = SimulationException.class)
 	public void teststartListener() throws OverloadException, DisabledException{
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(30000);
+		b.setWeightScanned(BigDecimal.valueOf(30000));
 		itemStub i = new itemStub (23000);
 		itemStub j = new itemStub(5000);
 		b.addItem(i);
@@ -281,8 +280,28 @@ public class BaggingAreaTest {
 	public void testaddItem5() throws OverloadException, DisabledException{
 		itemStub j = new itemStub(5);
 		BaggingArea b = new BaggingArea(station);
-		b.setWeightScanned(30000);
+		b.setWeightScanned(BigDecimal.valueOf(30000));
 		b.addItem(j);
+	}
+	
+	@Test
+	public void testRemoveItems() {
+		try {
+			BaggingArea b = new BaggingArea(station);
+			b.setWeightScanned(BigDecimal.valueOf(1000));
+			b.removeWeightScanned(BigDecimal.valueOf(500));
+			assertTrue(b.getWeightScanned().compareTo(BigDecimal.valueOf(500)) == 0);
+		}catch(Exception e) {
+			fail();
+		}
+		
+		try {
+			BaggingArea b = new BaggingArea(station);
+			b.setWeightScanned(BigDecimal.valueOf(1000));
+			b.removeWeightScanned(BigDecimal.valueOf(-10));
+		}catch(Exception e) {
+			assertTrue(e instanceof SimulationException);
+		}
 	}
 	
 	//Creating a stub for the item class
