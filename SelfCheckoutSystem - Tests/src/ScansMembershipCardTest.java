@@ -42,6 +42,7 @@ public class ScansMembershipCardTest {
 		Card validCard = new Card("Membership", "1234567", "A Name", null, null, false, false);
 		BufferedImage aSignature = new BufferedImage(1,2,3);
 		
+		//testing the probability
 		for(int i=0;i<1000;i++) {
 			scanMembership.swipeMembershipCard(validCard, aSignature);
 		}
