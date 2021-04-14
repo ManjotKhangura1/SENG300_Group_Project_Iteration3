@@ -232,6 +232,19 @@ public class BaggingArea {
 	}
 	
 	/**
+	 * Subtracts the weight from the total weight of scanned items by the given parameter
+	 * @param weight
+	 * @throws SimulationException
+	 * 			If the weight being set is negative.
+	 */
+	public void removeWeightScanned(BigDecimal weight) {
+		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0 || weight == null) {
+			throw new SimulationException("Invalid weight.");
+		}
+		this.totalWeightScanned.subtract(weight);
+	}
+	
+	/**
 	 * Gets the weight of all items currently scanned which may not have been bagged yet.
 	 * 
 	 * @return The total weight of all items scanned

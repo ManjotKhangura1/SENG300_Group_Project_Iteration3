@@ -74,14 +74,6 @@ public class ScanItem {
 	}
 	
 	/**
-	 * looks up the product from the database and updates price
-	 * @param barcode
-	 */
-	private void lookupProduct(Barcode barcode) {
-		done.setPrice(BigDecimal.valueOf(database.get(barcode).getPrice().doubleValue()));
-	}
-	
-	/**
 	 * create an instance of the listener 
 	 */
 	private void scannerListener() {
@@ -99,10 +91,8 @@ public class ScanItem {
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				done.setList(barcode.toString());
-				done.setWeight(curWeight);
+				done.updateTotals(database.get(barcode).getDescription(), BigDecimal.valueOf(database.get(barcode).getPrice().doubleValue()), curWeight);
 				baged.setWeightScanned(curWeight);
-				lookupProduct(barcode);
 			}
 			
 		});
@@ -120,10 +110,8 @@ public class ScanItem {
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				done.setList(barcode.toString());
-				done.setWeight(curWeight);
+				done.updateTotals(database.get(barcode).getDescription(), BigDecimal.valueOf(database.get(barcode).getPrice().doubleValue()), curWeight);
 				baged.setWeightScanned(curWeight);
-				lookupProduct(barcode);
 			}
 			
 		});
