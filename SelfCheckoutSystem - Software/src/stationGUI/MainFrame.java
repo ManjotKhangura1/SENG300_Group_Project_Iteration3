@@ -58,7 +58,7 @@ public class MainFrame {
 	public GiveChange giveChange;
 	public RemovePurchasedItems removePurchasedItems;
 	public ReturnsToAddingItems returnsToAddingItems;
-	public Maintenance maintence;
+	public Maintenance maintenance;
 	public FailBagging failBagging;
 	public DeclineBagPrompt declineBagPrompt;
 	public EntersPlasticBagsUsed bagsUsed;
@@ -117,11 +117,12 @@ public class MainFrame {
 			payWithBanknote = new PayWithBanknote(station);
 			payWithCoin = new PayWithCoin(station);
 			payWithDebit = new PayWithDebit(station);
+			payWithCreditCard = new PayWithCreditCard(station, cardIssuer);
 			payWithGiftCard = new PayWithGiftCard(station);
 			giveChange = new GiveChange(station, CAD, totalOwed, payWithBanknote, payWithCoin);
 			removePurchasedItems = new RemovePurchasedItems(station, scanItem, baggingArea, giveChange);
 			returnsToAddingItems = new ReturnsToAddingItems(station);
-			payWithCreditCard = new PayWithCreditCard(station, cardIssuer);
+			maintenance = new Maintenance(station);
 
 		} catch (OverloadException e) {
 			e.printStackTrace();

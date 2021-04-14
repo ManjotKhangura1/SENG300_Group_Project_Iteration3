@@ -141,10 +141,8 @@ public class Maintenance {
 				throw new SimulationException(e);
 			}
 		} else if (refillAmount <= 0){
-			System.out.println("The refill amount chosen is invalid (either negative or 0");
 			refillSuccess = false;
 		}else {
-			System.out.println("Invalid coin denomination provided");
 			refillSuccess = false;
 		}
 	}
