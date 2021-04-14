@@ -56,8 +56,8 @@ public class FinishesAddingItems {
 		ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>();
 		temp.add(price); //element 0
 		temp.add(weight); //element 1
-		finalWeight.add(weight); 
-		finalPrice.add(price); 
+		finalWeight = finalWeight.add(weight); 
+		finalPrice =  finalPrice.add(price); 
 		finalList.add(name); 
 		tracker.put(name, temp);
 	}
