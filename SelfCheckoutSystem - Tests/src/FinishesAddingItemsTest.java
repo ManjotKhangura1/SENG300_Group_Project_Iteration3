@@ -40,8 +40,26 @@ public class FinishesAddingItemsTest {
 		scs = new SelfCheckoutStation(currency, banknoteDenominations, coinDenominations, scaleMaximumWeight, scaleSens);
 		
 		bagArea = new BaggingArea(scs);
-		finish = new FinishesAddingItems(scs, scanItem, bagArea);
+		finish = new FinishesAddingItems(scs, bagArea);
 		scanItem = new ScanItem(scs, database, finish, bagArea);
+	}
+	
+	@Test
+	public void updateTotals_Test() {
+		String testString = "test name";
+		BigDecimal testPrice = new BigDecimal(10.00);
+		BigDecimal testWeight = new BigDecimal(50);
+		Map<String, ArrayList<BigDecimal>> expected = new HashMap<>();
+		ArrayList<String> testList = new ArrayList<>();
+		ArrayList<BigDecimal> tempList = new ArrayList<>();
+		tempList.add(testPrice);
+		tempList.add(testWeight);
+		testList.add(testString);
+		
+		expected.put(testString, tempList);
+		finish.updateTotals(testString, testPrice, testWeight); //actual
+		
+		assertEquals(expected, finish.getTracker());
 		
 	}
 		
