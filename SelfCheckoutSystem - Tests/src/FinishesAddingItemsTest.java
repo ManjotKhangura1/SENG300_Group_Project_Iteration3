@@ -11,12 +11,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.devices.DisabledException;
+import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+import Software.Bag;
 import Software.BaggingArea;
-import Software.DeclineBagPrompt;
 import Software.FinishesAddingItems;
 import Software.ScanItem;
 
@@ -91,17 +93,122 @@ public class FinishesAddingItemsTest {
 	}
 	
 	//testing the method without usage of other classes
+	//testing get price with 2 items
 	@Test
-	public void getPrice() {
+	public void getPriceTest() {
+		String testString = "test item 1";
+		String testString2 = "test item 2";
+		BigDecimal testPrice = new BigDecimal(10.00);
+		BigDecimal testWeight = new BigDecimal(50);
+		finish.updateTotals(testString, testPrice, testWeight);
+		finish.updateTotals(testString2, testPrice, testWeight);
+		double actual = finish.getPrice();
+		double expected = 10.00 + 10.00;
+		assertEquals(expected, actual, 0);
+	}
+	
+	//testing the method without usage of other classes
+	@Test
+	public void getListTest() {
 		String testString = "test item 2";
 		BigDecimal testPrice = new BigDecimal(10.00);
 		BigDecimal testWeight = new BigDecimal(50);
 		finish.updateTotals(testString, testPrice, testWeight);
+		ArrayList<String> expected = new ArrayList<>();
+		expected.add(testString);
+		ArrayList<String> actual = finish.getList();
 		
-		double actual = finish.getPrice();
-		double expected = 10.00;
+		assertEquals(expected, actual);
+		
 	}
+	
+	
+	@Test
+	public void getWeightTest() {
+		String testString = "test item 1";
+		String testString2 = "test item 2";
+		BigDecimal testPrice = new BigDecimal(10.00);
+		BigDecimal testWeight = new BigDecimal(50);
+		finish.updateTotals(testString, testPrice, testWeight);
+		finish.updateTotals(testString2, testPrice, testWeight);
+		double actual = finish.getWeight();
+		double expected = 50 + 50;
+		assertEquals(expected, actual, 0);
+	}
+	
+	@Test
+	public void addOwnBagTest() throws DisabledException, OverloadException {
+		double bagWeight = 4;
+		String bagName = "test bag";
+		Bag bag = new Bag(bagWeight);
+		finish.addOwnBag(bag, bagName);
+		BigDecimal expectedPrice = new BigDecimal(0.10);
+		BigDecimal expectedWeight = new BigDecimal(4);
+		Map<String, ArrayList<BigDecimal>> expected = new HashMap<>();
+		ArrayList<String> testList = new ArrayList<>();
+		ArrayList<BigDecimal> tempList = new ArrayList<>();
+		ArrayList<String> actual = finish.getList();
+		tempList.add(expectedPrice);
+		tempList.add(expectedWeight);
+		testList.add(bagName);
+		expected.put(bagName, tempList);
+		assertEquals(testList, finish.getList());
+		assertEquals(expected, finish.getTracker()); //fails since it is a big decimal version of 0.10 but this is fine
+	}
+	
+	@Test
+	public void removeOwnBag() throws DisabledException, OverloadException {
+		double bagWeight = 4;
+		String bagName = "test bag";
+		String bagName2 = "test bag2";
+		Bag bag = new Bag(bagWeight);
+		Bag bag2 = new Bag(bagWeight);
+		finish.addOwnBag(bag, bagName);
+		finish.addOwnBag(bag2, bagName2);
+		finish.removeOwnBag(bag2, bagName2);
+		BigDecimal expectedPrice = new BigDecimal(0.10);
+		BigDecimal expectedWeight = new BigDecimal(4);
+		Map<String, ArrayList<BigDecimal>> expected = new HashMap<>();
+		ArrayList<String> testList = new ArrayList<>();
+		ArrayList<BigDecimal> tempList = new ArrayList<>();
+		ArrayList<String> actual = finish.getList();
+		tempList.add(expectedPrice);
+		tempList.add(expectedWeight);
+		testList.add(bagName);
+		expected.put(bagName, tempList);
+		assertEquals(testList, finish.getList());
+		assertEquals(expected, finish.getTracker()); //fails since it is a big decimal version of 0.10 but this is fine
+	}
+	
+	@Test
+	public void finishTest_WithBagArea() {
+		finish.finish();
+		Barcode barcode = new Barcode("123");
+		double weight = 10.0;
+		BarcodedItem item = new BarcodedItem(barcode, weight);
 		
+		try {
+			bagArea.addItem(item);
+		}
+		catch(Exception e) {
+			assertTrue(e instanceof DisabledException);
+		}
+	}
+		@Test
+		public void finishTest_WithScan() {
+			finish.finish();
+			Barcode barcode = new Barcode("123");
+			double weight = 10.0;
+			BarcodedItem item = new BarcodedItem(barcode, weight);
+			
+			try {
+				scanItem.scanFromMain(item);
+			}
+			catch(Exception e) {
+				assertTrue(e instanceof DisabledException);
+			}
+	
+		}	
 		
 		
 		
