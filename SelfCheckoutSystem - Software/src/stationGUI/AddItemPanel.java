@@ -17,16 +17,19 @@ import java.util.Map;
 import javax.swing.SwingConstants;
 
 import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class AddItemPanel extends JPanel{
 	
 	private MainFrame mainFrame;
+	public int itemScanned = 0;
 
 	
 	public AddItemPanel(MainFrame mainFrame)
@@ -43,14 +46,18 @@ public class AddItemPanel extends JPanel{
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("", "[][][][][grow][][][grow]", "[][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][]"));
 		setVisible(false);
+	
 		
-		TextField textField = new TextField(22); // bags
+		TextField textField = new TextField(25); // bags
 		add(textField, "cell 1 3");
 		
-		TextField textField_1 = new TextField(22); // plu 
+		TextField textField_3 = new TextField(25); // brought own bags
+		add(textField_3, "cell 2 3");
+		
+		TextField textField_1 = new TextField(25); // plu 
 		add(textField_1, "cell 1 14");
 		
-		TextField textField_2 = new TextField(22); // weight of PLU Item Purchased
+		TextField textField_2 = new TextField(25); // weight of PLU Item Purchased
 		add(textField_2, "cell 2 14");
 
 
@@ -59,7 +66,7 @@ public class AddItemPanel extends JPanel{
 		add(btnNewButton_2, "cell 1 8");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				itemScanned = 4;
                 JOptionPane.showMessageDialog(null, "Eggs scanned! Please add to bagging area. ");
 			}
 		});
@@ -69,6 +76,7 @@ public class AddItemPanel extends JPanel{
 		add(btnNewButton_3, "cell 2 8");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				itemScanned = 5;
                 JOptionPane.showMessageDialog(null, "Black beans scanned! Please add to bagging area. ");
 			}
 		});
@@ -76,6 +84,7 @@ public class AddItemPanel extends JPanel{
 		JButton btnNewButton_3_1 = new JButton("   Crackers   ");
 		btnNewButton_3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				itemScanned = 6;
                 JOptionPane.showMessageDialog(null, "Crackers scanned! Please add to bagging area. ");
 			}
 		});
@@ -86,7 +95,8 @@ public class AddItemPanel extends JPanel{
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Crackers scanned! Please add to bagging area. ");
+				itemScanned = 1;
+                JOptionPane.showMessageDialog(null, "Milk scanned! Please add to bagging area. ");
 			}
 		});
 		add(btnNewButton, "cell 1 6");
@@ -95,7 +105,8 @@ public class AddItemPanel extends JPanel{
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Soy Milk scanned! Please add to bagging area. ");
+				itemScanned = 2;
+                JOptionPane.showMessageDialog(null, "Soy milk scanned! Please add to bagging area. ");
 			}
 		});
 		add(btnNewButton_1, "cell 2 6");
@@ -104,6 +115,8 @@ public class AddItemPanel extends JPanel{
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//mainFrame.scanItem.scanFromMain();
+				itemScanned = 3;
                 JOptionPane.showMessageDialog(null, "Bread scanned! Please add to bagging area. ");
 			}
 		});
@@ -114,13 +127,25 @@ public class AddItemPanel extends JPanel{
 		add(btnNewButton_6, "cell 5 14");
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				try {
-//					int bags = Integer.parseInt(textField.getText());
-//					String PLU = textField_1.getText();
-//					int weightPLUPurchased = Integer.parseInt(textField_2.getText());
-//					System.out.println(mainFrame.scanItem.getTotalPrice());
+				
+					try {
+						//bags addition 
+						int bags = Integer.parseInt(textField.getText());
+						//mainFrame.addOwnBag.addBag(Bag);
+						//PLU Code 
+						String PLU = textField_1.getText();
+						
+						int weightPLUPurchased = Integer.parseInt(textField_2.getText());
+						
+					}
+					catch(Exception exception) {
+		                JOptionPane.showMessageDialog(null, "Invalid input. Try again.");
+					}
+
 					
+					//scanning
+					mainFrame.scanItem.scanFromMain(mainFrame.BarcodedItems.get(itemScanned), false);
 
 				}
 				catch(Exception error) {
@@ -133,6 +158,16 @@ public class AddItemPanel extends JPanel{
 				
 			}
 		});
+		
+		JButton btnNewButton_5 = new JButton("Skip Bagging This");
+		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.addItemPanel.setVisible(false);
+				mainFrame.attendantPanel.setVisible(true);
+			}
+		});
+		add(btnNewButton_5, "cell 5 15");
 		
 		JButton btnNewButton_7 = new JButton("View Cart");
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -216,6 +251,10 @@ public class AddItemPanel extends JPanel{
 			JLabel lblNewJgoodiesLabel_16 = new JLabel("Enter Amount(g):");
 			lblNewJgoodiesLabel_16.setFont(new Font("Tahoma", Font.BOLD, 12));
 			add(lblNewJgoodiesLabel_16, "cell 2 13");
+			
+			JLabel lblNewJgoodiesLabel_17 = new JLabel("Brought Your Own Bags? Enter How Many:");
+			lblNewJgoodiesLabel_17.setFont(new Font("Tahoma", Font.BOLD, 12));
+			add(lblNewJgoodiesLabel_17, "cell 2 2");
 					
 		}
 
