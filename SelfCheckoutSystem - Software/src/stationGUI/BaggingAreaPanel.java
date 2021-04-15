@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class BaggingAreaPanel extends JPanel {
 
@@ -23,8 +22,6 @@ public class BaggingAreaPanel extends JPanel {
 	private JLabel itemCart;
 	public JLabel totalWeight;
 	public JScrollPane scrollPane;
-	public JButton btnBack;
-	public JButton btnViewCart;
 	
 
 	/**
@@ -44,7 +41,7 @@ public class BaggingAreaPanel extends JPanel {
 	private void initButtons() {
 
 		//Creating the back to adding items button
-		btnBack = new JButton("Back to Adding Items");
+		JButton btnBack = new JButton("Back to Adding Items");
 		btnBack.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnBack, "cell 1 3");
 		btnBack.addActionListener(new ActionListener() {
@@ -57,7 +54,7 @@ public class BaggingAreaPanel extends JPanel {
 		});
 
 		//Creating the view cart button
-		btnViewCart = new JButton("View Cart");
+		JButton btnViewCart = new JButton("View Cart");
 		btnViewCart.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -136,9 +133,9 @@ public class BaggingAreaPanel extends JPanel {
 		itemCart = new JLabel(items);
 		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
 
-		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
 
-			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+			items[i] = mainFrame.addItemPanel.getList().get(i).toString();
 
 		}
 
