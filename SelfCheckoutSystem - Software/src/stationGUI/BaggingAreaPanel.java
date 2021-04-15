@@ -67,6 +67,8 @@ public class BaggingAreaPanel extends JPanel {
 		
 	}
 
+	
+	
 	/**
 	 * Initializes the different components of the panel
 	 */
@@ -106,6 +108,9 @@ public class BaggingAreaPanel extends JPanel {
 		lblTotalWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblTotalWeight, "flowx,cell 1 1");
 
+		totalWeight = new JLabel("");
+		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(totalWeight, "cell 1 1");
 
 		//Creating station status label
 		lblStationStatus = new JLabel("");
@@ -122,21 +127,21 @@ public class BaggingAreaPanel extends JPanel {
 	public void refreshWeight() {
 		
 		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());
-		totalWeight = new JLabel(weight);
-		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(totalWeight, "cell 1 1");
+		totalWeight.setText(weight);
 		
 		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
+			if (mainFrame.addItemPanel.getList().get(i) != null) {
 			items.concat(mainFrame.addItemPanel.getList().get(i));
+			}
 		}
 
 		itemCart = new JLabel(items);
 		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
 
 		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
-
+			if (mainFrame.addItemPanel.getList().get(i) != null) {
 			items[i] = mainFrame.addItemPanel.getList().get(i).toString();
-
+			}
 		}
 
 		JList list = new JList(items);
