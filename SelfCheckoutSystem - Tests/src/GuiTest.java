@@ -162,7 +162,6 @@ public class GuiTest {
 		boolean test3= notes.isContentAreaFilled();
 		boolean test4= refillPanel.rdbtnBanknote.isContentAreaFilled();
 		
-		
 		assertEquals(test3, test4);
 	}
 	
@@ -188,27 +187,53 @@ public class GuiTest {
 		assertEquals(test1, actual);
 		assertEquals(test2,actual2);
 		
-	
 	}
 	
+	@Test
+	public void emptyPanel()	{
+		
+		MainFrame mainFrame = new MainFrame();
+		JFrame jFrame= new JFrame();
+		EmptyPanel emptyPanel= new EmptyPanel(mainFrame, jFrame);
+		
+		JRadioButton coins= new JRadioButton();
+		JRadioButton notes= new JRadioButton();
+		
+		
+		boolean test1= coins.isContentAreaFilled();
+		boolean test2= emptyPanel.rdbtnCoins.isContentAreaFilled();
+		
+		assertEquals(test1, test2);
+		
+		boolean test3= notes.isContentAreaFilled();
+		boolean test4= emptyPanel.rdbtnBanknote.isContentAreaFilled();
+		
+		assertEquals(test3, test4);
+		
+			
+		}
+		
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	
 		
