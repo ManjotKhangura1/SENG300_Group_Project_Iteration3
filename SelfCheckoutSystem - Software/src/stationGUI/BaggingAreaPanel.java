@@ -16,9 +16,9 @@ public class BaggingAreaPanel extends JPanel {
 
 	private MainFrame mainFrame;
 	private JLabel lblStationStatus;
-	private String price;
-	private String weight;
-	private String items = "";
+	public String price;
+	public String weight;
+	public String items = "";
 	private JLabel itemCart;
 	public JLabel totalWeight;
 	public JScrollPane scrollPane;
