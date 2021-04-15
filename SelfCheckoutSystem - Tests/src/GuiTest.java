@@ -21,21 +21,21 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
-import stationGUI.AddItemPanel;
-import stationGUI.MainFrame;
+import stationGUI.*;
 
 public class GuiTest {
 	
 	boolean checkActionPerformed;
+	boolean check=true;
 	
 	@Before
 	public void setUp() throws Exception {
 		
-		checkActionPerformed=false;
 	}
 		
 	@Test
-	public void testAddItemPanel_actionPerformed1() {
+	public void testAddItemPanel_actionPerformed2() {
+		
 		
 		JButton aButton= new  JButton("      Eggs      ");
 		MainFrame mainFrame = new MainFrame();
@@ -47,29 +47,109 @@ public class GuiTest {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				checkActionPerformed= true;
+				
 			}	
 		});
+		addItemPanel.itemScanned="4";
+		addItemPanel.initComponents();
 		
 		aButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				 check = true;			
+			}
+			
+		});
+			String expected= "4";
+			String actual= addItemPanel.itemScanned;
+			
+			assertEquals("4",actual);
+			assertEquals(check,true);
+
+		}
+
+	@Test
+	public void testAddItemPanel_actionPerformed3() {
+		
+		JButton aButton= new  JButton("     Black Beans      ");
+		MainFrame mainFrame = new MainFrame();
+		AddItemPanel addItemPanel= new AddItemPanel(mainFrame);
+		
+		//textField.getText() != "" && textField.getText().length() > 
+		
+		addItemPanel.btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkActionPerformed= true;
+			}	
+		});
+		addItemPanel.itemScanned="5";
+		aButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 				boolean check= true;			
+			}	
+			
+		});
+		
+			String expected= "5";
+			String actual= addItemPanel.itemScanned;
+			
+			assertEquals("5",actual);
+
+		}
+	
+	@Test
+	public void testAttendantLoginPanel_actionPerformed() {
+		
+		JButton login= new  JButton("INVALID LOGIN");
+		MainFrame mainFrame = new MainFrame();
+		AttendantLoginPanel attendantLoginPanel = new AttendantLoginPanel(mainFrame);
+		login.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkActionPerformed=true;		
 			}
 		});
 		
-			String expected= "0";
-			String actual= addItemPanel.itemScanned;
-			
-			assertEquals("0",actual);
+		boolean expected = false;
+		boolean actual= checkActionPerformed;
+		assertEquals(expected, actual);
+	}
 	
-		}
-		
-		
-		
+
 	
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 		
 	
