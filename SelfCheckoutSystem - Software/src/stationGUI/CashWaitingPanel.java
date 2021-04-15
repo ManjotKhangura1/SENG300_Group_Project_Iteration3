@@ -21,7 +21,12 @@ import java.awt.Font;
 public class CashWaitingPanel extends JPanel {
 	
 	private MainFrame mainFrame;
+	public JLabel calculation;
 	
+	public JLabel getCalculation() {
+		return calculation;
+	}
+
 	public CashWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
@@ -44,7 +49,7 @@ public class CashWaitingPanel extends JPanel {
 		instruction.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(instruction);
 		
-		JLabel calculation = new JLabel("<html>SUBTOTAL<br>TAX<br>TOTAL<br>PAID</html>");
+		calculation = new JLabel("<html>TOTAL: <br>PAID: </html>");
 		calculation.setBackground(Color.WHITE);
 		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 48));
 		calculation.setHorizontalAlignment(SwingConstants.CENTER);
