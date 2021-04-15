@@ -73,7 +73,7 @@ public class BaggingAreaPanel extends JPanel {
 	 * Initializes the different components of the panel
 	 */
 	private void initComponents() {
-		setBounds(0, 0, 1280, 720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new MigLayout("",
 				"[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));

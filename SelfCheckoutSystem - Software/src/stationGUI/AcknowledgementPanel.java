@@ -25,7 +25,7 @@ public class AcknowledgementPanel extends JPanel {
 
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 1));
 		setVisible(false);
 		
