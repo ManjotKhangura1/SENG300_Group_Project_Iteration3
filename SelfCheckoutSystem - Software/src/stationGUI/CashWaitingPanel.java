@@ -6,6 +6,8 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -57,17 +59,8 @@ public class CashWaitingPanel extends JPanel {
 		help.setVerticalTextPosition(SwingConstants.BOTTOM);
 		help.setHorizontalTextPosition(SwingConstants.CENTER);
 		help.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		help.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				help.setBackground(Color.CYAN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				help.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		add(help);
@@ -80,17 +73,8 @@ public class CashWaitingPanel extends JPanel {
 		cancel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cancel.setHorizontalTextPosition(SwingConstants.CENTER);
 		cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		cancel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				cancel.setBackground(Color.GRAY);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				cancel.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				mainFrame.cashWaitingPanel.setVisible(false);
 				mainFrame.welcomePanel.setVisible(true);
 			}
