@@ -23,6 +23,8 @@ public class BaggingAreaPanel extends JPanel {
 	private JLabel itemCart;
 	public JLabel totalWeight;
 	public JScrollPane scrollPane;
+	public JButton btnBack;
+	public JButton btnViewCart;
 	
 
 	/**
@@ -42,7 +44,7 @@ public class BaggingAreaPanel extends JPanel {
 	private void initButtons() {
 
 		//Creating the back to adding items button
-		JButton btnBack = new JButton("Back to Adding Items");
+		btnBack = new JButton("Back to Adding Items");
 		btnBack.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnBack, "cell 1 3");
 		btnBack.addActionListener(new ActionListener() {
@@ -55,7 +57,7 @@ public class BaggingAreaPanel extends JPanel {
 		});
 
 		//Creating the view cart button
-		JButton btnViewCart = new JButton("View Cart");
+		btnViewCart = new JButton("View Cart");
 		btnViewCart.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

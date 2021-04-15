@@ -27,6 +27,8 @@ public class RefillPanel extends JPanel {
 	private JFrame currentFrame;
 	private int indexSelected;
 	private JTextField txtfRefillAmount;
+	public JRadioButton rdbtnCoins;
+	public JRadioButton rdbtnBanknote;
 
 	/**
 	 * Create the Refill Options window
@@ -114,7 +116,7 @@ public class RefillPanel extends JPanel {
 		lisBDispensers.setVisible(false);
 
 		// Creating coins option
-		JRadioButton rdbtnCoins = new JRadioButton("Coins");
+		rdbtnCoins = new JRadioButton("Coins");
 		GridBagConstraints gbc_rdbtnCoins = new GridBagConstraints();
 		gbc_rdbtnCoins.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnCoins.gridx = 1;
@@ -131,7 +133,7 @@ public class RefillPanel extends JPanel {
 		add(rdbtnCoins, gbc_rdbtnCoins);
 
 		// creating banknote option
-		JRadioButton rdbtnBanknote = new JRadioButton("Banknote");
+		rdbtnBanknote = new JRadioButton("Banknote");
 		GridBagConstraints gbc_rdbtnBanknote = new GridBagConstraints();
 		gbc_rdbtnBanknote.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnBanknote.gridx = 1;
