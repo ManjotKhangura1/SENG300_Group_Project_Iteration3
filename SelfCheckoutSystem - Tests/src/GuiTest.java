@@ -21,6 +21,7 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 
+import Software.BaggingArea;
 import stationGUI.*;
 
 public class GuiTest {
@@ -123,8 +124,23 @@ public class GuiTest {
 	
 
 	
-	
-	
+	@Test
+	public void testBaggingAreaPanel() {
+		
+		JButton login= new  JButton("INVALID LOGIN");
+		MainFrame mainFrame = new MainFrame();
+		BaggingAreaPanel baggingAreaPanel = new BaggingAreaPanel(mainFrame);
+		
+		baggingAreaPanel.weight="2";
+		baggingAreaPanel.items.toString();
+		
+		baggingAreaPanel.refreshWeight();
+		
+		
+		assertEquals("0.0", baggingAreaPanel.weight);
+		
+		
+	}
 	
 	
 	
