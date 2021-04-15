@@ -44,6 +44,10 @@ public class ScanningPanel extends JPanel {
 	private String itemToBeDeleted = "";
 	private String itemToBeDeletedBadFormat;
 
+	/**
+	 * ScanningPanel Constructor
+	 * @param mainFrame the frame the panel is on
+	 */
 	public ScanningPanel(MainFrame mainFrame) {
 
 		this.mainFrame = mainFrame;
@@ -52,6 +56,9 @@ public class ScanningPanel extends JPanel {
 
 	}
 
+	/**
+	 * Initializes the components of the panel
+	 */
 	private void initComponents() {
 		//setBounds(0, 0, 1280, 720);
 		setBounds(mainFrame.frame.getBounds());
@@ -184,6 +191,9 @@ public class ScanningPanel extends JPanel {
 		 */
 	}
 
+	/**
+	 * Refreshes the total, tax on the scanningPanel screen in between item additions
+	 */
 	public void refreshTotal() {
 
 		subtotal = String.valueOf(mainFrame.finishesAddingItems.getPrice());
@@ -244,8 +254,9 @@ public class ScanningPanel extends JPanel {
 					i++;
 				}
 
-				System.out.println(itemToBeDeleted);
+				System.out.println("-" + itemToBeDeleted + "-");
 				
+				// TRIED TO IMPLEMENT REMOVE ITEM FEATURE BUT COULD NOT COMPLETE
 				//mainFrame.finishesAddingItems.removeItem(itemToBeDeleted);
 				
 			}
@@ -259,10 +270,18 @@ public class ScanningPanel extends JPanel {
 
 	}
 
+	/**
+	 * Gets the status of the station 
+	 * @return lblStationStatus the label containing the station status 
+	 */
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
 	}
 
+	/**
+	 * Gets the total in big decimal format 
+	 * @return bdtotal the total in BigDecimal form
+	 */
 	public BigDecimal getBDTotal() {
 		return bdtotal;
 	}

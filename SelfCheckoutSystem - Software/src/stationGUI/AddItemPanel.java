@@ -117,7 +117,7 @@ public class AddItemPanel extends JPanel{
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				itemScanned = "2";
+				itemScanned = "1";
                 JOptionPane.showMessageDialog(null, "Milk scanned! Please add to bagging area. ");
 			}
 		});
