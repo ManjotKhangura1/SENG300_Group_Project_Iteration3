@@ -27,6 +27,7 @@ public class PaymentPanel extends JPanel {
 	public JButton membership;
 	public JButton help;
 	public JButton cancel;
+	public JLabel calculation;
 	
 	public PaymentPanel(MainFrame mainFrame)
 	{
@@ -151,11 +152,15 @@ public class PaymentPanel extends JPanel {
 		});
 		add(cancel);
 		
-		JLabel calculation = new JLabel("<html>SUBTOTAL<br>TAX<br>TOTAL<br>PAID</html>");
+		calculation = new JLabel("<html>TOTAL: <br>PAID: </html>");
 		calculation.setBackground(Color.WHITE);
 		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
 		calculation.setHorizontalAlignment(SwingConstants.CENTER);
 		calculation.setVerticalAlignment(SwingConstants.CENTER);
 		add(calculation);
+	}
+
+	public JLabel getCalculation() {
+		return calculation;
 	}
 }
