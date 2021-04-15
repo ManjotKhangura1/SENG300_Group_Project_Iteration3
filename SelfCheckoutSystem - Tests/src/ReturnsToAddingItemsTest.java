@@ -148,4 +148,17 @@ public class ReturnsToAddingItemsTest {
 		
 	}
 	
+	/*
+	 * test throwing an exception if station is null
+	 */
+	@Test
+	public void testNullStation() {
+		try {
+			
+			return1 = new ReturnsToAddingItems(null);
+		}catch(Exception e) {
+			assertTrue(e instanceof SimulationException);
+		}
+	}
+	
 }
