@@ -21,6 +21,7 @@ public class AttendantLoginPanel extends JPanel {
 	JTextField textField = new JTextField();
 	
 	private MainFrame mainFrame;
+	public JButton loginButton;
 	
 	public AttendantLoginPanel(MainFrame mainFrame) {
 		
@@ -29,8 +30,7 @@ public class AttendantLoginPanel extends JPanel {
 		initComponents();
 	}
 
-	private void initComponents()
-	{
+	private void initComponents(){
 		setBounds(0,0,1280,720);
 		setLayout(new MigLayout("", "[390.00][368.00]", "[215.00][grow][][grow]"));
 		setVisible(false);
@@ -71,7 +71,7 @@ public class AttendantLoginPanel extends JPanel {
 			
 		});
 		
-		JButton loginButton = new JButton("Login");
+		loginButton = new JButton("Login");
 		
 		loginButton.addActionListener(new ActionListener() {
 			

@@ -19,6 +19,15 @@ public class AttendantPanel extends JPanel {
 	private JLabel lblStationStatus;
 	private JLabel lblPrinterPaperStatus;
 	private JLabel lblPrinterInkStatus;
+	public JButton btnRefill;
+	public JButton btnEmpty;
+	public JButton btnChangeInk;
+	public JButton btnChangePaper;
+	public JButton btnBlock;
+	public JButton btnUnblock;
+	public JButton btnStartUp;
+	public JButton btnShutDown;
+	public JButton btnLogout;
 	private JButton btnApprove;
 	private int paper = 0;
 	private int ink = 0;
@@ -90,7 +99,7 @@ public class AttendantPanel extends JPanel {
 	 */
 	private void createButtons() {
 		// Refill button
-		JButton btnRefill = new JButton("Refill");
+		btnRefill = new JButton("Refill");
 		btnRefill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createFrame();
@@ -106,7 +115,7 @@ public class AttendantPanel extends JPanel {
 		btnRefill.setVisible(false);
 
 		// Empty Dispenser
-		JButton btnEmpty = new JButton("Empty Storage");
+		btnEmpty = new JButton("Empty Storage");
 		btnEmpty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createFrame();
@@ -122,7 +131,7 @@ public class AttendantPanel extends JPanel {
 		btnEmpty.setVisible(false);
 
 		// Change ink button
-		JButton btnChangeInk = new JButton("Change Ink");
+		btnChangeInk = new JButton("Change Ink");
 		btnChangeInk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				maxInk = mainFrame.station.printer.MAXIMUM_INK;
@@ -142,7 +151,7 @@ public class AttendantPanel extends JPanel {
 		btnChangeInk.setVisible(false);
 
 		// Change paper button
-		JButton btnChangePaper = new JButton("Change Paper");
+		btnChangePaper = new JButton("Change Paper");
 		btnChangePaper.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				maxPaper = mainFrame.station.printer.MAXIMUM_PAPER;
@@ -182,9 +191,9 @@ public class AttendantPanel extends JPanel {
 		btnApprove.setVisible(false);
 
 		// Block Station button
-		JButton btnBlock = new JButton("Block Station");
+		btnBlock = new JButton("Block Station");
 		// Unlock Station button
-		JButton btnUnblock = new JButton("Unblock Station");
+		btnUnblock = new JButton("Unblock Station");
 
 		// Adding in the action listener for block and formatting it
 		btnBlock.addActionListener(new ActionListener() {
@@ -228,10 +237,10 @@ public class AttendantPanel extends JPanel {
 		btnUnblock.setVisible(false);
 
 		// Creating the start up button
-		JButton btnStartUp = new JButton("Start Up");
+		btnStartUp = new JButton("Start Up");
 
 		// Creating the shut down button
-		JButton btnShutDown = new JButton("Shut Down");
+		btnShutDown = new JButton("Shut Down");
 
 		// Creating an action listener for start up button and formatting
 		btnStartUp.addActionListener(new ActionListener() {
@@ -259,6 +268,10 @@ public class AttendantPanel extends JPanel {
 				btnUnblock.setVisible(false);
 				btnShutDown.setVisible(false);
 				btnStartUp.setVisible(true);
+				btnRefill.setVisible(false);
+				btnEmpty.setVisible(false);
+				btnChangeInk.setVisible(false);
+				btnChangePaper.setVisible(false);
 				lblStationStatus.setText("Station Status: OFF");
 				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: OFF");
 				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: OFF");
@@ -269,7 +282,7 @@ public class AttendantPanel extends JPanel {
 		btnStartUp.setVisible(false);
 
 		// Logout button
-		JButton btnLogout = new JButton("Logout");
+		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.attendantPanel.setVisible(false);

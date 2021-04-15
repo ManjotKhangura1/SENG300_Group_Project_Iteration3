@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -19,6 +20,13 @@ import javax.swing.Timer;
 public class PaymentPanel extends JPanel {
 	
 	private MainFrame mainFrame;
+	public JButton creditCard;
+	public JButton debitCard;
+	public JButton cash;
+	public JButton giftCard;
+	public JButton membership;
+	public JButton help;
+	public JButton cancel;
 	
 	public PaymentPanel(MainFrame mainFrame)
 	{
@@ -32,7 +40,7 @@ public class PaymentPanel extends JPanel {
 		setLayout(new GridLayout(2, 4));
 		setVisible(false);
 		
-		JButton creditCard = new JButton("CREDIT CARD"); 
+		creditCard = new JButton("CREDIT CARD"); 
 		creditCard.setBackground(Color.WHITE);
 		ImageIcon creditCardIcon = new ImageIcon(getClass().getResource("/Icons/Credit Card.png"));
 		creditCard.setIcon(new ImageIcon(creditCardIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
@@ -48,7 +56,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(creditCard);
 		
-		JButton debitCard = new JButton("DEBIT CARD");
+		debitCard = new JButton("DEBIT CARD");
 		debitCard.setBackground(Color.WHITE);
 		ImageIcon debitCardIcon = new ImageIcon(getClass().getResource("/Icons/Debit Card.png"));
 		debitCard.setIcon(new ImageIcon(debitCardIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
@@ -64,7 +72,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(debitCard);
 		
-		JButton cash = new JButton("CASH");
+		cash = new JButton("CASH");
 		cash.setBackground(Color.WHITE);
 		ImageIcon cashIcon = new ImageIcon(getClass().getResource("/Icons/Cash.png"));
 		cash.setIcon(new ImageIcon(cashIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
@@ -72,35 +80,11 @@ public class PaymentPanel extends JPanel {
 		cash.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cash.setHorizontalTextPosition(SwingConstants.CENTER);
 		cash.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		cash.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				cash.setBackground(Color.GREEN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				cash.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ActionListener listener1 = new ActionListener() {
-                	public void actionPerformed (ActionEvent ee) {
-                		mainFrame.cashWaitingPanel.setVisible(false);
-                		mainFrame.acknowledgementPanel.setVisible(true);
-                		ActionListener listener2 = new ActionListener() {
-                        	public void actionPerformed (ActionEvent ee) {
-                        		mainFrame.acknowledgementPanel.setVisible(false);
-                        		mainFrame.welcomePanel.setVisible(true);
-                        	}
-                        };
-                        //Timer timer2 = new Timer(10000, listener2);
-                        //timer2.start();
-                	}
-                };
-                //Timer timer1 = new Timer(10000, listener1);
+		
+		cash.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
                 mainFrame.paymentPanel.setVisible(false);
                 mainFrame.cashWaitingPanel.setVisible(true);
-                //timer1.start();
 			}
 		});
 		add(cash);
@@ -113,38 +97,29 @@ public class PaymentPanel extends JPanel {
 		giftCard.setVerticalTextPosition(SwingConstants.BOTTOM);
 		giftCard.setHorizontalTextPosition(SwingConstants.CENTER);
 		giftCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		giftCard.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				giftCard.setBackground(Color.GREEN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				giftCard.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ActionListener listener1 = new ActionListener() {
-                	public void actionPerformed (ActionEvent ee) {
-                		mainFrame.giftCardWaitingPanel.setVisible(false);
-                		mainFrame.acknowledgementPanel.setVisible(true);
-                		ActionListener listener2 = new ActionListener() {
-                        	public void actionPerformed (ActionEvent ee) {
-                        		mainFrame.acknowledgementPanel.setVisible(false);
-                        		mainFrame.welcomePanel.setVisible(true);
-                        	}
-                        };
-                        //Timer timer2 = new Timer(10000, listener2);
-                        //timer2.start();
-                	}
-                };
-                //Timer timer1 = new Timer(10000, listener1);
+		giftCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
                 mainFrame.paymentPanel.setVisible(false);
                 mainFrame.giftCardWaitingPanel.setVisible(true);
-                //timer1.start();
 			}
 		});
 		add(giftCard);
+		
+		JButton membership = new JButton("MEMBERSHIP");
+		membership.setBackground(Color.WHITE);
+		ImageIcon membershipIcon = new ImageIcon(getClass().getResource("/Icons/MEMBERSHIP.png"));
+		membership.setIcon(new ImageIcon(membershipIcon.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
+		membership.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
+		membership.setVerticalTextPosition(SwingConstants.BOTTOM);
+		membership.setHorizontalTextPosition(SwingConstants.CENTER);
+		membership.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		membership.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                mainFrame.paymentPanel.setVisible(false);
+                mainFrame.membershipWaitingPanel.setVisible(true);
+			}
+		});
+		add(membership);
 		
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
@@ -154,17 +129,8 @@ public class PaymentPanel extends JPanel {
 		help.setVerticalTextPosition(SwingConstants.BOTTOM);
 		help.setHorizontalTextPosition(SwingConstants.CENTER);
 		help.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		help.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				help.setBackground(Color.CYAN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				help.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		add(help);
@@ -177,21 +143,19 @@ public class PaymentPanel extends JPanel {
 		cancel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cancel.setHorizontalTextPosition(SwingConstants.CENTER);
 		cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		cancel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				cancel.setBackground(Color.GRAY);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				cancel.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				mainFrame.paymentPanel.setVisible(false);
 				mainFrame.welcomePanel.setVisible(true);
 			}
 		});
 		add(cancel);
+		
+		JLabel calculation = new JLabel("<html>SUBTOTAL<br>TAX<br>TOTAL<br>PAID</html>");
+		calculation.setBackground(Color.WHITE);
+		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
+		calculation.setHorizontalAlignment(SwingConstants.CENTER);
+		calculation.setVerticalAlignment(SwingConstants.CENTER);
+		add(calculation);
 	}
 }

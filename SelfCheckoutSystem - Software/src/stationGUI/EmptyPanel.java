@@ -26,6 +26,9 @@ public class EmptyPanel extends JPanel {
 	private MainFrame mainFrame;
 	private int indexSelected;
 	private JFrame currentFrame;
+	public JRadioButton rdbtnCoins;
+	public JRadioButton rdbtnBanknote;
+	public JButton btnEmpty;
 
 	/**
 	 * Create the Refill Options window
@@ -63,7 +66,7 @@ public class EmptyPanel extends JPanel {
 		add(lblTitle, gbc_lblTitle);
 
 		// Creating coins option
-		JRadioButton rdbtnCoins = new JRadioButton("Coins");
+		rdbtnCoins = new JRadioButton("Coins");
 		GridBagConstraints gbc_rdbtnCoins = new GridBagConstraints();
 		gbc_rdbtnCoins.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnCoins.gridx = 1;
@@ -76,7 +79,7 @@ public class EmptyPanel extends JPanel {
 		add(rdbtnCoins, gbc_rdbtnCoins);
 
 		// creating banknote option
-		JRadioButton rdbtnBanknote = new JRadioButton("Banknote");
+		rdbtnBanknote = new JRadioButton("Banknote");
 		GridBagConstraints gbc_rdbtnBanknote = new GridBagConstraints();
 		gbc_rdbtnBanknote.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnBanknote.gridx = 1;
@@ -95,7 +98,7 @@ public class EmptyPanel extends JPanel {
 		group.add(rdbtnBanknote);
 
 		// Creating the refill button that calls the logic
-		JButton btnEmpty = new JButton("Empty");
+		btnEmpty = new JButton("Empty");
 		GridBagConstraints gbc_btnEmpty = new GridBagConstraints();
 		gbc_btnEmpty.insets = new Insets(0, 0, 0, 5);
 		gbc_btnEmpty.gridx = 1;

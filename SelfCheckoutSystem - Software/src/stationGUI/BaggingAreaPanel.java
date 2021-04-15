@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class BaggingAreaPanel extends JPanel {
 
@@ -134,9 +133,9 @@ public class BaggingAreaPanel extends JPanel {
 		itemCart = new JLabel(items);
 		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
 
-		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
 
-			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+			items[i] = mainFrame.addItemPanel.getList().get(i).toString();
 
 		}
 
