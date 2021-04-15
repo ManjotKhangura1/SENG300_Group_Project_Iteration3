@@ -1,6 +1,8 @@
 package Software;
 import java.util.Scanner;
 
+import org.lsmr.selfcheckout.devices.SimulationException;
+
 public class EntersPlasticBagsUsed {
 		
 
@@ -34,5 +36,7 @@ public class EntersPlasticBagsUsed {
 		return totalPlasticBagsUsedPrice;
 	
 	}
+	
+	
 
 }

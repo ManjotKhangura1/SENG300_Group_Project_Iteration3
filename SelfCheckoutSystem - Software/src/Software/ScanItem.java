@@ -46,10 +46,10 @@ public class ScanItem {
 	 * @param a boolean, true is declining bag prompt
 	 * @throws SimulationException if barcodedItem is null
 	 */
-	public void scanFromMain(BarcodedItem item, boolean declineBagPrompt) {
+	public void scanFromMain(BarcodedItem item) {
 		
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
-		curWeight = BigDecimal.valueOf(item.getWeight());
+		curWeight = new BigDecimal(item.getWeight());
 		main.scan(item);	
 	}
 	
@@ -61,7 +61,7 @@ public class ScanItem {
 	 */
 	public void scanFromHandheld(BarcodedItem item) {
 		if(item == null) throw new SimulationException(new NullPointerException("item is null"));
-		curWeight = BigDecimal.valueOf(item.getWeight());
+		curWeight = new BigDecimal(item.getWeight());
 		handheld.scan(item);		
 	}
 	 
@@ -91,7 +91,7 @@ public class ScanItem {
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				done.updateTotals(database.get(barcode).getDescription(), BigDecimal.valueOf(database.get(barcode).getPrice().doubleValue()), curWeight);
+				done.updateTotals(database.get(barcode).getDescription(), database.get(barcode).getPrice(), curWeight);
 				baged.setWeightScanned(curWeight);
 			}
 			
@@ -110,7 +110,7 @@ public class ScanItem {
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				done.updateTotals(database.get(barcode).getDescription(), BigDecimal.valueOf(database.get(barcode).getPrice().doubleValue()), curWeight);
+				done.updateTotals(database.get(barcode).getDescription(), database.get(barcode).getPrice(), curWeight);
 				baged.setWeightScanned(curWeight);
 			}
 			

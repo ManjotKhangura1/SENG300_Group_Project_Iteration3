@@ -5,15 +5,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class BaggingAreaPanel extends JPanel {
 
 	private MainFrame mainFrame;
+	private JLabel lblStationStatus;
+	private String price;
+	private String weight;
+	private String items = "";
+	private JLabel itemCart;
+	public JLabel totalWeight;
+	public JScrollPane scrollPane;
+	
 
 	/**
 	 * Bagging area panel constructor
@@ -40,6 +50,7 @@ public class BaggingAreaPanel extends JPanel {
 				mainFrame.addItemPanel.setVisible(true);
 				mainFrame.baggingAreaPanel.setVisible(false);
 				mainFrame.attendantLoginPanel.setVisible(false);
+				totalWeight.setText("");
 			}
 		});
 
@@ -54,7 +65,7 @@ public class BaggingAreaPanel extends JPanel {
 		});
 		btnViewCart.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnViewCart, "cell 1 4");
-
+		
 	}
 
 	/**
@@ -66,9 +77,11 @@ public class BaggingAreaPanel extends JPanel {
 				"[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
-
+		
 		initLabels();
 		initButtons();
+		
+		
 	}
 
 	/**
@@ -76,7 +89,7 @@ public class BaggingAreaPanel extends JPanel {
 	 */
 	private void initLabels() {
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0 1 6,grow");
 
 		//Creating bagging area label
@@ -84,29 +97,57 @@ public class BaggingAreaPanel extends JPanel {
 		lblBaggingArea.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblBaggingArea.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblBaggingArea);
-
-		//Creating item weight label
-		JLabel lblItemWeight = new JLabel("Weight of Item Added: ");
-		lblItemWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblItemWeight.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblItemWeight, "cell 1 0");
 		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
+
 		//Creating total weight label
-		JLabel lblTotalWeight = new JLabel("Total Weight:");
+		JLabel lblTotalWeight = new JLabel("Total Weight (g): ");
 		lblTotalWeight.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblTotalWeight, "cell 1 1");
+		add(lblTotalWeight, "flowx,cell 1 1");
+
 
 		//Creating station status label
-		JLabel lblStationStatus = new JLabel("");
-		if(mainFrame.maintenance.isStationOn() == true) {
+		lblStationStatus = new JLabel("");
+		/*if(mainFrame.maintenance.isStationOn() == true) {
 			lblStationStatus.setText("Station Status: ON");
 		}else {
 			lblStationStatus.setText("Station Status: OFF");
-		}
+		}*/
 		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblStationStatus, "cell 1 2");
 
 	}
+	
+	public void refreshWeight() {
+		
+		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());
+		totalWeight = new JLabel(weight);
+		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(totalWeight, "cell 1 1");
+		
+		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
+			items.concat(mainFrame.addItemPanel.getList().get(i));
+		}
 
+		itemCart = new JLabel(items);
+		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
+
+		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+
+			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+
+		}
+
+		JList list = new JList(items);
+		scrollPane.setViewportView(list);
+		
+
+	}
+	
+	
+	public JLabel getLblStationStatus() {
+		return lblStationStatus;
+	}
 }

@@ -12,8 +12,8 @@ public class BaggingArea {
 	
 	public ElectronicScale baggingArea;
 	
-	private BigDecimal totalWeightInBagging;
-	private BigDecimal totalWeightScanned;
+	private BigDecimal totalWeightInBagging = new BigDecimal(0.00);
+	private BigDecimal totalWeightScanned = new BigDecimal(0.00);
 	
 	private boolean weightChanged = false;
 	private boolean overload= false;
@@ -34,10 +34,14 @@ public class BaggingArea {
 			throw new SimulationException(new NullPointerException("Self checkout station is null."));
 		}
 		this.baggingArea = selfCheckout.baggingArea;
+		//this.baggingArea.enable();
 		
 		updateWeight();
 		
 		startListener();
+		
+		this.totalWeightInBagging = new BigDecimal(0.0);
+		this.totalWeightScanned = new BigDecimal(0.0);
 
 	}
 	
@@ -228,7 +232,7 @@ public class BaggingArea {
 		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0) {
 			throw new SimulationException("Invalid weight.");
 		}
-		this.totalWeightScanned.add(weight);
+		this.totalWeightScanned = this.totalWeightScanned.add(weight);
 	}
 	
 	/**
@@ -241,7 +245,7 @@ public class BaggingArea {
 		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0 || weight == null) {
 			throw new SimulationException("Invalid weight.");
 		}
-		this.totalWeightScanned.subtract(weight);
+		this.totalWeightScanned = this.totalWeightScanned.subtract(weight);
 	}
 	
 	/**
