@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -18,7 +19,11 @@ public class BaggingAreaPanel extends JPanel {
 	private JLabel lblStationStatus;
 	private String price;
 	private String weight;
+	private String items = "";
+	private JLabel itemCart;
 	public JLabel totalWeight;
+	public JScrollPane scrollPane;
+	
 
 	/**
 	 * Bagging area panel constructor
@@ -72,9 +77,11 @@ public class BaggingAreaPanel extends JPanel {
 				"[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
-
+		
 		initLabels();
 		initButtons();
+		
+		
 	}
 
 	/**
@@ -82,7 +89,7 @@ public class BaggingAreaPanel extends JPanel {
 	 */
 	private void initLabels() {
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 0 1 6,grow");
 
 		//Creating bagging area label
@@ -90,6 +97,9 @@ public class BaggingAreaPanel extends JPanel {
 		lblBaggingArea.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblBaggingArea.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane.setColumnHeaderView(lblBaggingArea);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
 
 		//Creating total weight label
 		JLabel lblTotalWeight = new JLabel("Total Weight (g): ");
@@ -116,6 +126,23 @@ public class BaggingAreaPanel extends JPanel {
 		totalWeight = new JLabel(weight);
 		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(totalWeight, "cell 1 1");
+		
+		for (int i = 0; i < mainFrame.addItemPanel.getList().size(); i++) {
+			items.concat(mainFrame.addItemPanel.getList().get(i));
+		}
+
+		itemCart = new JLabel(items);
+		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
+
+		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+
+			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+
+		}
+
+		JList list = new JList(items);
+		scrollPane.setViewportView(list);
+		
 
 	}
 	
@@ -123,5 +150,4 @@ public class BaggingAreaPanel extends JPanel {
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
 	}
-
 }

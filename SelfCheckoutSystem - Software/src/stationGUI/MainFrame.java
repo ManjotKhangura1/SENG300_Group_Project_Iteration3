@@ -20,6 +20,8 @@ import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+
 import Software.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -40,7 +42,8 @@ public class MainFrame {
 	public GiftCardWaitingPanel giftCardWaitingPanel;
 	public AcknowledgementPanel acknowledgementPanel;
 	public PaymentPanel paymentPanel;
-	
+	public MembershipWaitingPanel membershipWaitingPanel;
+
 	public BaggingArea baggingArea;
 	public ScanItem scanItem;
 	public EnterMembership enterMembership;
@@ -150,6 +153,7 @@ public class MainFrame {
 		creditDebitWaitingPanel = new CreditDebitWaitingPanel(this);
 		giftCardWaitingPanel = new GiftCardWaitingPanel(this);
 		paymentPanel = new PaymentPanel(this);
+		membershipWaitingPanel = new MembershipWaitingPanel(this);
 
 		frame.setBounds(0,0,1280,720);
 		frame.setVisible(true);
@@ -178,7 +182,7 @@ public class MainFrame {
 		frame.getContentPane().add(cashWaitingPanel);
 		frame.getContentPane().add(creditDebitWaitingPanel);
 		frame.getContentPane().add(giftCardWaitingPanel);
-
+		frame.getContentPane().add(membershipWaitingPanel);
 	}
 	
 	private void initPLUCodedItems() {
@@ -246,6 +250,7 @@ public class MainFrame {
 		BarcodedItems.put(barcode3, bread);
 		BarcodedItems.put(barcode4, eggs);
 		BarcodedItems.put(barcode5, blackbeans);
+		
 		BarcodedItems.put(barcode6, crackers);
 		
 	}
