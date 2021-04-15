@@ -232,7 +232,7 @@ public class BaggingArea {
 		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0) {
 			throw new SimulationException("Invalid weight.");
 		}
-		this.totalWeightScanned.add(weight);
+		this.totalWeightScanned = this.totalWeightScanned.add(weight);
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class BaggingArea {
 		if(weight.compareTo(BigDecimal.valueOf(0.0)) < 0 || weight == null) {
 			throw new SimulationException("Invalid weight.");
 		}
-		this.totalWeightScanned.subtract(weight);
+		this.totalWeightScanned = this.totalWeightScanned.subtract(weight);
 	}
 	
 	/**

@@ -20,6 +20,8 @@ import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+
 import Software.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -246,6 +248,7 @@ public class MainFrame {
 		BarcodedItems.put(barcode3, bread);
 		BarcodedItems.put(barcode4, eggs);
 		BarcodedItems.put(barcode5, blackbeans);
+		
 		BarcodedItems.put(barcode6, crackers);
 		
 	}

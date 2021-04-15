@@ -38,9 +38,8 @@ public class BaggingAreaPanel extends JPanel {
 
 		//Creating the back to adding items button
 		JButton btnBack = new JButton("Back to Adding Items");
-		btnBack.setBounds(494, 410, 203, 33);
 		btnBack.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		add(btnBack);
+		add(btnBack, "cell 1 3");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainFrame.addItemPanel.setVisible(true);
@@ -52,7 +51,6 @@ public class BaggingAreaPanel extends JPanel {
 
 		//Creating the view cart button
 		JButton btnViewCart = new JButton("View Cart");
-		btnViewCart.setBounds(494, 530, 115, 33);
 		btnViewCart.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -61,7 +59,7 @@ public class BaggingAreaPanel extends JPanel {
 			}
 		});
 		btnViewCart.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		add(btnViewCart);
+		add(btnViewCart, "cell 1 4");
 		
 	}
 
@@ -70,6 +68,9 @@ public class BaggingAreaPanel extends JPanel {
 	 */
 	private void initComponents() {
 		setBounds(0, 0, 1280, 720);
+		setLayout(new MigLayout("",
+				"[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]",
+				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
 		setVisible(false);
 
 		initLabels();
@@ -80,11 +81,9 @@ public class BaggingAreaPanel extends JPanel {
 	 * Initializes the labels
 	 */
 	private void initLabels() {
-		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(7, 7, 483, 706);
-		add(scrollPane);
+		add(scrollPane, "cell 0 0 1 6,grow");
 
 		//Creating bagging area label
 		JLabel lblBaggingArea = new JLabel("Bagging Area: ");
@@ -94,30 +93,29 @@ public class BaggingAreaPanel extends JPanel {
 
 		//Creating total weight label
 		JLabel lblTotalWeight = new JLabel("Total Weight (g): ");
-		lblTotalWeight.setBounds(494, 174, 214, 24);
 		lblTotalWeight.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalWeight.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblTotalWeight);
-		
+		add(lblTotalWeight, "flowx,cell 1 1");
+
+
 		//Creating station status label
 		lblStationStatus = new JLabel("");
-		lblStationStatus.setBounds(494, 305, 0, 0);
 		/*if(mainFrame.maintenance.isStationOn() == true) {
 			lblStationStatus.setText("Station Status: ON");
 		}else {
 			lblStationStatus.setText("Station Status: OFF");
 		}*/
 		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		add(lblStationStatus);
+		add(lblStationStatus, "cell 1 2");
 
 	}
 	
 	public void refreshWeight() {
 		
-		weight = String.valueOf(mainFrame.baggingArea.getWeightBaggingArea());
+		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());
 		totalWeight = new JLabel(weight);
 		totalWeight.setFont(new Font("Tahoma", Font.BOLD, 12));
-		totalWeight.setBounds(733, 181, 92, 14);
+		add(totalWeight, "cell 1 1");
 
 	}
 	
@@ -125,5 +123,4 @@ public class BaggingAreaPanel extends JPanel {
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
 	}
-
 }
