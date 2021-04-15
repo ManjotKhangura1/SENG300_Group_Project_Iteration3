@@ -18,12 +18,14 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.DisabledException;
+import org.lsmr.selfcheckout.devices.ElectronicScale;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+import Software.Bag;
 import Software.BaggingArea;
-import Software.DeclineBagPrompt;
+//import Software.DeclineBagPrompt;
 import Software.FinishesAddingItems;
 import Software.GiveChange;
 import Software.PayWithBanknote;
@@ -43,8 +45,9 @@ public class RemovePurchasedItemsTest {
 	public Coin coin;
 	public PayWithCoin coinpayment;
 	public RemovePurchasedItems removed;
-	public DeclineBagPrompt bagPrompt;
+//	public DeclineBagPrompt bagPrompt;
 	public Item i;
+	
 
 	@Before
 	public void setUp() throws Exception {
@@ -66,21 +69,31 @@ public class RemovePurchasedItemsTest {
 		database = new HashMap<>();
 		database.put(barcode, product);
 		
+		
+		
+		ElectronicScale elecScale= new ElectronicScale(20,1);
+		
+		Bag aBag= new Bag(2.9);
+		
+		BaggingArea baggingArea= new BaggingArea(elecScale);
+		FinishesAddingItems finish= new FinishesAddingItems(station,baggingArea);
+		
+		
 		//create scanner
-		bagPrompt = new DeclineBagPrompt();
-		scanner = new ScanItem(station, database, bagPrompt);
+		//bagPrompt = new DeclineBagPrompt();
+		scanner = new ScanItem(station, database, finish, baggingArea);
 		ArrayList<String> expected = new ArrayList<String>();
 		expected.add("1");
 		
 		// Scan the item that costs $5.25
-		scanner.scanFromMain(barcodedItem, false);
+		scanner.scanFromMain(barcodedItem);
 
 		//create bagging area
 		bags = new BaggingArea(station);
 
 		
 		//no more items will be added and we are finished
-		FinishesAddingItems finished = new FinishesAddingItems(station, scanner, bags);
+		FinishesAddingItems finished = new FinishesAddingItems(station, baggingArea);
 		
 		//payment with banknote and coin 
 		int value = 5;
@@ -147,13 +160,18 @@ public class RemovePurchasedItemsTest {
 	@Test(expected = SimulationException.class)
 	public void itemsNotTakenTest() throws DisabledException {
 		bags.addItem(i); // I can only add an item, not a barcoded item? 
-		bags.setWeightBaggingArea(50.00); // Should we have to use the baggingarea.setweight funtion to set the weight to 50.00?
+		BigDecimal aWeight= BigDecimal.valueOf(50);
+		
+		bags.setWeightBaggingArea(aWeight); // Should we have to use the baggingarea.setweight funtion to set the weight to 50.00?
 		assertEquals(false, removed.getItemsTaken());
 	}
 	
 	@Test
 	public void itemsTakenTest() {
-		bags.setWeightBaggingArea(0.00);
+		
+		BigDecimal zeroWeight= BigDecimal.valueOf(0);
+		
+		bags.setWeightBaggingArea(zeroWeight);
 		System.out.println(bags.getWeightBaggingArea());
 		assertEquals(true, removed.getItemsTaken());
 	}
