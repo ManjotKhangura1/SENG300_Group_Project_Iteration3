@@ -17,7 +17,7 @@ import java.math.RoundingMode;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Font;
-
+import javax.swing.JList;
 
 public class ScanningPanel extends JPanel {
 
@@ -33,12 +33,11 @@ public class ScanningPanel extends JPanel {
 	private BigDecimal bdtotal = new BigDecimal("0.00");
 	private BigDecimal tax = new BigDecimal("0.00");
 	private String total;
-	private JPanel panel_1;
 	private JPanel panel_2_2;
 	private String items = "";
 	private JLabel lblNewJgoodiesLabel_2 = new JLabel("");
 	private JLabel itemCart;
-	private	JScrollPane scrollPane;
+	private JScrollPane scrollPane;
 	private JLabel label;
 
 	public ScanningPanel(MainFrame mainFrame) {
@@ -56,20 +55,12 @@ public class ScanningPanel extends JPanel {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(7, 7, 490, 706);
-		
-		panel_1 = new JPanel();
-		panel_1.setBounds(7, 7, 490, 706);
-		
+
 		add(scrollPane);
-		
-		panel_1.setPreferredSize(null);;
-		scrollPane.setViewportView(panel_1);
-		
-		//scrollPane.doLayout();
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		//scrollPane.setPreferredSize(new Dimension(490,706));
-		panel_1.setLayout(null);
+
+//		//scrollPane.doLayout();
+//		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JLabel lblNewLabel = new JLabel("Item Cart:");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -81,11 +72,11 @@ public class ScanningPanel extends JPanel {
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel_1);
-		
+
 		panel_2 = new JPanel();
 		panel_2.setBounds(857, 45, 173, 33);
 		add(panel_2);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Total ($):");
 		lblNewLabel_2.setBounds(569, 213, 109, 24);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -95,24 +86,22 @@ public class ScanningPanel extends JPanel {
 		panel_3 = new JPanel();
 		panel_3.setBounds(857, 199, 173, 49);
 		add(panel_3);
-		
+
 		// Creating station status label
 		lblStationStatus = new JLabel("Station Status: ON");
 		lblStationStatus.setBounds(569, 302, 227, 24);
-		//lblStationStatus.setText("Station Status: ON");
-		//System.out.print(mainFrame.attendantPanel.getLblStationStatus());
-		//lblStationStatus.setText(mainFrame.attendantPanel.getLblStationStatus());
-		/*if (mainFrame.maintenance.isStationOn() == true) {
-			System.out.print(mainFrame.maintenance.isStationOn());
-			lblStationStatus.setText("Station Status: ON");
-		} else {
-			System.out.print(mainFrame.maintenance.isStationOn());
-			lblStationStatus.setText("Station Status: OFF");
-		}*/
+		// lblStationStatus.setText("Station Status: ON");
+		// System.out.print(mainFrame.attendantPanel.getLblStationStatus());
+		// lblStationStatus.setText(mainFrame.attendantPanel.getLblStationStatus());
+		/*
+		 * if (mainFrame.maintenance.isStationOn() == true) {
+		 * System.out.print(mainFrame.maintenance.isStationOn());
+		 * lblStationStatus.setText("Station Status: ON"); } else {
+		 * System.out.print(mainFrame.maintenance.isStationOn());
+		 * lblStationStatus.setText("Station Status: OFF"); }
+		 */
 		lblStationStatus.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(lblStationStatus);
-		
-		
 
 		JPanel panel_4 = new JPanel();
 		panel_4.setBounds(857, 286, 173, 119);
@@ -128,7 +117,7 @@ public class ScanningPanel extends JPanel {
 				mainFrame.scanningPanel.setVisible(false);
 			}
 		});
-		
+
 		JButton btnNewButton_3 = new JButton("Remove Item");
 		btnNewButton_3.setBounds(914, 451, 256, 33);
 		btnNewButton_3.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -173,83 +162,71 @@ public class ScanningPanel extends JPanel {
 		});
 		attendantLoginB.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(attendantLoginB);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("Tax ($) :");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblNewLabel_1_1.setBounds(540, 130, 160, 24);
 		add(lblNewLabel_1_1);
-		
+
 		panel_2_2 = new JPanel();
 		panel_2_2.setBounds(857, 130, 173, 33);
 		add(panel_2_2);
-		
-
-		
 
 		/*
 		 * if (!attendantLogin.isVisible() && !attendantLogin.isVisible()) {
 		 * setVisible(true); }
 		 */
 	}
-	
+
 	public void refreshTotal() {
-		
+
 		subtotal = String.valueOf(mainFrame.finishesAddingItems.getPrice());
 		lblNewJgoodiesLabel = new JLabel(subtotal);
 		lblNewJgoodiesLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewJgoodiesLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_2.removeAll();
 		panel_2.add(lblNewJgoodiesLabel);
-		
+
 		tax = new BigDecimal(mainFrame.finishesAddingItems.getPrice() * 0.05);
 		tax = tax.setScale(2, RoundingMode.HALF_UP);
 		totaltax = tax.toString();
-		lblNewJgoodiesLabel_2 = new JLabel (totaltax);
+		lblNewJgoodiesLabel_2 = new JLabel(totaltax);
 		lblNewJgoodiesLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_2_2.removeAll();
 		panel_2_2.add(lblNewJgoodiesLabel_2);
 
-
 		bdtotal = new BigDecimal(mainFrame.finishesAddingItems.getPrice() * 1.05);
 		bdtotal = bdtotal.setScale(2, RoundingMode.HALF_UP);
 		total = bdtotal.toString();
-		lblNewJgoodiesLabel_1 = new JLabel (total);
+		lblNewJgoodiesLabel_1 = new JLabel(total);
 		lblNewJgoodiesLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewJgoodiesLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_3.removeAll();
-		panel_3.add(lblNewJgoodiesLabel_1); 
-		
-		for(int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+		panel_3.add(lblNewJgoodiesLabel_1);
+
+		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
 			items.concat(mainFrame.finishesAddingItems.getList().get(i));
 		}
-		
-		itemCart = new JLabel(items);
 
-		int height = 17;
-		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++)
-		{
-		     label = new JLabel(mainFrame.finishesAddingItems.getList().get(i));
-		     label.setBounds(17, height, 480, 20);
-		     label.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		     label.setHorizontalAlignment(SwingConstants.CENTER);
-		     panel_1.add(label);		 
-		     height += 30;
-			 mainFrame.frame.repaint();
-			 mainFrame.frame.revalidate();
+		itemCart = new JLabel(items);
+		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
+
+		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
+
+			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+
 		}
-		
+
+		JList list = new JList(items);
+		scrollPane.setViewportView(list);
 
 //		scrollPane.repaint();
 //		scrollPane.revalidate();
 //		mainFrame.frame.repaint();
 //		mainFrame.frame.revalidate();
-		
-	}
-	
-	
-	
 
+	}
 
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
