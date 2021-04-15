@@ -142,9 +142,8 @@ public class ScanningPanel extends JPanel {
 		btnNewButton_1.setBounds(581, 644, 215, 33);
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		add(btnNewButton_1);
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				mainFrame.scanningPanel.setVisible(false);
 				mainFrame.paymentPanel.setVisible(true);
 			}
