@@ -28,13 +28,22 @@ import javax.swing.JTextField;
 
 public class AddItemPanel extends JPanel{
 	
-	private MainFrame mainFrame;
-	private String itemScanned = "0";
-	private BigDecimal price = new BigDecimal("0.00");
-	private BigDecimal weight = new BigDecimal("0.00");
-	private String name;
-	private Barcode barcode;
-	private ArrayList<String> baggedItems = new ArrayList<>();
+	public MainFrame mainFrame;
+	public String itemScanned = "0";
+	public BigDecimal price = new BigDecimal("0.00");
+	public BigDecimal weight = new BigDecimal("0.00");
+	public String name;
+	public Barcode barcode;
+	public ArrayList<String> baggedItems = new ArrayList<>();
+	public JButton btnNewButton_2;
+	public JButton btnNewButton_3;
+	public JButton btnNewButton_3_1;
+	public JButton btnNewButton;
+	public JButton btnNewButton_5;
+	public JButton btnNewButton_7;
+	public JButton btnNewButton_1;
+	public JButton btnNewButton_4;
+	public JButton btnNewButton_6;
 	
 
 	
@@ -47,7 +56,7 @@ public class AddItemPanel extends JPanel{
 
 	}
 
-	private void initComponents(){
+	public void initComponents(){
 		
 		setBounds(0,0,1280,720);
 		setVisible(false);
@@ -70,7 +79,7 @@ public class AddItemPanel extends JPanel{
 		textField_2.setBounds(313, 605, 174, 22);
 		add(textField_2);
 
-		JButton btnNewButton_2 = new JButton("      Eggs      ");
+		btnNewButton_2 = new JButton("      Eggs      ");
 		btnNewButton_2.setBounds(56, 362, 142, 68);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_2);
@@ -81,7 +90,7 @@ public class AddItemPanel extends JPanel{
 			}
 		});
 		
-		JButton btnNewButton_3 = new JButton("Black Beans");
+		btnNewButton_3 = new JButton("Black Beans");
 		btnNewButton_3.setBounds(269, 362, 142, 68);
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_3);
@@ -92,7 +101,7 @@ public class AddItemPanel extends JPanel{
 			}
 		});
 		
-		JButton btnNewButton_3_1 = new JButton("   Crackers   ");
+		btnNewButton_3_1 = new JButton("   Crackers   ");
 		btnNewButton_3_1.setBounds(454, 362, 127, 68);
 		btnNewButton_3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +112,7 @@ public class AddItemPanel extends JPanel{
 		btnNewButton_3_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_3_1);
 		
-		JButton btnNewButton = new JButton("      Milk      ");
+		btnNewButton = new JButton("      Milk      ");
 		btnNewButton.setBounds(56, 294, 142, 57);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -114,7 +123,7 @@ public class AddItemPanel extends JPanel{
 		});
 		add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("  Soy Milk  ");
+		btnNewButton_1 = new JButton("  Soy Milk  ");
 		btnNewButton_1.setBounds(269, 294, 142, 57);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -125,7 +134,7 @@ public class AddItemPanel extends JPanel{
 		});
 		add(btnNewButton_1);
 		
-		JButton btnNewButton_4 = new JButton("    Bread    ");
+		btnNewButton_4 = new JButton("    Bread    ");
 		btnNewButton_4.setBounds(454, 294, 127, 57);
 		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_4.addActionListener(new ActionListener() {
@@ -136,7 +145,7 @@ public class AddItemPanel extends JPanel{
 		});
 		add(btnNewButton_4);
 		
-		JButton btnNewButton_6 = new JButton("Add to Bagging Area");
+		btnNewButton_6 = new JButton("Add to Bagging Area");
 		btnNewButton_6.setBounds(757, 440, 194, 102);
 		btnNewButton_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_6);
@@ -167,7 +176,6 @@ public class AddItemPanel extends JPanel{
 					
 					//PLU Code 
 					else if (textField_1.getText() != "" && textField_2.getText() != "" && textField_1.getText().length() > 0 && textField_2.getText().length() > 0) {
-
 						String PLU = textField_1.getText();
 						int weightPLUPurchased = Integer.parseInt(textField_2.getText());			
 						PriceLookupCode plu = new PriceLookupCode(PLU);
@@ -185,7 +193,6 @@ public class AddItemPanel extends JPanel{
 						weight = new BigDecimal(scanWeight);
 
 						price = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getPrice();
-						
 						name = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getDescription() + ", $" + price.setScale(2, RoundingMode.HALF_UP);
 						//mainFrame.scanItem.scanFromMain(mainFrame.BarcodedItems.get(barcode));
 						mainFrame.finishesAddingItems.updateTotals(name, price, weight);
@@ -221,12 +228,11 @@ public class AddItemPanel extends JPanel{
 		});
 		
 		// Get attendant to approve weight discrepancy
-		JButton btnNewButton_5 = new JButton("Skip Bagging This");
+		btnNewButton_5 = new JButton("Skip Bagging This");
 		btnNewButton_5.setBounds(757, 579, 194, 68);
 		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 
 				try {
 					// customer buys bags
@@ -234,7 +240,7 @@ public class AddItemPanel extends JPanel{
 						price = BigDecimal.valueOf(Integer.parseInt(textField.getText()) * 0.1);
 						int bagsWeight = Integer.parseInt(textField.getText()) * 5; // Each bag is 5g
 						weight = BigDecimal.valueOf(bagsWeight);
-						name = textField.getText() + " Store Bags";
+						name = textField.getText() + " Store Bags, $" + price.setScale(2, RoundingMode.HALF_UP);
 						mainFrame.finishesAddingItems.updateTotals(name, price, weight);
 					}
 					
@@ -249,9 +255,9 @@ public class AddItemPanel extends JPanel{
 						String PLU = textField_1.getText();
 						int weightPLUPurchased = Integer.parseInt(textField_2.getText());			
 						PriceLookupCode plu = new PriceLookupCode(PLU);
-						name = textField_2.getText() + " g " + ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getDescription();
 						price = ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getPrice();
 						price = price.multiply(new BigDecimal(weightPLUPurchased)).multiply(new BigDecimal(0.001));
+						name = textField_2.getText() + "g " + ProductDatabases.PLU_PRODUCT_DATABASE.get(plu).getDescription() + ", $" + price.setScale(2, RoundingMode.HALF_UP);
 						mainFrame.finishesAddingItems.updateTotals(name, price, new BigDecimal(weightPLUPurchased));
 					}	
 					
@@ -261,7 +267,7 @@ public class AddItemPanel extends JPanel{
 						double scanWeight = mainFrame.BarcodedItems.get(barcode).getWeight();
 						weight = new BigDecimal(scanWeight);
 						price = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getPrice();
-						name = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getDescription();
+						name = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode).getDescription() + ", $" + price.setScale(2, RoundingMode.HALF_UP);
 						mainFrame.finishesAddingItems.updateTotals(name, price, weight);
 
 					}
@@ -274,29 +280,28 @@ public class AddItemPanel extends JPanel{
 					textField_3.setText("");
 					textField_1.setText("");
 					textField_2.setText("");
-
 					
 					System.out.println(mainFrame.finishesAddingItems.getPrice());
 					System.out.println(mainFrame.finishesAddingItems.getList());
 					System.out.println(mainFrame.finishesAddingItems.getWeight()  + "g");
+					mainFrame.addItemPanel.setVisible(false);
+					mainFrame.attendantPanel.setVisibilityBtnApprove(true);
+					mainFrame.attendantLoginPanel.setVisible(true);
+	                JOptionPane.showMessageDialog(null, "Please wait for an attendant. ");
+					mainFrame.baggingAreaPanel.refreshWeight();
+					mainFrame.scanningPanel.refreshTotal();
 					
 				}
 				catch(Exception exception) {
 					exception.printStackTrace();
 				}	
 				
-				mainFrame.addItemPanel.setVisible(false);
-				mainFrame.attendantPanel.setVisibilityBtnApprove(true);
-				mainFrame.attendantLoginPanel.setVisible(true);
-                JOptionPane.showMessageDialog(null, "Please wait for an attendant. ");
-				mainFrame.baggingAreaPanel.refreshWeight();
-				mainFrame.scanningPanel.refreshTotal();
-				
+
 			}
 		});
 		add(btnNewButton_5);
 		
-		JButton btnNewButton_7 = new JButton("View Cart");
+		btnNewButton_7 = new JButton("View Cart");
 		btnNewButton_7.setBounds(1021, 579, 117, 68);
 		btnNewButton_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNewButton_7);
