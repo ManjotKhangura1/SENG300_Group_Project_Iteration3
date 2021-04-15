@@ -14,8 +14,8 @@ public class AcknowledgementPanel extends JPanel {
 	private MainFrame mainFrame;
 	
 	/**
-	 * Constructor for 
-	 * @param mainFrame
+	 * Constructor for AcknowledgementPanel
+	 * @param mainFrame - the frame which holds all the panels of the self checkout system
 	 */
 	public AcknowledgementPanel(MainFrame mainFrame)
 	{
@@ -23,19 +23,22 @@ public class AcknowledgementPanel extends JPanel {
 		initComponents();
 	}
 
+	/**
+	 * Initializes the components for this panel
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 1));
 		setVisible(false);
 		
+		//Labels when customer done payment
 		JLabel acknowledgementLabel1 = new JLabel("Thank you for shopping with us today!", SwingConstants.CENTER);
 		acknowledgementLabel1.setForeground(Color.MAGENTA);
 		acknowledgementLabel1.setBackground(Color.WHITE);
 		acknowledgementLabel1.setFont(new Font("Brush Script MT", Font.PLAIN, 72));
 		acknowledgementLabel1.setVerticalAlignment(SwingConstants.BOTTOM);
 		add(acknowledgementLabel1);
-		
 		JLabel acknowledgementLabel2 = new JLabel("Have a nice day!", SwingConstants.CENTER);
 		acknowledgementLabel2.setForeground(Color.MAGENTA);
 		acknowledgementLabel2.setBackground(Color.WHITE);

@@ -8,6 +8,10 @@ public class ReceiptPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	/**
+	 * Constructor for panel
+	 * @param mainFrame - Frame which shows panel
+	 */
 	public ReceiptPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
@@ -15,9 +19,12 @@ public class ReceiptPanel extends JPanel {
 		initComponents();
 	}
 
+	/**
+	 * Initializes components
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new MigLayout("","[]","[]"));
 		setVisible(false);
 	}

@@ -15,12 +15,19 @@ import java.awt.Font;
 public class BaggingAreaPanel extends JPanel {
 
 	private MainFrame mainFrame;
+	//Label for status of station (if it is on or off)
 	private JLabel lblStationStatus;
+	//Price of items (or bags)
 	public String price;
+	//Weight of items (or bags)
 	public String weight;
+	//Item names
 	public String items = "";
+	//Cart with items
 	private JLabel itemCart;
+	//Total weight in electronic scale
 	public JLabel totalWeight;
+	//Scroll panel
 	public JScrollPane scrollPane;
 	
 
@@ -73,7 +80,7 @@ public class BaggingAreaPanel extends JPanel {
 	 * Initializes the different components of the panel
 	 */
 	private void initComponents() {
-		setBounds(0, 0, 1280, 720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new MigLayout("",
 				"[517.00][94.00][200.00,grow][17.00,grow][180.00][204.00,grow][17.00][][][][][][][][][][][][][][][][38.00][36.00,grow]",
 				"[139.00,grow][129.00,grow][138.00,grow][134.00,grow][135.00,grow][124.00,grow]"));
@@ -124,6 +131,9 @@ public class BaggingAreaPanel extends JPanel {
 
 	}
 	
+	/**
+	 * Refreshes total price, total weight, and item cart as items are scanned. Also updates payment panels
+	 */
 	public void refreshWeight() {
 		
 		weight = String.valueOf(mainFrame.finishesAddingItems.getWeight());

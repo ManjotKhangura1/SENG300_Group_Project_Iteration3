@@ -17,12 +17,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AttendantLoginPanel extends JPanel {
+	
+	//Creates field for a password for attendant
 	private JPasswordField passwordField = new JPasswordField();
+	
+	//For username of attendant
 	JTextField textField = new JTextField();
 	
 	private MainFrame mainFrame;
+	
+	//login button
 	public JButton loginButton;
 	
+	/**
+	 * Constructor for this panel
+	 * @param mainFrame - Frame which shows all panels
+	 */
 	public AttendantLoginPanel(MainFrame mainFrame) {
 		
 		this.mainFrame = mainFrame;
@@ -30,18 +40,24 @@ public class AttendantLoginPanel extends JPanel {
 		initComponents();
 	}
 
+	/**
+	 * Initializes the components of the panel
+	 */
 	private void initComponents(){
-		setBounds(0,0,1280,720);
+		
+		//Sets layout
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new MigLayout("", "[390.00][368.00]", "[215.00][grow][][grow]"));
 		setVisible(false);
 		
-		
+		//Makes username label
 		JLabel username = new JLabel("Username: ");
 		username.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		add(username, "cell 0 0,alignx trailing");
 		
 		add(textField, "cell 1 0,growx");
 		
+		//Makes password label
 		JLabel password = new JLabel("Password: ");
 		password.setHorizontalAlignment(SwingConstants.CENTER);
 		password.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -49,10 +65,12 @@ public class AttendantLoginPanel extends JPanel {
 		
 		add(passwordField, "cell 1 1,growx");
 		
+		//Makes show password label
 		JCheckBox showPassword = new JCheckBox("Show Password");
 		showPassword.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		add(showPassword, "cell 1 2");
 		
+		//If show password is clicked, it will show password or hide it again
 		showPassword.addActionListener(new ActionListener() {
 
 			@Override
@@ -71,14 +89,17 @@ public class AttendantLoginPanel extends JPanel {
 			
 		});
 		
+		//Login button
 		loginButton = new JButton("Login");
 		
+		//Sets actions for when attendant clicks login button to log in
 		loginButton.addActionListener(new ActionListener() {
 			
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == loginButton)
 				{
+					//Preset usernames and passwords for attendant login
 					String userText;
 		            String pwdText;
 		            userText = textField.getText();

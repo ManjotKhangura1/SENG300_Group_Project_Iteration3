@@ -29,18 +29,26 @@ public class PaymentPanel extends JPanel {
 	public JButton cancel;
 	public JLabel calculation;
 	
+	/**
+	 * Constructor for panel
+	 * @param mainFrame - Frame to show panel
+	 */
 	public PaymentPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
 	}
 
+	/**
+	 * Initialize components
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 4));
 		setVisible(false);
 		
+		//Credit card button
 		creditCard = new JButton("CREDIT CARD"); 
 		creditCard.setBackground(Color.WHITE);
 		ImageIcon creditCardIcon = new ImageIcon(getClass().getResource("/Icons/Credit Card.png"));
@@ -57,6 +65,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(creditCard);
 		
+		//Debit card button
 		debitCard = new JButton("DEBIT CARD");
 		debitCard.setBackground(Color.WHITE);
 		ImageIcon debitCardIcon = new ImageIcon(getClass().getResource("/Icons/Debit Card.png"));
@@ -73,6 +82,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(debitCard);
 		
+		//Cash button
 		cash = new JButton("CASH");
 		cash.setBackground(Color.WHITE);
 		ImageIcon cashIcon = new ImageIcon(getClass().getResource("/Icons/Cash.png"));
@@ -90,6 +100,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(cash);
 		
+		//Gift card button
 		JButton giftCard = new JButton("GIFT CARD");
 		giftCard.setBackground(Color.WHITE);
 		ImageIcon giftCardIcon = new ImageIcon(getClass().getResource("/Icons/Gift Card.png"));
@@ -106,6 +117,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(giftCard);
 		
+		//Membership button
 		JButton membership = new JButton("MEMBERSHIP");
 		membership.setBackground(Color.WHITE);
 		ImageIcon membershipIcon = new ImageIcon(getClass().getResource("/Icons/MEMBERSHIP.png"));
@@ -122,6 +134,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(membership);
 		
+		//Help button
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
@@ -136,6 +149,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(help);
 		
+		//Cancel button
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));
@@ -152,6 +166,7 @@ public class PaymentPanel extends JPanel {
 		});
 		add(cancel);
 		
+		//Shows total and paid
 		calculation = new JLabel("<html>TOTAL: <br>PAID: </html>");
 		calculation.setBackground(Color.WHITE);
 		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 24));
@@ -160,6 +175,10 @@ public class PaymentPanel extends JPanel {
 		add(calculation);
 	}
 
+	/**
+	 * Getter to get total and paid string to change when items are added
+	 * @return - Total and paid label
+	 */
 	public JLabel getCalculation() {
 		return calculation;
 	}

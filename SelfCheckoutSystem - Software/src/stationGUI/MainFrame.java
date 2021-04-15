@@ -81,12 +81,9 @@ public class MainFrame {
 
 	
 	TouchScreen touchscreen = new TouchScreen();
-	JFrame frame = new JFrame(); //touchScreen.getFrame();
-	//Jframe frame = touchscreen.getFrame();
+	//JFrame frame = new JFrame(); //touchScreen.getFrame();
+	JFrame frame = touchscreen.getFrame();
 	
-	/**
-	 * SWAP LINE 83 and 84 BEFORE SUBMISSION
-	 */
 	
 	
 	

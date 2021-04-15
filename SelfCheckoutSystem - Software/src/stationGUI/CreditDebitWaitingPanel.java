@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import org.lsmr.selfcheckout.Card;
+import org.lsmr.selfcheckout.external.CardIssuer;
+
 public class CreditDebitWaitingPanel extends JPanel {
 	
 	private MainFrame mainFrame;
@@ -28,19 +33,29 @@ public class CreditDebitWaitingPanel extends JPanel {
 	private JProgressBar processingProgressBar;
 	private JLabel approvedLabel;
 	private JLabel declinedLabel;
+	public Card testCard;
 	
+	/**
+	 * constructor for panel
+	 * @param mainFrame - Frame which shows panel
+	 */
 	public CreditDebitWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
+		initDatabase();
 	}
 
+	/**
+	 * Initialize components
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 2));
 		setVisible(false);
 		
+		//Credit/debit label asking for number
 		JLabel instruction = new JLabel("Please insert/swipe/tap your card");
 		instruction.setBackground(Color.WHITE);
 		ImageIcon instructionIcon = new ImageIcon(getClass().getResource("/Icons/Insert_Swipe_Tap.png"));
@@ -51,9 +66,35 @@ public class CreditDebitWaitingPanel extends JPanel {
 		instruction.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(instruction);
 		
+		//Makes keypad for card
 		KeypadWithDisplay keypadWithDisplay = new KeypadWithDisplay();
+		keypadWithDisplay.keypad.enter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processingDialog.setVisible(true);
+				if(keypadWithDisplay.data.equals("111111")) {
+					testCard = new Card("credit", "111111", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else if(keypadWithDisplay.data.equals("222222")) {
+					testCard = new Card("credit", "222222", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else if(keypadWithDisplay.data.equals("333333")) {
+					testCard = new Card("credit", "333333", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else {
+					mainFrame.payWithCreditCard.isApproved = false;
+					processing();
+				}
+			}
+		});
 		add(keypadWithDisplay);
 		
+		//Help button
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
@@ -68,6 +109,7 @@ public class CreditDebitWaitingPanel extends JPanel {
 		});
 		add(help);
 		
+		//Cancel button
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));
@@ -84,12 +126,14 @@ public class CreditDebitWaitingPanel extends JPanel {
 		});
 		add(cancel);
 		
+		//Makes dialog box
 		processingDialog = new JDialog(mainFrame.frame);
 		processingDialog.setSize(400, 80);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		processingDialog.setLocation((dimension.width - 400)/2, (dimension.height - 80)/2);
 		processingDialog.setLayout(new GridLayout(1,1));
 		
+		//Makes bar showing progress in processing card
 		processingProgressBar = new JProgressBar();
 		processingProgressBar.setBorderPainted(true);
 		processingProgressBar.setIndeterminate(true);
@@ -97,12 +141,14 @@ public class CreditDebitWaitingPanel extends JPanel {
 		processingProgressBar.setString("Processing ...");
 		processingProgressBar.setStringPainted(true);
 		
+		//Approved label
 		approvedLabel = new JLabel();
 		approvedLabel.setText("Approved!");
 		approvedLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		approvedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		approvedLabel.setVerticalAlignment(SwingConstants.CENTER);
 		
+		//Declined label
 		declinedLabel = new JLabel();
 		declinedLabel.setText("Declined! Please select another payment type.");
 		declinedLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
@@ -113,8 +159,10 @@ public class CreditDebitWaitingPanel extends JPanel {
 		processingDialog.setVisible(false);
 	}
 	
+	/**
+	 * Processes card to approve or decline it
+	 */
 	public void processing() {
-		processingDialog.setVisible(true);
 		if(mainFrame.payWithCreditCard.isApproved) {
 			processingDialog.setVisible(false);
 			processingDialog.remove(processingProgressBar);
@@ -128,4 +176,17 @@ public class CreditDebitWaitingPanel extends JPanel {
 			processingDialog.setVisible(true);
 		}
 	}
+	
+	/**
+	 * Initializes the database for cards
+	 */
+	private void initDatabase() {
+		CardIssuer testIssuer = new CardIssuer("testIssuer");
+		Calendar testCalendar =  Calendar.getInstance();
+		testCalendar.set(Calendar.YEAR, 2030);
+		testIssuer.addCardData("111111", "Person One", testCalendar, "111", new BigDecimal("1000"));
+		testIssuer.addCardData("222222", "Person Two", testCalendar, "222", new BigDecimal("5"));
+		testIssuer.addCardData("333333", "Person Three", testCalendar, "333", new BigDecimal("10"));
+	};
+	
 }

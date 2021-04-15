@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -20,7 +22,7 @@ import java.awt.Font;
 import javax.swing.JList;
 
 public class ScanningPanel extends JPanel {
-	
+
 	private MainFrame mainFrame;
 	private JFrame frame;
 	private JLabel lblStationStatus = new JLabel("");
@@ -39,7 +41,13 @@ public class ScanningPanel extends JPanel {
 	private JLabel itemCart;
 	private JScrollPane scrollPane;
 	private JLabel label;
+	private String itemToBeDeleted = "";
+	private String itemToBeDeletedBadFormat;
 
+	/**
+	 * ScanningPanel Constructor
+	 * @param mainFrame the frame the panel is on
+	 */
 	public ScanningPanel(MainFrame mainFrame) {
 
 		this.mainFrame = mainFrame;
@@ -48,8 +56,13 @@ public class ScanningPanel extends JPanel {
 
 	}
 
+	/**
+	 * Initializes the components of the panel
+	 */
 	private void initComponents() {
-		setBounds(0, 0, 1280, 720);
+		//setBounds(0, 0, 1280, 720);
+		setBounds(mainFrame.frame.getBounds());
+		
 		setVisible(false);
 		setLayout(null);
 
@@ -178,6 +191,9 @@ public class ScanningPanel extends JPanel {
 		 */
 	}
 
+	/**
+	 * Refreshes the total, tax on the scanningPanel screen in between item additions
+	 */
 	public void refreshTotal() {
 
 		subtotal = String.valueOf(mainFrame.finishesAddingItems.getPrice());
@@ -203,12 +219,12 @@ public class ScanningPanel extends JPanel {
 		lblNewJgoodiesLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_3.removeAll();
 		panel_3.add(lblNewJgoodiesLabel_1);
-		
+
 		mainFrame.paymentPanel.getCalculation().setText("<html>TOTAL:" + total + "<br>PAID: </html>");
 		mainFrame.cashWaitingPanel.getCalculation().setText("<html>TOTAL:" + total + "<br>PAID: </html>");
-		
+
 		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
-			if (mainFrame.finishesAddingItems.getList().get(i) != null) {				
+			if (mainFrame.finishesAddingItems.getList().get(i) != null) {
 				items.concat(mainFrame.finishesAddingItems.getList().get(i));
 			}
 
@@ -219,13 +235,33 @@ public class ScanningPanel extends JPanel {
 
 		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
 			if (mainFrame.finishesAddingItems.getList().get(i) != null) {
-				items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();				
+				items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
 			}
 
 		}
 
 		JList list = new JList(items);
 		scrollPane.setViewportView(list);
+
+		list.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				itemToBeDeletedBadFormat = (String) list.getSelectedValue();
+				itemToBeDeleted = "";
+				int i = 0;
+				while (itemToBeDeletedBadFormat.charAt(i) != ',') {
+					itemToBeDeleted = itemToBeDeleted + itemToBeDeletedBadFormat.charAt(i);
+					i++;
+				}
+
+				System.out.println("-" + itemToBeDeleted + "-");
+				
+				// TRIED TO IMPLEMENT REMOVE ITEM FEATURE BUT COULD NOT COMPLETE
+				//mainFrame.finishesAddingItems.removeItem(itemToBeDeleted);
+				
+			}
+
+		});
 
 //		scrollPane.repaint();
 //		scrollPane.revalidate();
@@ -234,10 +270,18 @@ public class ScanningPanel extends JPanel {
 
 	}
 
+	/**
+	 * Gets the status of the station 
+	 * @return lblStationStatus the label containing the station status 
+	 */
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
 	}
-	
+
+	/**
+	 * Gets the total in big decimal format 
+	 * @return bdtotal the total in BigDecimal form
+	 */
 	public BigDecimal getBDTotal() {
 		return bdtotal;
 	}

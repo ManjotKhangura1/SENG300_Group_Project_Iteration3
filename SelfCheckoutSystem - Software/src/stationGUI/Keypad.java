@@ -26,6 +26,9 @@ public class Keypad extends JPanel{
 	public JButton zero;
 	public JButton enter;
 	
+	/**
+	 * Constructor for keyad. Makes buttons for the keypad
+	 */
 	public Keypad() {
 		setLayout(new GridLayout(4, 3));
 		

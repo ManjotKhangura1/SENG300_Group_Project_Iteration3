@@ -10,10 +10,11 @@ import java.util.Map;
 public class FinishesAddingItems {
 	//local variables
 	boolean isEnabled;
-	private BigDecimal finalWeight;
-	private BigDecimal finalPrice;
+	private BigDecimal finalWeight = new BigDecimal("0.00");
+	private BigDecimal finalPrice = new BigDecimal("0.00");
 	//Local object
-	private ArrayList<String> finalList;
+	private ArrayList<String> finalList = new ArrayList<String>();
+	private ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>();
 	private SelfCheckoutStation station;
 	private AddOwnBag aob;
 	private BaggingArea bags;
@@ -53,7 +54,7 @@ public class FinishesAddingItems {
 	 * @param BigDecimal weight
 	 */
 	public void updateTotals(String name, BigDecimal price, BigDecimal weight) {
-		ArrayList<BigDecimal> temp = new ArrayList<BigDecimal>();
+
 		temp.add(price); //element 0
 		temp.add(weight); //element 1
 		finalWeight = finalWeight.add(weight); 
