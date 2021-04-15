@@ -58,7 +58,7 @@ public class AddItemPanel extends JPanel{
 
 	public void initComponents(){
 		
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setVisible(false);
 		setLayout(null);
 	

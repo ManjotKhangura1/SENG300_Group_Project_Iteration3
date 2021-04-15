@@ -31,7 +31,7 @@ public class AttendantLoginPanel extends JPanel {
 	}
 
 	private void initComponents(){
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new MigLayout("", "[390.00][368.00]", "[215.00][grow][][grow]"));
 		setVisible(false);
 		

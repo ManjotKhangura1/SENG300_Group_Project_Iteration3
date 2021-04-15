@@ -13,6 +13,10 @@ public class AcknowledgementPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	/**
+	 * Constructor for AcknowledgementPanel
+	 * @param mainFrame - the frame which holds all the panels of the self checkout system
+	 */
 	public AcknowledgementPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
@@ -21,7 +25,7 @@ public class AcknowledgementPanel extends JPanel {
 
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 1));
 		setVisible(false);
 		
