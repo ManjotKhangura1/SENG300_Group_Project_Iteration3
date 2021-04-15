@@ -255,7 +255,7 @@ public class FinishesAddingItemsTest {
 			Bag bag = new Bag(bagWeight);
 			PLUCodedItem pluItem = new PLUCodedItem(new PriceLookupCode("1234"), 5.0);
 			
-			scanItem.scanFromMain(BARCODEDITEM);
+			scanItem.scanFromMain(BARCODEDITEM); //has probability to fail
 			bagArea.addItem(BARCODEDITEM);
 			scs.scale.add(pluItem);
 			eplu.itemLookup("1234");
@@ -267,6 +267,21 @@ public class FinishesAddingItemsTest {
 			
 			assertEquals(actual, expected, 0);
 			
+		}
+		
+		@Test
+		public void nullConstructorTest() {
+			try {
+			finish = new FinishesAddingItems(null, bagArea);
+			}catch(Exception e) {
+				assertTrue(e instanceof SimulationException);
+			}
+			
+			try {
+				finish = new FinishesAddingItems(scs, null);
+				}catch(Exception e) {
+					assertTrue(e instanceof SimulationException);
+				}
 		}
 
 }
