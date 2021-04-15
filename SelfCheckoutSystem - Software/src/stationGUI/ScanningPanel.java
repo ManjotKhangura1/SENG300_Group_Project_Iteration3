@@ -203,7 +203,9 @@ public class ScanningPanel extends JPanel {
 		lblNewJgoodiesLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panel_3.removeAll();
 		panel_3.add(lblNewJgoodiesLabel_1);
-
+		
+		mainFrame.paymentPanel.getCalculation().setText("<html>TOTAL:" + total + "<br>PAID: </html>");
+		mainFrame.cashWaitingPanel.getCalculation().setText("<html>TOTAL:" + total + "<br>PAID: </html>");
 		
 		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
 			if (mainFrame.finishesAddingItems.getList().get(i) != null) {				
@@ -234,5 +236,9 @@ public class ScanningPanel extends JPanel {
 
 	public JLabel getLblStationStatus() {
 		return lblStationStatus;
+	}
+	
+	public BigDecimal getBDTotal() {
+		return bdtotal;
 	}
 }
