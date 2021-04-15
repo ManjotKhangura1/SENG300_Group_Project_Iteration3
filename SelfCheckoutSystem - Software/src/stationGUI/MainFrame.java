@@ -42,7 +42,7 @@ public class MainFrame {
 	public GiftCardWaitingPanel giftCardWaitingPanel;
 	public AcknowledgementPanel acknowledgementPanel;
 	public PaymentPanel paymentPanel;
-//	public MembershipWaitingPanel membershipWaitingPanel;
+	public MembershipWaitingPanel membershipWaitingPanel;
 
 	public BaggingArea baggingArea;
 	public ScanItem scanItem;
@@ -153,7 +153,7 @@ public class MainFrame {
 		creditDebitWaitingPanel = new CreditDebitWaitingPanel(this);
 		giftCardWaitingPanel = new GiftCardWaitingPanel(this);
 		paymentPanel = new PaymentPanel(this);
-//		membershipWaitingPanel = new MembershipWaitingPanel(this);
+		membershipWaitingPanel = new MembershipWaitingPanel(this);
 
 		frame.setBounds(0,0,1280,720);
 		frame.setVisible(true);
@@ -182,7 +182,7 @@ public class MainFrame {
 		frame.getContentPane().add(cashWaitingPanel);
 		frame.getContentPane().add(creditDebitWaitingPanel);
 		frame.getContentPane().add(giftCardWaitingPanel);
-//		frame.getContentPane().add(membershipWaitingPanel);
+		frame.getContentPane().add(membershipWaitingPanel);
 	}
 	
 	private void initPLUCodedItems() {
