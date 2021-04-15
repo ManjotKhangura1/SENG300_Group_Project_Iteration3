@@ -20,7 +20,7 @@ import java.awt.Font;
 import javax.swing.JList;
 
 public class ScanningPanel extends JPanel {
-
+	
 	private MainFrame mainFrame;
 	private JFrame frame;
 	private JLabel lblStationStatus = new JLabel("");
