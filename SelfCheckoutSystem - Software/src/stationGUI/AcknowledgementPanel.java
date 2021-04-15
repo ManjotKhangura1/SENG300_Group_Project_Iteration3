@@ -14,8 +14,8 @@ public class AcknowledgementPanel extends JPanel {
 	private MainFrame mainFrame;
 	
 	/**
-	 * Constructor for 
-	 * @param mainFrame
+	 * Constructor for AcknowledgementPanel
+	 * @param mainFrame - the frame which holds all the panels of the self checkout system
 	 */
 	public AcknowledgementPanel(MainFrame mainFrame)
 	{
