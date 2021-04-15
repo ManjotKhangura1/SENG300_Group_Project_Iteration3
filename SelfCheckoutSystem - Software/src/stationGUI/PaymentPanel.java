@@ -29,7 +29,7 @@ public class PaymentPanel extends JPanel {
 	private void initComponents()
 	{
 		setBounds(0,0,1280,720);
-		setLayout(new GridLayout(2, 3));
+		setLayout(new GridLayout(2, 4));
 		setVisible(false);
 		
 		JButton creditCard = new JButton("CREDIT CARD"); 
@@ -40,35 +40,10 @@ public class PaymentPanel extends JPanel {
 		creditCard.setVerticalTextPosition(SwingConstants.BOTTOM);
 		creditCard.setHorizontalTextPosition(SwingConstants.CENTER);
 		creditCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		creditCard.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				creditCard.setBackground(Color.GREEN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				creditCard.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ActionListener listener1 = new ActionListener() {
-                	public void actionPerformed (ActionEvent ee) {
-                		mainFrame.creditDebitWaitingPanel.setVisible(false);
-                		mainFrame.acknowledgementPanel.setVisible(true);
-                		ActionListener listener2 = new ActionListener() {
-                        	public void actionPerformed (ActionEvent ee) {
-                        		mainFrame.acknowledgementPanel.setVisible(false);
-                        		mainFrame.welcomePanel.setVisible(true);
-                        	}
-                        };
-                        //Timer timer2 = new Timer(10000, listener2);
-                        //timer2.start();
-                	}
-                };
-                //Timer timer1 = new Timer(10000, listener1);
+		creditCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
                 mainFrame.paymentPanel.setVisible(false);
                 mainFrame.creditDebitWaitingPanel.setVisible(true);
-                //timer1.start();
 			}
 		});
 		add(creditCard);
@@ -81,36 +56,10 @@ public class PaymentPanel extends JPanel {
 		debitCard.setVerticalTextPosition(SwingConstants.BOTTOM);
 		debitCard.setHorizontalTextPosition(SwingConstants.CENTER);
 		debitCard.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		debitCard.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				debitCard.setBackground(Color.GREEN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				debitCard.setBackground(Color.WHITE);
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ActionListener listener1 = new ActionListener() {
-                	public void actionPerformed (ActionEvent ee) {
-                		mainFrame.creditDebitWaitingPanel.setVisible(false);
-                		mainFrame.acknowledgementPanel.setVisible(true);
-                		ActionListener listener2 = new ActionListener() {
-                        	public void actionPerformed (ActionEvent ee) {
-                        		mainFrame.acknowledgementPanel.setVisible(false);
-                        		mainFrame.welcomePanel.setVisible(true);
-                        	}
-                        };
-                        //Timer timer2 = new Timer(10000, listener2);
-                        //timer2.start();
-                	}
-                };
-                //Timer timer1 = new Timer(10000, listener1);
+		debitCard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
                 mainFrame.paymentPanel.setVisible(false);
                 mainFrame.creditDebitWaitingPanel.setVisible(true);
-                //timer1.start();
 			}
 		});
 		add(debitCard);

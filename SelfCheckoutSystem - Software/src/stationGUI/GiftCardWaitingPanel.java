@@ -1,6 +1,7 @@
 package stationGUI;
 
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -11,6 +12,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,6 +21,10 @@ import java.awt.Font;
 public class GiftCardWaitingPanel extends JPanel {
 	
 	private MainFrame mainFrame;
+	private JDialog processingDialog;
+	private JProgressBar processingProgressBar;
+	private JLabel approvedLabel;
+	private JLabel declinedLabel;
 	
 	public GiftCardWaitingPanel(MainFrame mainFrame)
 	{
