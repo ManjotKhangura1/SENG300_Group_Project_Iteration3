@@ -168,6 +168,28 @@ public class GuiTest {
 	
 	
 	
+	@Test
+	public void testScanningPanel() {
+		
+		MainFrame mainFrame = new MainFrame();
+		ScanningPanel scanningPanel= new ScanningPanel(mainFrame);
+		
+		scanningPanel.refreshTotal();
+		scanningPanel.getLblStationStatus();
+		scanningPanel.getBDTotal();
+		
+		boolean test1= scanningPanel.isDisplayable();
+		boolean actual= false;
+		
+		boolean test2= scanningPanel.isEnabled();
+		boolean actual2= true;
+		
+		
+		assertEquals(test1, actual);
+		assertEquals(test2,actual2);
+		
+	
+	}
 	
 	
 	
@@ -178,7 +200,13 @@ public class GuiTest {
 	
 	
 	
-
+	
+	
+	
+	
+	
+	
+	
 	
 }
 		
