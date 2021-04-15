@@ -169,9 +169,9 @@ public class RemovePurchasedItemsTest {
 	@Test
 	public void itemsTakenTest() {
 		
-		BigDecimal aWeight= BigDecimal.valueOf(0);
+		BigDecimal zeroWeight= BigDecimal.valueOf(0);
 		
-		bags.setWeightBaggingArea(aWeight);
+		bags.setWeightBaggingArea(zeroWeight);
 		System.out.println(bags.getWeightBaggingArea());
 		assertEquals(true, removed.getItemsTaken());
 	}
