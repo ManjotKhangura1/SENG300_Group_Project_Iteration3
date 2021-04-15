@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import org.lsmr.selfcheckout.Card;
+import org.lsmr.selfcheckout.external.CardIssuer;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -11,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,11 +33,15 @@ public class GiftCardWaitingPanel extends JPanel {
 	private JProgressBar processingProgressBar;
 	private JLabel approvedLabel;
 	private JLabel declinedLabel;
+	public CardIssuer testIssuer;
+	public Card testCard;
+	private boolean isApproved = false;
 	
 	public GiftCardWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
+		initDatabase();
 	}
 
 	private void initComponents()
@@ -63,6 +73,18 @@ public class GiftCardWaitingPanel extends JPanel {
 		help.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				processingDialog.setVisible(true);
+				if(keypadWithDisplay.data.equals("111111")) {
+					Card validCard = new Card("Membership", "1234567", "A Name", null, null, false, false);
+					BufferedImage aSignature = new BufferedImage(1,2,3);
+					mainFrame.payWithGiftCard.SwipeGiftCard(validCard, aSignature, testIssuer, mainFrame.scanningPanel.getBDTotal());
+					isApproved = true;
+					processing();
+				}
+				else {
+					isApproved = false;
+					processing();
+				}
 			}
 		});
 		add(help);
@@ -83,4 +105,26 @@ public class GiftCardWaitingPanel extends JPanel {
 		});
 		add(cancel);
 	}
+	
+	public void processing() {
+		if(isApproved) {
+			processingDialog.setVisible(false);
+			processingDialog.remove(processingProgressBar);
+			processingDialog.add(approvedLabel);
+			processingDialog.setVisible(true);
+		}
+		else {
+			processingDialog.setVisible(false);
+			processingDialog.remove(processingProgressBar);
+			processingDialog.add(declinedLabel);
+			processingDialog.setVisible(true);
+		}
+	}
+	
+	private void initDatabase() {
+		testIssuer = new CardIssuer("testIssuer");
+		Calendar testCalendar =  Calendar.getInstance();
+		testCalendar.set(Calendar.YEAR, 2030);
+		testIssuer.addCardData("111111", "Customer", testCalendar, "111", BigDecimal.valueOf(5.0));
+	};
 }

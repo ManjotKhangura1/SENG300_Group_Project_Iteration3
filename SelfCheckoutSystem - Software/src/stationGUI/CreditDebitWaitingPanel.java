@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import org.lsmr.selfcheckout.Card;
+import org.lsmr.selfcheckout.external.CardIssuer;
+
 public class CreditDebitWaitingPanel extends JPanel {
 	
 	private MainFrame mainFrame;
@@ -28,11 +33,13 @@ public class CreditDebitWaitingPanel extends JPanel {
 	private JProgressBar processingProgressBar;
 	private JLabel approvedLabel;
 	private JLabel declinedLabel;
+	public Card testCard;
 	
 	public CreditDebitWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
+		initDatabase();
 	}
 
 	private void initComponents()
@@ -52,6 +59,30 @@ public class CreditDebitWaitingPanel extends JPanel {
 		add(instruction);
 		
 		KeypadWithDisplay keypadWithDisplay = new KeypadWithDisplay();
+		keypadWithDisplay.keypad.enter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				processingDialog.setVisible(true);
+				if(keypadWithDisplay.data.equals("111111")) {
+					testCard = new Card("credit", "111111", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else if(keypadWithDisplay.data.equals("222222")) {
+					testCard = new Card("credit", "222222", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else if(keypadWithDisplay.data.equals("333333")) {
+					testCard = new Card("credit", "333333", "Person One", "111", "1234", true, true);
+					mainFrame.payWithCreditCard.payWithTap(testCard, mainFrame.scanningPanel.getBDTotal());
+					processing();
+				}
+				else {
+					mainFrame.payWithCreditCard.isApproved = false;
+					processing();
+				}
+			}
+		});
 		add(keypadWithDisplay);
 		
 		JButton help = new JButton("Help");
@@ -114,7 +145,6 @@ public class CreditDebitWaitingPanel extends JPanel {
 	}
 	
 	public void processing() {
-		processingDialog.setVisible(true);
 		if(mainFrame.payWithCreditCard.isApproved) {
 			processingDialog.setVisible(false);
 			processingDialog.remove(processingProgressBar);
@@ -128,4 +158,14 @@ public class CreditDebitWaitingPanel extends JPanel {
 			processingDialog.setVisible(true);
 		}
 	}
+	
+	private void initDatabase() {
+		CardIssuer testIssuer = new CardIssuer("testIssuer");
+		Calendar testCalendar =  Calendar.getInstance();
+		testCalendar.set(Calendar.YEAR, 2030);
+		testIssuer.addCardData("111111", "Person One", testCalendar, "111", new BigDecimal("1000"));
+		testIssuer.addCardData("222222", "Person Two", testCalendar, "222", new BigDecimal("5"));
+		testIssuer.addCardData("333333", "Person Three", testCalendar, "333", new BigDecimal("10"));
+	};
+	
 }
