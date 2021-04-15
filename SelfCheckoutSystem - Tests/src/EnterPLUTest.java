@@ -109,7 +109,7 @@ public class EnterPLUTest {
 		try {
 			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
 			test.itemLookup("1234");
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),5.0)); //item 2222 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),3.0)); //item 2222 weighs 3kg
 			test.itemLookup("2222");
 		}catch(Exception e) {
 			fail();
@@ -123,7 +123,7 @@ public class EnterPLUTest {
 		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
 		
 		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 23001kg
 			test.itemLookup("1234");
 		}catch(Exception e) {
 			assertTrue(e instanceof OverloadException);
@@ -137,84 +137,13 @@ public class EnterPLUTest {
 		EnterPLU test = new EnterPLU(station, database, finishAddingItems, baggingArea);
 		
 		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001.0)); //item 1234 weighs 5kg
+			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),51.0)); //item 1234 weighs 51kg
 			test.itemLookup("5555");
 		}catch(Exception e) {
 			assertTrue(e instanceof SimulationException);
 		}
 		
 	}
-	
-	/*
-
-	@Test
-	public void testItemLookup() {
-		EnterPLU test = new EnterPLU(station, database);
-		try {
-		station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
-		test.itemLookup("1234");
-		station.scale.add(new PLUCodedItem(new PriceLookupCode("2222"),5.0)); //item 2222 weighs 5kg
-		test.itemLookup("2222");
-		}catch(Exception e) {
-			fail();
-		} 
-		
-		//looking up an invalid plu
-		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
-			test.itemLookup("1111");
-			fail();
-		}catch(Exception e) {
-			assertTrue(e instanceof SimulationException);
-		}
-		
-		//over the weight limit
-		try {
-			station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),23001)); 
-			test.itemLookup("1234");
-			fail();
-		}catch(Exception e) {
-			assertTrue(e instanceof OverloadException); 
-		}
-		
-		//looking up a null plu
-		try {
-			test.itemLookup(null);
-			fail();
-		}catch(Exception e) {
-			assertTrue(e instanceof SimulationException);
-		}
-	}
-
-	@Test
-	public void testGetPrice() {
-		//PLUproduct has plu = 1234 and price of 1.5
-		EnterPLU test = new EnterPLU(station, database);
-		try {
-		station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
-		test.itemLookup("1234");
-		
-		assertEquals(test.getPrice(), BigDecimal.valueOf(station.scale.getCurrentWeight()).multiply(BigDecimal.valueOf(1.5))); //we must mulitply price by weight
-		}catch(Exception e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void testGetDescription() {
-		//PLUproduct has plu = 1234 and price of 1.5
-		EnterPLU test = new EnterPLU(station, database);
-		try {
-		station.scale.add(new PLUCodedItem(new PriceLookupCode("1234"),5.0)); //item 1234 weighs 5kg
-		test.itemLookup("1234");
-		
-		assertEquals(test.getDescription(), "Red Apples"); 
-		}catch(Exception e) {
-			fail();
-		}
-	}
-	
-	*/
 	
 
 }

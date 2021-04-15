@@ -31,6 +31,11 @@ public class EnterPLU {
 	 */
 	public EnterPLU(SelfCheckoutStation station, Map<PriceLookupCode, PLUCodedProduct> database, FinishesAddingItems d, BaggingArea b) {
 		if(station == null) throw new SimulationException(new NullPointerException("station is null"));
+		
+		price = new BigDecimal(0);
+		weight = new BigDecimal(0);
+		
+		
 		EnterPLU.database = database;
 		scale = station.scale;
 		done = d;
@@ -59,7 +64,7 @@ public class EnterPLU {
 				baged.setWeightScanned(weight);
 			}
 		}catch(OverloadException e) {
-			throw new OverloadException("Item not on scale"); //from scale.getCurrentWeight
+			throw new OverloadException("Item overweight! Please remove."); //from scale.getCurrentWeight
 		}catch(Exception e) {
 			throw new SimulationException(new NullPointerException("code not recognised")); //from database.get(plu)
 		}

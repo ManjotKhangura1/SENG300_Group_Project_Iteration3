@@ -26,6 +26,7 @@ public class ScansMembershipCard { //through card reader
 	public CardData data;
 	
 	//instance of some arbitrary valid cards for testing purposes
+	//[valid cards]
 	//(false, false) because a membership card doesn't have a chip and can't be tapped
 	Card validCard1 = new Card("Membership", "1234567", "A Name", null, null, false, false);
 	Card validCard2 = new Card("Membership", "2345678", "A Name", null, null, false, false);
