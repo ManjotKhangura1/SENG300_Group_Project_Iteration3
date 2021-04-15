@@ -259,6 +259,10 @@ public class AttendantPanel extends JPanel {
 				btnUnblock.setVisible(false);
 				btnShutDown.setVisible(false);
 				btnStartUp.setVisible(true);
+				btnRefill.setVisible(false);
+				btnEmpty.setVisible(false);
+				btnChangeInk.setVisible(false);
+				btnChangePaper.setVisible(false);
 				lblStationStatus.setText("Station Status: OFF");
 				mainFrame.scanningPanel.getLblStationStatus().setText("Station Status: OFF");
 				mainFrame.baggingAreaPanel.getLblStationStatus().setText("Station Status: OFF");
