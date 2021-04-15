@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Currency;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JRadioButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -127,7 +129,6 @@ public class GuiTest {
 	@Test
 	public void testBaggingAreaPanel() {
 		
-		JButton login= new  JButton("INVALID LOGIN");
 		MainFrame mainFrame = new MainFrame();
 		BaggingAreaPanel baggingAreaPanel = new BaggingAreaPanel(mainFrame);
 		
@@ -139,7 +140,30 @@ public class GuiTest {
 		
 		assertEquals("0.0", baggingAreaPanel.weight);
 		
+	}
+	
+	
+	@Test
+	public void testRefillPanel() {
 		
+		MainFrame mainFrame = new MainFrame();
+		JFrame jFrame= new JFrame();
+		RefillPanel refillPanel= new RefillPanel(mainFrame, jFrame);
+		
+		JRadioButton coins= new JRadioButton();
+		JRadioButton notes= new JRadioButton();
+		
+		
+		boolean test1= coins.isContentAreaFilled();
+		boolean test2= refillPanel.rdbtnCoins.isContentAreaFilled();
+		
+		assertEquals(test1, test2);
+		
+		boolean test3= notes.isContentAreaFilled();
+		boolean test4= refillPanel.rdbtnBanknote.isContentAreaFilled();
+		
+		
+		assertEquals(test3, test4);
 	}
 	
 	
@@ -154,17 +178,7 @@ public class GuiTest {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }
 		
