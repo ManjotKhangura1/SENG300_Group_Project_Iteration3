@@ -13,6 +13,10 @@ public class AcknowledgementPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	/**
+	 * Constructor for 
+	 * @param mainFrame
+	 */
 	public AcknowledgementPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
