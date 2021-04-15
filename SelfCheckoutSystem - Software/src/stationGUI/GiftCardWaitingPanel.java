@@ -7,6 +7,8 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,7 +23,7 @@ import java.awt.Font;
 public class GiftCardWaitingPanel extends JPanel {
 	
 	private MainFrame mainFrame;
-	private JDialog processingDialog;
+	public JDialog processingDialog;
 	private JProgressBar processingProgressBar;
 	private JLabel approvedLabel;
 	private JLabel declinedLabel;
@@ -48,12 +50,8 @@ public class GiftCardWaitingPanel extends JPanel {
 		instruction.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(instruction);
 		
-		JLabel calculation = new JLabel("<html>SUBTOTAL<br>TAX<br>TOTAL<br>PAID</html>");
-		calculation.setBackground(Color.WHITE);
-		calculation.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 48));
-		calculation.setHorizontalAlignment(SwingConstants.CENTER);
-		calculation.setVerticalAlignment(SwingConstants.CENTER);
-		add(calculation);
+		KeypadWithDisplay keypadWithDisplay = new KeypadWithDisplay();
+		add(keypadWithDisplay);
 		
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
@@ -63,17 +61,8 @@ public class GiftCardWaitingPanel extends JPanel {
 		help.setVerticalTextPosition(SwingConstants.BOTTOM);
 		help.setHorizontalTextPosition(SwingConstants.CENTER);
 		help.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		help.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				help.setBackground(Color.CYAN);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				help.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		add(help);
@@ -86,17 +75,8 @@ public class GiftCardWaitingPanel extends JPanel {
 		cancel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cancel.setHorizontalTextPosition(SwingConstants.CENTER);
 		cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		cancel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				cancel.setBackground(Color.GRAY);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				cancel.setBackground(Color.WHITE);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				mainFrame.giftCardWaitingPanel.setVisible(false);
 				mainFrame.welcomePanel.setVisible(true);
 			}

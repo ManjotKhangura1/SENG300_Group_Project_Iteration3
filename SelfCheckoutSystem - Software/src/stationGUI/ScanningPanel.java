@@ -204,16 +204,21 @@ public class ScanningPanel extends JPanel {
 		panel_3.removeAll();
 		panel_3.add(lblNewJgoodiesLabel_1);
 
+		
 		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
-			items.concat(mainFrame.finishesAddingItems.getList().get(i));
+			if (mainFrame.finishesAddingItems.getList().get(i) != null) {				
+				items.concat(mainFrame.finishesAddingItems.getList().get(i));
+			}
+
 		}
 
 		itemCart = new JLabel(items);
 		String items[] = new String[mainFrame.finishesAddingItems.getList().size()];
 
 		for (int i = 0; i < mainFrame.finishesAddingItems.getList().size(); i++) {
-
-			items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();
+			if (mainFrame.finishesAddingItems.getList().get(i) != null) {
+				items[i] = mainFrame.finishesAddingItems.getList().get(i).toString();				
+			}
 
 		}
 
