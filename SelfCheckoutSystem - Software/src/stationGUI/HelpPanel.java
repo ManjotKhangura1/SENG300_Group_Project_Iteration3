@@ -9,8 +9,8 @@ public class HelpPanel extends JPanel {
 	private MainFrame mainFrame;
 	
 	/**
-	 *
-	 * @param mainFrame
+	 *Constructor for panel
+	 * @param mainFrame - Frame which shows panel
 	 */
 	public HelpPanel(MainFrame mainFrame)
 	{

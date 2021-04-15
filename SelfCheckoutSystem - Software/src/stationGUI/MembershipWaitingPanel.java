@@ -26,18 +26,26 @@ public class MembershipWaitingPanel extends JPanel {
 	private JLabel approvedLabel;
 	private JLabel declinedLabel;
 	
+	/**
+	 * Constructor for panel
+	 * @param mainFrame - Frame which shows the panel
+	 */
 	public MembershipWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
 	}
 
+	/**
+	 * Initializes the components
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 2));
 		setVisible(false);
 		
+		//Asks to swipe the membership card
 		JLabel instruction = new JLabel("Please swipe your membership card or enter the number");
 		instruction.setBackground(Color.WHITE);
 		ImageIcon instructionIcon = new ImageIcon(getClass().getResource("/Icons/Swipe_Gift Card.png"));
@@ -48,9 +56,11 @@ public class MembershipWaitingPanel extends JPanel {
 		instruction.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(instruction);
 		
+		//Adds keypad and keypad values
 		KeypadWithDisplay keypadWithDisplay = new KeypadWithDisplay();
 		add(keypadWithDisplay);
 		
+		//Help button
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
@@ -65,6 +75,7 @@ public class MembershipWaitingPanel extends JPanel {
 		});
 		add(help);
 		
+		//Cancel button
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));

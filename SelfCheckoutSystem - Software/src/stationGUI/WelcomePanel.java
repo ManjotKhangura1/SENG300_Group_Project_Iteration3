@@ -16,18 +16,26 @@ public class WelcomePanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	/**
+	 * Constructor for panel
+	 * @param mainFrame - Frame which shows panel
+	 */
 	public WelcomePanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
 	}
 
+	/**
+	 * Initializes components
+	 */
 	private void initComponents()
 	{
 		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 1));
 		setVisible(false);
 		
+		//Welcome page
 		JLabel welcomeLabel1 = new JLabel("WELCOME!", SwingConstants.CENTER);
 		welcomeLabel1.setForeground(Color.GREEN);
 		welcomeLabel1.setBackground(Color.WHITE);
@@ -43,6 +51,7 @@ public class WelcomePanel extends JPanel {
 		});
 		add(welcomeLabel1);
 		
+		//More of welcome page
 		JLabel welcomeLabel2 = new JLabel("TOUCH SCREEN TO START...", SwingConstants.CENTER);
 		welcomeLabel2.setForeground(Color.GREEN);
 		welcomeLabel2.setBackground(Color.WHITE);

@@ -18,10 +18,14 @@ public class KeypadWithDisplay extends JPanel {
 	public Keypad keypad;
 	public String data = "";
 	
+	/**
+	 * Constructor for displaying keypad values
+	 */
 	public KeypadWithDisplay() {
 		
 		setLayout(new BorderLayout());
 		
+		//Sets keypad to display numbers being clicked
 		display = new JLabel(" ");
 		display.setBackground(Color.WHITE);
 		display.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 72));
@@ -33,6 +37,7 @@ public class KeypadWithDisplay extends JPanel {
 		keypad = new Keypad();
 		add(keypad);
 		
+		//Adds listeners to key[ad to show numbers as they are clicked to display it
 		keypad.one.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display.setText(display.getText() + "1");
