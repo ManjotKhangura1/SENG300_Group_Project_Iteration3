@@ -209,7 +209,6 @@ public class GuiTest {
 		boolean test4= emptyPanel.rdbtnBanknote.isContentAreaFilled();
 		
 		assertEquals(test3, test4);
-		
 			
 		}
 		
