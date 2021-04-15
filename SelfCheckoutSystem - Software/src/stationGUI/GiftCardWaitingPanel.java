@@ -37,6 +37,10 @@ public class GiftCardWaitingPanel extends JPanel {
 	public Card testCard;
 	private boolean isApproved = false;
 	
+	/**
+	 * Constructor for panel
+	 * @param mainFrame - Frame which shows panel
+	 */
 	public GiftCardWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
@@ -44,12 +48,16 @@ public class GiftCardWaitingPanel extends JPanel {
 		initDatabase();
 	}
 
+	/**
+	 * Initializes components
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 2));
 		setVisible(false);
 		
+		//Asks to swipe gift card
 		JLabel instruction = new JLabel("Please swipe your gift card");
 		instruction.setBackground(Color.WHITE);
 		ImageIcon instructionIcon = new ImageIcon(getClass().getResource("/Icons/Swipe_Gift Card.png"));
@@ -60,9 +68,11 @@ public class GiftCardWaitingPanel extends JPanel {
 		instruction.setHorizontalTextPosition(SwingConstants.CENTER);
 		add(instruction);
 		
+		//Makes keypad for card
 		KeypadWithDisplay keypadWithDisplay = new KeypadWithDisplay();
 		add(keypadWithDisplay);
 		
+		//Help button
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
@@ -71,6 +81,7 @@ public class GiftCardWaitingPanel extends JPanel {
 		help.setVerticalTextPosition(SwingConstants.BOTTOM);
 		help.setHorizontalTextPosition(SwingConstants.CENTER);
 		help.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		//Help with gift card listener
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				processingDialog.setVisible(true);
@@ -89,6 +100,7 @@ public class GiftCardWaitingPanel extends JPanel {
 		});
 		add(help);
 		
+		//Cancel button
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));
@@ -106,6 +118,9 @@ public class GiftCardWaitingPanel extends JPanel {
 		add(cancel);
 	}
 	
+	/**
+	 * Processes the gift card
+	 */
 	public void processing() {
 		if(isApproved) {
 			processingDialog.setVisible(false);
@@ -121,6 +136,9 @@ public class GiftCardWaitingPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Initializes the gift card database
+	 */
 	private void initDatabase() {
 		testIssuer = new CardIssuer("testIssuer");
 		Calendar testCalendar =  Calendar.getInstance();

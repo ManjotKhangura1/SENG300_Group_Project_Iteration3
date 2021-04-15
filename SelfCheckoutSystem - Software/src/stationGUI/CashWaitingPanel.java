@@ -23,22 +23,34 @@ public class CashWaitingPanel extends JPanel {
 	private MainFrame mainFrame;
 	public JLabel calculation;
 	
+	/**
+	 * getter to get the total and paid values in payment panel
+	 * @return - calculation: JLabel which shows total and paid amount for payments
+	 */
 	public JLabel getCalculation() {
 		return calculation;
 	}
 
+	/**
+	 * Constructor for this panel
+	 * @param mainFrame - Frame which shows panels
+	 */
 	public CashWaitingPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		initComponents();
 	}
 
+	/**
+	 * Initializes the components of panel
+	 */
 	private void initComponents()
 	{
-		setBounds(0,0,1280,720);
+		setBounds(mainFrame.frame.getBounds());
 		setLayout(new GridLayout(2, 2));
 		setVisible(false);
 		
+		//Label for adding banknote or coins
 		JLabel instruction = new JLabel("Please insert banknote and/or coins");
 		instruction.setBackground(Color.WHITE);
 		ImageIcon instructionIcon = new ImageIcon(getClass().getResource("/Icons/Insert_Banknote_Coin.png"));
@@ -56,6 +68,7 @@ public class CashWaitingPanel extends JPanel {
 		calculation.setVerticalAlignment(SwingConstants.CENTER);
 		add(calculation);
 		
+		//Help button
 		JButton help = new JButton("Help");
 		help.setBackground(Color.WHITE);
 		ImageIcon helpIcon = new ImageIcon(getClass().getResource("/Icons/Help.png"));
@@ -70,6 +83,7 @@ public class CashWaitingPanel extends JPanel {
 		});
 		add(help);
 		
+		//Cancel button
 		JButton cancel = new JButton("Cancel");
 		cancel.setBackground(Color.WHITE);
 		ImageIcon cancelIcon = new ImageIcon(getClass().getResource("/Icons/Cancel.png"));

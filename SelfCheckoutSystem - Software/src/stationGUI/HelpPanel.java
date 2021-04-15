@@ -8,6 +8,10 @@ public class HelpPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	/**
+	 *
+	 * @param mainFrame
+	 */
 	public HelpPanel(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
