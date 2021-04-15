@@ -102,7 +102,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 							return data;
 						}
 						
-						if ( !HandleDebitHold(data, issuer, amount)) {
+						if ( !HandleGiftCardHold(data, issuer, amount)) {
 							throw new SimulationException("Error when completing transaction");
 						}
 						
@@ -128,7 +128,7 @@ public SelfCheckoutStation aSelfCheckoutStation;
 		 * @param issuer Issuer for the card
 		 * @param amount Amount that you're looking to spend
 		 */
-		private boolean HandleDebitHold(CardData data, CardIssuer issuer, BigDecimal amount) {
+		private boolean HandleGiftCardHold(CardData data, CardIssuer issuer, BigDecimal amount) {
 			int holdNumber = issuer.authorizeHold(data.getNumber(), amount);
 			if (holdNumber != -1) {
 				return issuer.postTransaction(data.getNumber(), holdNumber, amount);
